@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!--
+    mall-bom：平台唯一版本权威。
+    - 无 parent：根 POM 会 import 本 BOM，若 parent 指向根 POM 将形成模型循环
+    - groupId/version 与根 POM 保持一致，由人工保证同步
+    - 仅承载 dependencyManagement：全部第三方版本只允许在此声明
+    - Lombok 由 spring-boot-dependencies 托管，不在此重复声明
+  -->
+  <groupId>com.ai-mall</groupId>
+  <artifactId>mall-bom</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>mall-bom</name>
+  <description>AI 智能电商微服务平台依赖版本清单（唯一版本权威）</description>
+
+  <properties>
+    <!-- 首批额外统一管理的三方版本 -->
+    <mybatis-plus.version>3.5.12</mybatis-plus.version>
+    <mapstruct.version>1.6.3</mapstruct.version>
+    <springdoc.version>2.8.9</springdoc.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Spring 技术基线 BOM：Spring Boot 3.5.15 + Spring Cloud 2025.0.3 + SCA 2025.0.0.0 -->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>3.5.15</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2025.0.3</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>2025.0.0.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- MyBatis-Plus 官方 BOM（版本治理首批） -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-bom</artifactId>
+        <version>${mybatis-plus.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- MapStruct（版本治理首批） -->
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+
+      <!-- Springdoc OpenAPI（版本治理首批） -->
+      <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>${springdoc.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+</project>
