@@ -13,12 +13,12 @@
   <artifactId>mall-common-mq</artifactId>
 
   <name>mall-common-mq</name>
-  <description>消息队列通用能力：RocketMQ 生产消费基础组件（版本由 SCA BOM 统一管理）</description>
+  <description>消息队列通用能力：RocketMQ 生产消费基础组件（坐标选型见 design §2.4，版本由 SCA BOM 统一管理）</description>
 
   <dependencies>
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
-      <artifactId>rocketmq-spring-boot-starter</artifactId>
+      <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
     </dependency>
   </dependencies>
 </project>

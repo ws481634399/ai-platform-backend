@@ -21,3 +21,6 @@ logs/
 
 # 本地环境配置
 *.local
+
+# 沙箱构建用的临时本地仓库（不影响真实缓存 D:\maven-repository）
+.m2-repo/
