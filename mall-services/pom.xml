@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.ai-mall</groupId>
+    <artifactId>backend</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>mall-services</artifactId>
+  <packaging>pom</packaging>
+
+  <name>mall-services</name>
+  <description>业务服务聚合模块：8 个独立 Spring Boot 应用（多模块≠单体，每个服务独立打包启动）</description>
+
+  <modules>
+    <module>mall-identity</module>
+    <module>mall-member</module>
+    <module>mall-product</module>
+    <module>mall-cart</module>
+    <module>mall-order</module>
+    <module>mall-inventory</module>
+    <module>mall-search</module>
+    <module>mall-system</module>
+  </modules>
+</project>
