@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.ai-mall</groupId>
+  <artifactId>backend</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>backend</name>
+  <description>AI 智能电商微服务平台后端聚合根 POM（M0 工程骨架）</description>
+
+  <!-- 平台聚合入口：mall-bom 为版本权威，其余为工程模块 -->
+  <modules>
+    <module>mall-bom</module>
+    <module>mall-common</module>
+    <module>mall-contracts</module>
+    <module>mall-gateway</module>
+    <module>mall-services</module>
+  </modules>
+
+  <properties>
+    <!-- 技术基线：Java 21（enforcer 守门，见 build/plugins） -->
+    <java.version>21</java.version>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Spring Boot 版本：供 spring-boot-maven-plugin 引用；依赖版本统一由 mall-bom 管理 -->
+    <spring-boot.version>3.5.15</spring-boot.version>
+
+    <!-- 插件版本（集中管理，子模块禁止声明插件版本） -->
+    <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+    <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+    <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
+    <maven-enforcer-plugin.version>3.5.0</maven-enforcer-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- 平台唯一版本权威：所有第三方版本只允许出现在 mall-bom -->
+      <dependency>
+        <groupId>com.ai-mall</groupId>
+        <artifactId>mall-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <release>${maven.compiler.release}</release>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>${maven-resources-plugin.version}</version>
+          <configuration>
+            <encoding>${project.build.sourceEncoding}</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${maven-surefire-plugin.version}</version>
+        </plugin>
+        <!-- 应用模块按需引用：绑定后由 repackage 生成可执行 Fat Jar -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+          <executions>
+            <execution>
+              <id>repackage</id>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <!-- 环境守门：全模块生效，版本不满足时显式失败（AC-3） -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>${maven-enforcer-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>enforce-environment</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>[3.9,)</version>
+                  <message>本工程要求 Maven 3.9+，当前版本不满足，请升级 Maven。</message>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>[21,22)</version>
+                  <message>本工程要求 JDK 21，检测到的 Java 版本不满足，请使用 JDK 21。</message>
+                </requireJavaVersion>
+              </rules>
+              <fail>true</fail>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
