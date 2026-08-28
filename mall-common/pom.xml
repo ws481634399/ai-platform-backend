@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.ai-mall</groupId>
+    <artifactId>backend</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>mall-common</artifactId>
+  <packaging>pom</packaging>
+
+  <name>mall-common</name>
+  <description>公共技术能力聚合模块：只放跨服务复用的技术组件，禁止出现业务领域代码</description>
+
+  <modules>
+    <module>mall-common-core</module>
+    <module>mall-common-web</module>
+    <module>mall-common-security</module>
+    <module>mall-common-redis</module>
+    <module>mall-common-mq</module>
+    <module>mall-common-openfeign</module>
+    <module>mall-common-log</module>
+    <module>mall-common-test</module>
+  </modules>
+</project>
