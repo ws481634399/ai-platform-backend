@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: mall-product
+
+server:
+  port: 8103

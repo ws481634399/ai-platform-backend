@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: mall-inventory
+
+server:
+  port: 8106

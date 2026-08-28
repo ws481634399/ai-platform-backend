@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: mall-member
+
+server:
+  port: 8102

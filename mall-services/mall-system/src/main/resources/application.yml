@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: mall-system
+
+server:
+  port: 8108

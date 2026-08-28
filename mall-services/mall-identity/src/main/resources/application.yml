@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: mall-identity
+
+server:
+  port: 8101
