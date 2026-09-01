@@ -13,13 +13,21 @@
   <artifactId>mall-common-test</artifactId>
 
   <name>mall-common-test</name>
-  <description>测试通用能力：测试基类与工具组件（仅测试 classpath 生效，版本由 mall-bom 统一管理）</description>
+  <description>测试依赖聚合器：模块以 test scope 引用本模块即可获得 JUnit5/AssertJ/Mockito 与 H2（版本由 Boot BOM 托管）</description>
 
   <dependencies>
+    <!--
+      聚合器模式：必须以默认（compile）scope 声明——Maven 中 test scope 依赖不可传递，
+      服务以 test scope 引用本模块时，下列依赖才能到达其测试 classpath（design.md §2.8）。
+      版本由 spring-boot-dependencies（经 mall-bom）统一管理。
+    -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
     </dependency>
   </dependencies>
 </project>

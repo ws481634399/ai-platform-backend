@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  平台基础日志配置片段（mall-common-log 提供）。
+  使用方式（二选一）：
+    1. 服务自建 logback-spring.xml 中 <include resource="logback/mall-logback-base.xml"/> 引入；
+    2. 复制本文件后按需调整。
+  说明：刻意不放 jar 根目录命名为 logback-spring.xml，避免依赖本模块的服务被动套用；
+       M0 阶段服务经 application.yml 的 logging.pattern.console 获得 traceId 日志格式。
+-->
+<included>
+  <appender name="MALL_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%X{traceId:-}] %logger{40} - %msg%n</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="MALL_CONSOLE"/>
+  </root>
+</included>

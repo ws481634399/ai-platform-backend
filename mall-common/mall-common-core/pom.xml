@@ -14,4 +14,13 @@
 
   <name>mall-common-core</name>
   <description>核心通用组件：工具类、常量、通用模型基类（纯 Java，零第三方依赖）</description>
+
+  <dependencies>
+    <!-- 仅测试 classpath 生效；dependency:tree 默认 scope 仍仅自身坐标（AC-12 基线不变） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
