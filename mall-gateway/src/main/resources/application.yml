@@ -2,5 +2,11 @@ spring:
   application:
     name: mall-gateway
 
+  cloud:
+    nacos:
+      server-addr: ${NACOS_ADDR:}
+      discovery:
+        enabled: ${NACOS_ENABLED:false}
+
 server:
   port: 8080

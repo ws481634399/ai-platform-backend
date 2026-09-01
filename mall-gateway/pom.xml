@@ -20,6 +20,18 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-gateway</artifactId>
     </dependency>
+    <!-- Nacos 服务发现预留：默认关闭（NACOS_ENABLED:false），禁启动断言；WebFlux 栈隔离，禁依赖 mall-common-web -->
+    <dependency>
+      <groupId>com.alibaba.cloud</groupId>
+      <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+    </dependency>
+    <!-- 测试依赖聚合器：test scope 引用（design.md §2.8） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-test</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
