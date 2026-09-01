@@ -1,0 +1,42 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制 Workspace PRD / Design（Reference do not duplicate），workspace-source 仅为相对引用。
+
+id: DU-BE-001
+repository: "repo-1"
+parent:
+  change: "CHG-0003"
+feature-path:
+  level-1:
+    id: MOD-1
+    name: 工程基础
+  level-2:
+    id: FEAT-2
+    name: 微服务工程基线
+  level-3:
+    id: FEAT-2-01
+    name: 骨架与基础能力
+  story:
+    id: STORY-3
+    name: 建立 Java 后端微服务工程基线
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0003/工程基础/微服务工程基线/骨架与基础能力/建立 Java
+    后端微服务工程基线/requirement.md
+  prd: delivery/changes/CHG-0003/工程基础/微服务工程基线/骨架与基础能力/建立 Java 后端微服务工程基线/prd.md
+  design: delivery/changes/CHG-0003/工程基础/微服务工程基线/骨架与基础能力/建立 Java 后端微服务工程基线/design.md
+  tasks: delivery/changes/CHG-0003/工程基础/微服务工程基线/骨架与基础能力/建立 Java 后端微服务工程基线/tasks.md
+scope: []
+implementation-guidance:
+  sketch: true
+  pseudocode: true
+  complexity-trigger:
+    - orchestration
+status: pending # pending / developing / testing / completed
+baseline:
+  commit: ""
+result:
+  commit: ""
+  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填）
+  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>）
