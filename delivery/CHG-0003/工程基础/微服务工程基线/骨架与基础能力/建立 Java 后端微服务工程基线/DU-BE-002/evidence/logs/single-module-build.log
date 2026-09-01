@@ -1,0 +1,211 @@
+﻿[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] backend                                                            [pom]
+[INFO] mall-common                                                        [pom]
+[INFO] mall-common-core                                                   [jar]
+[INFO] mall-common-web                                                    [jar]
+[INFO] mall-common-log                                                    [jar]
+[INFO] mall-common-test                                                   [jar]
+[INFO] mall-services                                                      [pom]
+[INFO] mall-order                                                         [jar]
+[INFO] 
+[INFO] ------------------------< com.ai-mall:backend >-------------------------
+[INFO] Building backend 1.0.0-SNAPSHOT                                    [1/8]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ backend ---
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ backend ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-common >-----------------------
+[INFO] Building mall-common 1.0.0-SNAPSHOT                                [2/8]
+[INFO]   from mall-common\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-common ---
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common ---
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-core >--------------------
+[INFO] Building mall-common-core 1.0.0-SNAPSHOT                           [3/8]
+[INFO]   from mall-common\mall-common-core\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-common-core ---
+[INFO] Deleting D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\target
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-core ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-core ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 6 source files with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-core ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-core ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-core ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ mall-common-core ---
+[INFO] Building jar: D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\target\mall-common-core-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-web >---------------------
+[INFO] Building mall-common-web 1.0.0-SNAPSHOT                            [4/8]
+[INFO]   from mall-common\mall-common-web\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-common-web ---
+[INFO] Deleting D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-web\target
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-web ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-web ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-web ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 5 source files with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-web ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-web\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-web ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 5 source files with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-web ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ mall-common-web ---
+[INFO] Building jar: D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-web\target\mall-common-web-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-log >---------------------
+[INFO] Building mall-common-log 1.0.0-SNAPSHOT                            [5/8]
+[INFO]   from mall-common\mall-common-log\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-common-log ---
+[INFO] Deleting D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-log\target
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-log ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-log ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-log ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 1 source file with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-log ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-log\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-log ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-log ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ mall-common-log ---
+[INFO] Building jar: D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-log\target\mall-common-log-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-test >--------------------
+[INFO] Building mall-common-test 1.0.0-SNAPSHOT                           [6/8]
+[INFO]   from mall-common\mall-common-test\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-common-test ---
+[INFO] Deleting D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\target
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-test ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-test ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-test ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-test ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-test ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 2 source files with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-test ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ mall-common-test ---
+[WARNING] JAR will be empty - no content was marked for inclusion!
+[INFO] Building jar: D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\target\mall-common-test-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-services >----------------------
+[INFO] Building mall-services 1.0.0-SNAPSHOT                              [7/8]
+[INFO]   from mall-services\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-services ---
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-services ---
+[INFO] 
+[INFO] -----------------------< com.ai-mall:mall-order >-----------------------
+[INFO] Building mall-order 1.0.0-SNAPSHOT                                 [8/8]
+[INFO]   from mall-services\mall-order\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.2.0:clean (default-clean) @ mall-order ---
+[INFO] Deleting D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-order\target
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-order ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-order ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-order ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-order ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-order ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-order ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.5.0:jar (default-jar) @ mall-order ---
+[INFO] Building jar: D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-order\target\mall-order-1.0.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.5.15:repackage (repackage) @ mall-order ---
+[INFO] Replacing main artifact D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-order\target\mall-order-1.0.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-order\target\mall-order-1.0.0-SNAPSHOT.jar.original
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for backend 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] backend ............................................ SUCCESS [  0.466 s]
+[INFO] mall-common ........................................ SUCCESS [  0.005 s]
+[INFO] mall-common-core ................................... SUCCESS [  3.519 s]
+[INFO] mall-common-web .................................... SUCCESS [  3.029 s]
+[INFO] mall-common-log .................................... SUCCESS [  0.281 s]
+[INFO] mall-common-test ................................... SUCCESS [  1.000 s]
+[INFO] mall-services ...................................... SUCCESS [  0.002 s]
+[INFO] mall-order ......................................... SUCCESS [  4.633 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.505 s
+[INFO] Finished at: 2026-09-01T22:54:24+08:00
+[INFO] ------------------------------------------------------------------------

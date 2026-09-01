@@ -18,9 +18,14 @@ Thumbs.db
 # 日志
 *.log
 logs/
+# 保留 delivery 下的 evidence/logs/（构建/测试日志留证）
+!delivery/**/evidence/logs/
+!delivery/**/evidence/logs/**
+!delivery/**/evidence/logs/**/*.log
 
 # 本地环境配置
 *.local
 
 # 沙箱构建用的临时本地仓库（不影响真实缓存 D:\maven-repository）
 .m2-repo/
+.m2-sandbox/

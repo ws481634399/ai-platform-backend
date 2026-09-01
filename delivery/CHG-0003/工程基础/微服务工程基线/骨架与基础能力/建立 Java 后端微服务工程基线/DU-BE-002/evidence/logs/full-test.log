@@ -1,0 +1,1464 @@
+﻿[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] mall-bom                                                           [pom]
+[INFO] backend                                                            [pom]
+[INFO] mall-common                                                        [pom]
+[INFO] mall-common-core                                                   [jar]
+[INFO] mall-common-web                                                    [jar]
+[INFO] mall-common-security                                               [jar]
+[INFO] mall-common-redis                                                  [jar]
+[INFO] mall-common-mq                                                     [jar]
+[INFO] mall-common-openfeign                                              [jar]
+[INFO] mall-common-log                                                    [jar]
+[INFO] mall-common-test                                                   [jar]
+[INFO] mall-contracts                                                     [pom]
+[INFO] mall-api-contracts                                                 [jar]
+[INFO] mall-event-contracts                                               [jar]
+[INFO] mall-gateway                                                       [jar]
+[INFO] mall-services                                                      [pom]
+[INFO] mall-identity                                                      [jar]
+[INFO] mall-member                                                        [jar]
+[INFO] mall-product                                                       [jar]
+[INFO] mall-cart                                                          [jar]
+[INFO] mall-order                                                         [jar]
+[INFO] mall-inventory                                                     [jar]
+[INFO] mall-search                                                        [jar]
+[INFO] mall-system                                                        [jar]
+[INFO] 
+[INFO] ------------------------< com.ai-mall:mall-bom >------------------------
+[INFO] Building mall-bom 1.0.0-SNAPSHOT                                  [1/24]
+[INFO]   from mall-bom\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] ------------------------< com.ai-mall:backend >-------------------------
+[INFO] Building backend 1.0.0-SNAPSHOT                                   [2/24]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ backend ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-common >-----------------------
+[INFO] Building mall-common 1.0.0-SNAPSHOT                               [3/24]
+[INFO]   from mall-common\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common ---
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-core >--------------------
+[INFO] Building mall-common-core 1.0.0-SNAPSHOT                          [4/24]
+[INFO]   from mall-common\mall-common-core\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-core ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-core ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-core ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-core ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-core\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-core ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-core ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-junit-platform/3.5.2/surefire-junit-platform-3.5.2.pom
+Progress (1): 5.7 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-junit-platform/3.5.2/surefire-junit-platform-3.5.2.pom (5.7 kB at 20 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-providers/3.5.2/surefire-providers-3.5.2.pom
+Progress (1): 0.4/2.6 kB
+Progress (1): 2.6 kB    
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-providers/3.5.2/surefire-providers-3.5.2.pom (2.6 kB at 41 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/common-java5/3.5.2/common-java5-3.5.2.pom
+Progress (1): 2.8 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/common-java5/3.5.2/common-java5-3.5.2.pom (2.8 kB at 45 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.pom
+Progress (1): 3.2 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.pom (3.2 kB at 67 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.pom
+Progress (1): 1.7 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.pom (1.7 kB at 24 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.pom
+Progress (1): 2.8 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.pom (2.8 kB at 41 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.9.3/junit-platform-launcher-1.9.3.pom
+Progress (1): 3.0 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.9.3/junit-platform-launcher-1.9.3.pom (3.0 kB at 46 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-junit-platform/3.5.2/surefire-junit-platform-3.5.2.jar
+Progress (1): 1.9/27 kB
+Progress (1): 18/27 kB 
+Progress (1): 27 kB   
+                   
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/surefire-junit-platform/3.5.2/surefire-junit-platform-3.5.2.jar (27 kB at 60 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/common-java5/3.5.2/common-java5-3.5.2.jar
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.9.3/junit-platform-launcher-1.9.3.jar
+Progress (1): 7.3/7.7 kB
+Progress (1): 7.7 kB    
+Progress (2): 7.7 kB | 4.8/189 kB
+Progress (2): 7.7 kB | 21/189 kB 
+Progress (3): 7.7 kB | 21/189 kB | 3.3/18 kB
+Progress (3): 7.7 kB | 21/189 kB | 18 kB    
+Progress (3): 7.7 kB | 38/189 kB | 18 kB
+Progress (3): 7.7 kB | 54/189 kB | 18 kB
+Progress (3): 7.7 kB | 70/189 kB | 18 kB
+Progress (4): 7.7 kB | 70/189 kB | 18 kB | 7.3/103 kB
+Progress (5): 7.7 kB | 70/189 kB | 18 kB | 7.3/103 kB | 7.3/169 kB
+Progress (5): 7.7 kB | 70/189 kB | 18 kB | 16/103 kB | 7.3/169 kB 
+Progress (5): 7.7 kB | 70/189 kB | 18 kB | 16/103 kB | 15/169 kB 
+Progress (5): 7.7 kB | 87/189 kB | 18 kB | 16/103 kB | 15/169 kB
+Progress (5): 7.7 kB | 87/189 kB | 18 kB | 32/103 kB | 15/169 kB
+Progress (5): 7.7 kB | 87/189 kB | 18 kB | 32/103 kB | 32/169 kB
+Progress (5): 7.7 kB | 103/189 kB | 18 kB | 32/103 kB | 32/169 kB
+Progress (5): 7.7 kB | 103/189 kB | 18 kB | 48/103 kB | 32/169 kB
+Progress (5): 7.7 kB | 103/189 kB | 18 kB | 65/103 kB | 32/169 kB
+Progress (5): 7.7 kB | 103/189 kB | 18 kB | 65/103 kB | 48/169 kB
+Progress (5): 7.7 kB | 120/189 kB | 18 kB | 65/103 kB | 48/169 kB
+Progress (5): 7.7 kB | 127/189 kB | 18 kB | 65/103 kB | 48/169 kB
+Progress (5): 7.7 kB | 127/189 kB | 18 kB | 65/103 kB | 65/169 kB
+Progress (5): 7.7 kB | 144/189 kB | 18 kB | 65/103 kB | 65/169 kB
+Progress (5): 7.7 kB | 144/189 kB | 18 kB | 81/103 kB | 65/169 kB
+Progress (5): 7.7 kB | 160/189 kB | 18 kB | 81/103 kB | 65/169 kB
+Progress (5): 7.7 kB | 160/189 kB | 18 kB | 81/103 kB | 81/169 kB
+Progress (5): 7.7 kB | 177/189 kB | 18 kB | 81/103 kB | 81/169 kB
+Progress (5): 7.7 kB | 177/189 kB | 18 kB | 97/103 kB | 81/169 kB
+Progress (5): 7.7 kB | 177/189 kB | 18 kB | 103 kB | 81/169 kB   
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 81/169 kB    
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 97/169 kB
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 114/169 kB
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 130/169 kB
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 146/169 kB
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 163/169 kB
+Progress (5): 7.7 kB | 189 kB | 18 kB | 103 kB | 169 kB    
+                                                       
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar (7.7 kB at 77 kB/s)
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-commons/1.9.3/junit-platform-commons-1.9.3.jar (103 kB at 911 kB/s)
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.9.3/junit-platform-launcher-1.9.3.jar (169 kB at 1.5 MB/s)
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/apache/maven/surefire/common-java5/3.5.2/common-java5-3.5.2.jar (18 kB at 77 kB/s)
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-engine/1.9.3/junit-platform-engine-1.9.3.jar (189 kB at 788 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.pom
+Progress (1): 3.0 kB
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.pom (3.0 kB at 58 kB/s)
+Downloading from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.jar
+Progress (1): 3.3/208 kB
+Progress (1): 20/208 kB 
+Progress (1): 36/208 kB
+Progress (1): 52/208 kB
+Progress (1): 69/208 kB
+Progress (1): 85/208 kB
+Progress (1): 102/208 kB
+Progress (1): 118/208 kB
+Progress (1): 134/208 kB
+Progress (1): 151/208 kB
+Progress (1): 167/208 kB
+Progress (1): 184/208 kB
+Progress (1): 200/208 kB
+Progress (1): 208 kB    
+                    
+Downloaded from aliyunmaven: https://maven.aliyun.com/repository/public/org/junit/platform/junit-platform-launcher/1.12.2/junit-platform-launcher-1.12.2.jar (208 kB at 1.1 MB/s)
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.common.core.result.CommonErrorCodeTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in com.ai.mall.common.core.result.CommonErrorCodeTest
+[INFO] Running com.ai.mall.common.core.result.UnifyResultTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.ai.mall.common.core.result.UnifyResultTest
+[INFO] Running com.ai.mall.common.core.trace.TraceContextTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.040 s -- in com.ai.mall.common.core.trace.TraceContextTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-web >---------------------
+[INFO] Building mall-common-web 1.0.0-SNAPSHOT                           [5/24]
+[INFO]   from mall-common\mall-common-web\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-web ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-web ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-web ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-web ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-web\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-web ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-web ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.common.web.advice.GlobalExceptionHandlerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01T22:53:06.630+08:00  INFO 34104 --- [           main] c.a.m.c.w.a.GlobalExceptionHandlerTest   : Starting GlobalExceptionHandlerTest using Java 21.0.12 with PID 34104 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-web)
+2026-09-01T22:53:06.633+08:00  INFO 34104 --- [           main] c.a.m.c.w.a.GlobalExceptionHandlerTest   : No active profile set, falling back to 1 default profile: "default"
+2026-09-01T22:53:07.484+08:00  INFO 34104 --- [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-09-01T22:53:07.484+08:00  INFO 34104 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-09-01T22:53:07.486+08:00  INFO 34104 --- [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-09-01T22:53:07.506+08:00  INFO 34104 --- [           main] c.a.m.c.w.a.GlobalExceptionHandlerTest   : Started GlobalExceptionHandlerTest in 1.16 seconds (process running for 1.86)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This
+ will no longer work in future releases of the JDK. Please add Mockito as an ag
+ent to your build as described in Mockito's documentation: https://javadoc.io/d
+oc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+所在位置 行:1 字符: 125
++ ... G-0003/工程基础/微服务工程基线/骨架与基础能力/建立 Java 后端微服务工程基线"; mvn test 2>&1 | Out-F ...
++                                                     ~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+2026-09-01T22:53:08.171+08:00 ERROR 34104 --- [           main] c.a.m.c.w.advice.GlobalExceptionHandler  : 未预期异常
+
+java.lang.IllegalStateException: select * from users; jdk internal stack detail
+	at com.ai.mall.common.web.testsupport.TestEchoController.boom(TestEchoController.java:57) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72) ~[spring-test-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at com.ai.mall.common.web.trace.TraceIdFilter.doFilterInternal(TraceIdFilter.java:36) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201) ~[spring-test-6.2.19.jar:6.2.19]
+	at com.ai.mall.common.web.advice.GlobalExceptionHandlerTest.responseShouldNotExposeStackTrace(GlobalExceptionHandlerTest.java:82) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.2.jar:3.5.2]
+
+2026-09-01T22:53:08.300+08:00 ERROR 34104 --- [           main] c.a.m.c.w.advice.GlobalExceptionHandler  : 未预期异常
+
+java.lang.IllegalStateException: select * from users; jdk internal stack detail
+	at com.ai.mall.common.web.testsupport.TestEchoController.boom(TestEchoController.java:57) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:991) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:896) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72) ~[spring-test-6.2.19.jar:6.2.19]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.55.jar:6.0]
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at com.ai.mall.common.web.trace.TraceIdFilter.doFilterInternal(TraceIdFilter.java:36) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.setup.MockMvcFilterDecorator.doFilter(MockMvcFilterDecorator.java:162) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.2.19.jar:6.2.19]
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201) ~[spring-test-6.2.19.jar:6.2.19]
+	at com.ai.mall.common.web.advice.GlobalExceptionHandlerTest.unexpectedExceptionShouldReturn500WithGenericMessage(GlobalExceptionHandlerTest.java:61) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479) ~[junit-platform-commons-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.12.2.jar:5.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.12.2.jar:1.12.2]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.5.2.jar:3.5.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.5.2.jar:3.5.2]
+
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.210 s -- in com.ai.mall.common.web.advice.GlobalExceptionHandlerTest
+[INFO] Running com.ai.mall.common.web.trace.TraceIdFilterTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in com.ai.mall.common.web.trace.TraceIdFilterTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ------------------< com.ai-mall:mall-common-security >------------------
+[INFO] Building mall-common-security 1.0.0-SNAPSHOT                      [6/24]
+[INFO]   from mall-common\mall-common-security\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-security ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-security ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-security\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-security ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-security ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-security\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-security ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-security ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] -------------------< com.ai-mall:mall-common-redis >--------------------
+[INFO] Building mall-common-redis 1.0.0-SNAPSHOT                         [7/24]
+[INFO]   from mall-common\mall-common-redis\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-redis ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-redis ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-redis\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-redis ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-redis ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-redis\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-redis ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-redis ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-common-mq >---------------------
+[INFO] Building mall-common-mq 1.0.0-SNAPSHOT                            [8/24]
+[INFO]   from mall-common\mall-common-mq\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 1 problem was encountered while building the effective model for org.javassist:javassist:jar:3.21.0-GA during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-mq ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-mq ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-mq\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-mq ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-mq ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-mq\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-mq ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-mq ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] -----------------< com.ai-mall:mall-common-openfeign >------------------
+[INFO] Building mall-common-openfeign 1.0.0-SNAPSHOT                     [9/24]
+[INFO]   from mall-common\mall-common-openfeign\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-openfeign ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-openfeign ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-openfeign\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-openfeign ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-openfeign ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-openfeign\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-openfeign ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-openfeign ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-log >---------------------
+[INFO] Building mall-common-log 1.0.0-SNAPSHOT                          [10/24]
+[INFO]   from mall-common\mall-common-log\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-log ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-log ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-log ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-log ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-log\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-log ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-log ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --------------------< com.ai-mall:mall-common-test >--------------------
+[INFO] Building mall-common-test 1.0.0-SNAPSHOT                         [11/24]
+[INFO]   from mall-common\mall-common-test\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-test ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-test ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-test ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-test ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-test\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-test ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-test ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.common.test.CommonTestAggregatorTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.046 s -- in com.ai.mall.common.test.CommonTestAggregatorTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-contracts >---------------------
+[INFO] Building mall-contracts 1.0.0-SNAPSHOT                           [12/24]
+[INFO]   from mall-contracts\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-contracts ---
+[INFO] 
+[INFO] -------------------< com.ai-mall:mall-api-contracts >-------------------
+[INFO] Building mall-api-contracts 1.0.0-SNAPSHOT                       [13/24]
+[INFO]   from mall-contracts\mall-api-contracts\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-api-contracts ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-api-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-api-contracts\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-api-contracts ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-api-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-api-contracts\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-api-contracts ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-api-contracts ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ------------------< com.ai-mall:mall-event-contracts >------------------
+[INFO] Building mall-event-contracts 1.0.0-SNAPSHOT                     [14/24]
+[INFO]   from mall-contracts\mall-event-contracts\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-event-contracts ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-event-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-event-contracts\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-event-contracts ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-event-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-event-contracts\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-event-contracts ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-event-contracts ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-gateway >----------------------
+[INFO] Building mall-gateway 1.0.0-SNAPSHOT                             [15/24]
+[INFO]   from mall-gateway\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-gateway ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-gateway ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-gateway ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-gateway\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-gateway ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+22:53:12.629 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.gateway.MallGatewayApplicationSmokeTest]: MallGatewayApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:12.728 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.gateway.MallGatewayApplication for test class com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01T22:53:13.257+08:00  INFO 21108 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : Starting MallGatewayApplicationSmokeTest using Java 21.0.12 with PID 21108 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-gateway)
+2026-09-01T22:53:13.259+08:00  INFO 21108 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : No active profile set, falling back to 1 default profile: "default"
+2026-09-01T22:53:14.220+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=241ef51f-fbd1-30c1-a298-e99413c805bc
+2026-09-01T22:53:14.543+08:00  WARN 21108 --- [mall-gateway] [           main] GatewayClassPathWarningAutoConfiguration : 
+
+**********************************************************
+
+The artifact spring-cloud-gateway-server is deprecated. It will be removed in the next major release. Please add spring-cloud-gateway-server-webflux dependency.
+
+**********************************************************
+
+
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-09-01T22:53:14.899+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-09-01T22:53:14.900+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-09-01T22:53:14.900+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-09-01T22:53:14.900+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-09-01T22:53:14.900+08:00  INFO 21108 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-09-01T22:53:15.080+08:00  WARN 21108 --- [mall-gateway] [           main] s.w.s.StarterDeprecatedAutoConfiguration : 
+
+**********************************************************
+
+spring-cloud-starter-gateway is deprecated. It will be removed in the next major release. Please use spring-cloud-starter-gateway-server-webflux instead.
+
+**********************************************************
+
+
+2026-09-01T22:53:15.139+08:00  INFO 21108 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : Started MallGatewayApplicationSmokeTest in 2.168 seconds (process running for 3.073)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.098 s -- in com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-services >----------------------
+[INFO] Building mall-services 1.0.0-SNAPSHOT                            [16/24]
+[INFO]   from mall-services\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-services ---
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-identity >----------------------
+[INFO] Building mall-identity 1.0.0-SNAPSHOT                            [17/24]
+[INFO]   from mall-services\mall-identity\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-identity ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-identity ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-identity ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-identity ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-identity ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-identity ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.identity.MallIdentityApplicationSmokeTest
+22:53:16.827 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.identity.MallIdentityApplicationSmokeTest]: MallIdentityApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:16.925 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.identity.MallIdentityApplication for test class com.ai.mall.identity.MallIdentityApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:17.370 [main] INFO  [] c.a.m.i.MallIdentityApplicationSmokeTest - Starting MallIdentityApplicationSmokeTest using Java 21.0.12 with PID 26972 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-identity)
+2026-09-01 22:53:17.372 [main] INFO  [] c.a.m.i.MallIdentityApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:18.275 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.identity]' package. Please check your configuration.
+2026-09-01 22:53:18.279 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=014c6a74-3e99-3537-8761-f4a0f1450575
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:19.339 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:19.530 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_identity_test user=SA
+2026-09-01 22:53:19.531 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:19.579 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_identity_test (H2 2.3)
+2026-09-01 22:53:19.604 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:19.606 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.006s)
+2026-09-01 22:53:19.606 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:19.615 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:19.649 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:19.651 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:19.670 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:19.847 [main] INFO  [] c.a.m.i.MallIdentityApplicationSmokeTest - Started MallIdentityApplicationSmokeTest in 2.77 seconds (process running for 3.568)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.615 s -- in com.ai.mall.identity.MallIdentityApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-member >-----------------------
+[INFO] Building mall-member 1.0.0-SNAPSHOT                              [18/24]
+[INFO]   from mall-services\mall-member\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-member ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-member ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-member ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-member ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-member ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-member ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.member.MallMemberApplicationSmokeTest
+22:53:21.395 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.member.MallMemberApplicationSmokeTest]: MallMemberApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:21.484 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.member.MallMemberApplication for test class com.ai.mall.member.MallMemberApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:21.921 [main] INFO  [] c.a.m.m.MallMemberApplicationSmokeTest - Starting MallMemberApplicationSmokeTest using Java 21.0.12 with PID 35184 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-member)
+2026-09-01 22:53:21.923 [main] INFO  [] c.a.m.m.MallMemberApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:22.816 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.member]' package. Please check your configuration.
+2026-09-01 22:53:22.821 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=48aafed8-5fd3-34d3-859c-b8711a1dc7ac
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:23.883 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:24.069 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_member_test user=SA
+2026-09-01 22:53:24.070 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:24.105 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_member_test (H2 2.3)
+2026-09-01 22:53:24.123 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:24.129 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.011s)
+2026-09-01 22:53:24.129 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:24.135 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:24.164 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:24.167 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:24.193 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:24.384 [main] INFO  [] c.a.m.m.MallMemberApplicationSmokeTest - Started MallMemberApplicationSmokeTest in 2.774 seconds (process running for 3.54)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.629 s -- in com.ai.mall.member.MallMemberApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-product >----------------------
+[INFO] Building mall-product 1.0.0-SNAPSHOT                             [19/24]
+[INFO]   from mall-services\mall-product\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-product ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-product ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-product ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-product ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.product.MallProductApplicationSmokeTest
+22:53:25.939 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.product.MallProductApplicationSmokeTest]: MallProductApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:26.027 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.MallProductApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:26.449 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Starting MallProductApplicationSmokeTest using Java 21.0.12 with PID 34924 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product)
+2026-09-01 22:53:26.450 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:27.278 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.product]' package. Please check your configuration.
+2026-09-01 22:53:27.282 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=ab64a03c-b71d-3cbf-b584-94d9267f5439
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:28.312 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:28.473 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_product_test user=SA
+2026-09-01 22:53:28.474 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:28.519 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_product_test (H2 2.3)
+2026-09-01 22:53:28.545 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:28.548 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.007s)
+2026-09-01 22:53:28.548 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:28.555 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:28.594 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:28.598 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:28.622 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:28.860 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Started MallProductApplicationSmokeTest in 2.709 seconds (process running for 3.452)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.605 s -- in com.ai.mall.product.MallProductApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] -----------------------< com.ai-mall:mall-cart >------------------------
+[INFO] Building mall-cart 1.0.0-SNAPSHOT                                [20/24]
+[INFO]   from mall-services\mall-cart\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-cart ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-cart ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-cart ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-cart ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-cart ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-cart ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.cart.MallCartApplicationSmokeTest
+22:53:30.499 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.cart.MallCartApplicationSmokeTest]: MallCartApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:30.587 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.cart.MallCartApplication for test class com.ai.mall.cart.MallCartApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:31.030 [main] INFO  [] c.a.m.cart.MallCartApplicationSmokeTest - Starting MallCartApplicationSmokeTest using Java 21.0.12 with PID 34904 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-cart)
+2026-09-01 22:53:31.032 [main] INFO  [] c.a.m.cart.MallCartApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:31.903 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.cart]' package. Please check your configuration.
+2026-09-01 22:53:31.908 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=417d4097-6654-3287-ae03-67008828a262
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:33.109 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:33.276 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_cart_test user=SA
+2026-09-01 22:53:33.277 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:33.312 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_cart_test (H2 2.3)
+2026-09-01 22:53:33.330 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:33.332 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.005s)
+2026-09-01 22:53:33.332 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:33.337 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:33.371 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:33.374 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:33.397 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:33.657 [main] INFO  [] c.a.m.cart.MallCartApplicationSmokeTest - Started MallCartApplicationSmokeTest in 2.936 seconds (process running for 3.723)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.827 s -- in com.ai.mall.cart.MallCartApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] -----------------------< com.ai-mall:mall-order >-----------------------
+[INFO] Building mall-order 1.0.0-SNAPSHOT                               [21/24]
+[INFO]   from mall-services\mall-order\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-order ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-order ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-order ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-order ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-order ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-order ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.order.MallOrderApplicationSmokeTest
+22:53:35.377 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.order.MallOrderApplicationSmokeTest]: MallOrderApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:35.476 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.order.MallOrderApplication for test class com.ai.mall.order.MallOrderApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:35.929 [main] INFO  [] c.a.m.o.MallOrderApplicationSmokeTest - Starting MallOrderApplicationSmokeTest using Java 21.0.12 with PID 30212 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-order)
+2026-09-01 22:53:35.931 [main] INFO  [] c.a.m.o.MallOrderApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:36.738 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.order]' package. Please check your configuration.
+2026-09-01 22:53:36.741 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=f67588f2-ce79-307a-a9e2-bc115e7f4455
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:37.747 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:37.941 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_order_test user=SA
+2026-09-01 22:53:37.944 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:37.985 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_order_test (H2 2.3)
+2026-09-01 22:53:38.006 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:38.008 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.007s)
+2026-09-01 22:53:38.008 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:38.014 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:38.059 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:38.061 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:38.084 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:38.312 [main] INFO  [] c.a.m.o.MallOrderApplicationSmokeTest - Started MallOrderApplicationSmokeTest in 2.705 seconds (process running for 3.498)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.675 s -- in com.ai.mall.order.MallOrderApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-inventory >---------------------
+[INFO] Building mall-inventory 1.0.0-SNAPSHOT                           [22/24]
+[INFO]   from mall-services\mall-inventory\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-inventory ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-inventory ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-inventory ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-inventory ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-inventory ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-inventory ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+22:53:40.078 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.inventory.MallInventoryApplicationSmokeTest]: MallInventoryApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:40.167 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:40.605 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Starting MallInventoryApplicationSmokeTest using Java 21.0.12 with PID 29728 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-01 22:53:40.606 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:41.496 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.inventory]' package. Please check your configuration.
+2026-09-01 22:53:41.500 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=146b4bf1-da4c-31a2-aab1-af68924060c8
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:42.482 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:42.649 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-01 22:53:42.651 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:42.686 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-01 22:53:42.705 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:42.706 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.005s)
+2026-09-01 22:53:42.707 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:42.713 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:42.753 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:42.756 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:42.776 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:43.007 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Started MallInventoryApplicationSmokeTest in 2.714 seconds (process running for 3.489)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.559 s -- in com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-search >-----------------------
+[INFO] Building mall-search 1.0.0-SNAPSHOT                              [23/24]
+[INFO]   from mall-services\mall-search\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-search ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-search ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-search ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-search ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-search ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-search ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.search.MallSearchApplicationSmokeTest
+22:53:44.714 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.search.MallSearchApplicationSmokeTest]: MallSearchApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:44.814 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.search.MallSearchApplication for test class com.ai.mall.search.MallSearchApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:45.288 [main] INFO  [] c.a.m.s.MallSearchApplicationSmokeTest - Starting MallSearchApplicationSmokeTest using Java 21.0.12 with PID 35632 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-search)
+2026-09-01 22:53:45.289 [main] INFO  [] c.a.m.s.MallSearchApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:46.086 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.search]' package. Please check your configuration.
+2026-09-01 22:53:46.091 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=96c5a574-762c-3f1a-b3d7-195f804d3520
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:47.278 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:47.467 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_search_test user=SA
+2026-09-01 22:53:47.469 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:47.507 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_search_test (H2 2.3)
+2026-09-01 22:53:47.525 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:47.527 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.005s)
+2026-09-01 22:53:47.527 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:47.532 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:47.564 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:47.567 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:47.589 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:47.856 [main] INFO  [] c.a.m.s.MallSearchApplicationSmokeTest - Started MallSearchApplicationSmokeTest in 2.886 seconds (process running for 3.777)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.796 s -- in com.ai.mall.search.MallSearchApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-system >-----------------------
+[INFO] Building mall-system 1.0.0-SNAPSHOT                              [24/24]
+[INFO]   from mall-services\mall-system\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-system ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-system ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-system ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-system ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-system ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.system.MallSystemApplicationSmokeTest
+22:53:49.448 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.system.MallSystemApplicationSmokeTest]: MallSystemApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+22:53:49.538 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.system.MallSystemApplication for test class com.ai.mall.system.MallSystemApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-01 22:53:50.029 [main] INFO  [] c.a.m.s.MallSystemApplicationSmokeTest - Starting MallSystemApplicationSmokeTest using Java 21.0.12 with PID 29600 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-system)
+2026-09-01 22:53:50.030 [main] INFO  [] c.a.m.s.MallSystemApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-01 22:53:50.915 [main] WARN  [] o.m.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.ai.mall.system]' package. Please check your configuration.
+2026-09-01 22:53:50.919 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=051451f3-cf7d-3c51-ade4-929784488496
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-01 22:53:51.864 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-01 22:53:52.042 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_system_test user=SA
+2026-09-01 22:53:52.045 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-01 22:53:52.089 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_system_test (H2 2.3)
+2026-09-01 22:53:52.112 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-01 22:53:52.112 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 0 migrations (execution time 00:00.006s)
+2026-09-01 22:53:52.113 [main] WARN  [] o.f.core.internal.command.DbValidate - No migrations found. Are your locations set up correctly?
+2026-09-01 22:53:52.126 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-01 22:53:52.154 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-01 22:53:52.157 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+2026-09-01 22:53:52.178 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6a4d7f76
+2026-09-01 22:53:52.385 [main] INFO  [] c.a.m.s.MallSystemApplicationSmokeTest - Started MallSystemApplicationSmokeTest in 2.704 seconds (process running for 3.486)
+Mockito is currently self-attaching to enable the inline-mock-maker. This will 
+no longer work in future releases of the JDK. Please add Mockito as an agent to
+ your build as described in Mockito's documentation: https://javadoc.io/doc/org
+.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (D:\Desktop\ai-platform\imple
+mentation\ai-platform-backend\.m2-sandbox\net\bytebuddy\byte-buddy-agent\1.17.8
+\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamic
+AgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrume
+nt.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future re
+lease
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot l
+oader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.545 s -- in com.ai.mall.system.MallSystemApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for backend 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] mall-bom ........................................... SUCCESS [  0.002 s]
+[INFO] backend ............................................ SUCCESS [  0.320 s]
+[INFO] mall-common ........................................ SUCCESS [  0.004 s]
+[INFO] mall-common-core ................................... SUCCESS [  4.334 s]
+[INFO] mall-common-web .................................... SUCCESS [  3.625 s]
+[INFO] mall-common-security ............................... SUCCESS [  0.127 s]
+[INFO] mall-common-redis .................................. SUCCESS [  0.283 s]
+[INFO] mall-common-mq ..................................... SUCCESS [  1.546 s]
+[INFO] mall-common-openfeign .............................. SUCCESS [  0.320 s]
+[INFO] mall-common-log .................................... SUCCESS [  0.030 s]
+[INFO] mall-common-test ................................... SUCCESS [  0.695 s]
+[INFO] mall-contracts ..................................... SUCCESS [  0.001 s]
+[INFO] mall-api-contracts ................................. SUCCESS [  0.019 s]
+[INFO] mall-event-contracts ............................... SUCCESS [  0.017 s]
+[INFO] mall-gateway ....................................... SUCCESS [  4.213 s]
+[INFO] mall-services ...................................... SUCCESS [  0.001 s]
+[INFO] mall-identity ...................................... SUCCESS [  4.725 s]
+[INFO] mall-member ........................................ SUCCESS [  4.573 s]
+[INFO] mall-product ....................................... SUCCESS [  4.526 s]
+[INFO] mall-cart .......................................... SUCCESS [  4.786 s]
+[INFO] mall-order ......................................... SUCCESS [  4.732 s]
+[INFO] mall-inventory ..................................... SUCCESS [  4.574 s]
+[INFO] mall-search ........................................ SUCCESS [  4.868 s]
+[INFO] mall-system ........................................ SUCCESS [  4.480 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  53.316 s
+[INFO] Finished at: 2026-09-01T22:53:52+08:00
+[INFO] ------------------------------------------------------------------------
