@@ -1,0 +1,44 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制 Workspace PRD / Design（Reference do not duplicate），workspace-source 仅为相对引用。
+
+id: DU-BE-001
+repository: "repo-1"
+parent:
+  change: "CHG-0002"
+feature-path:
+  level-1:
+    id: MOD-1
+    name: 工程基础
+  level-2:
+    id: FEAT-1
+    name: Maven 工程与版本治理
+  level-3:
+    id: FEAT-1-01
+    name: 工程结构与公共模块
+  story:
+    id: STORY-2
+    name: 建立 mall-common 与 mall-contracts 公共基础模块
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立
+    mall-common 与 mall-contracts 公共基础模块/requirement.md
+  prd: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与
+    mall-contracts 公共基础模块/prd.md
+  design: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与
+    mall-contracts 公共基础模块/design.md
+  tasks: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与
+    mall-contracts 公共基础模块/tasks.md
+scope: []
+implementation-guidance:
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: completed # pending / developing / testing / completed（核验型零变更，验收核验全部通过后置 completed；du sync-status CLI 存在 meta 缺陷，按 writeHumanGate 同规则手工回填并留痕）
+baseline:
+  commit: "350304b02dbccb617319a3b272fbc52c724ec211" # materialize 时记录的仓库 HEAD（与 workspace DU 记录一致）
+result:
+  commit: "350304b02dbccb617319a3b272fbc52c724ec211" # 核验型零代码变更，HEAD 与 baseline 相同（git rev-parse 实证）
+  paths: [] # 实现影响路径（可选，repo 相对路径；零代码变更，仅新增 delivery/ 留证文档）
+  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>；不适用）

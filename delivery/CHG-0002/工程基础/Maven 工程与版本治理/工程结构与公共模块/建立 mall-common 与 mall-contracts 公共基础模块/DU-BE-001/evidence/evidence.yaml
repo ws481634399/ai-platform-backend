@@ -1,0 +1,82 @@
+# OpenSpec DU Evidence — DU-BE-001（sdd-dev 阶段）
+#
+# schema 对齐 evidence model v0.1。
+# 本 DU 为验收核验型：无 code-change（POM/代码/配置零变更），验证活动记 test-run。
+# 留证日志正文归档于 workspace 仓 evidence/（design §3：审计输出不入库 repo-1），
+# log 字段为 workspace 仓库根相对路径。
+
+version: 0.1
+change-id: "CHG-0002"
+delivery-unit: DU-BE-001
+repository: repo-1
+
+items:
+  - id: EV-001
+    type: test-run
+    command: mvn -B validate（backend 根目录，全 24 项目 Reactor，enforcer Maven/Java 版本守门）
+    result: passed
+    summary:
+      total: 24
+      passed: 24
+      failed: 0
+      skipped: 0
+    log: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与 mall-contracts 公共基础模块/evidence/logs/mvn-validate.txt
+    covers: [AC-3, AC-4, AC-8]
+    recorded-at: "2026-08-31T22:49:17+08:00"
+
+  - id: EV-002
+    type: test-run
+    command: mvn -B "-Dmaven.repo.local=D:/Desktop/ai-platform/.m2-sandbox" -pl mall-common/mall-common-core dependency:tree
+    result: passed
+    summary:
+      total: 1
+      passed: 1
+      failed: 0
+      skipped: 0
+    log: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与 mall-contracts 公共基础模块/evidence/logs/dependency-tree-core.txt
+    covers: [AC-9]
+    recorded-at: "2026-08-31T23:02:41+08:00"
+
+  - id: EV-003
+    type: test-run
+    command: mvn -B "-Dmaven.repo.local=D:/Desktop/ai-platform/.m2-sandbox" -pl mall-contracts/mall-api-contracts dependency:tree
+    result: passed
+    summary:
+      total: 1
+      passed: 1
+      failed: 0
+      skipped: 0
+    log: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与 mall-contracts 公共基础模块/evidence/logs/dependency-tree-api-contracts.txt
+    covers: [AC-9]
+    recorded-at: "2026-08-31T23:03:05+08:00"
+
+  - id: EV-004
+    type: test-run
+    command: mvn -B "-Dmaven.repo.local=D:/Desktop/ai-platform/.m2-sandbox" -pl mall-contracts/mall-event-contracts dependency:tree
+    result: passed
+    summary:
+      total: 1
+      passed: 1
+      failed: 0
+      skipped: 0
+    log: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与 mall-contracts 公共基础模块/evidence/logs/dependency-tree-event-contracts.txt
+    covers: [AC-9]
+    recorded-at: "2026-08-31T23:03:08+08:00"
+
+  - id: EV-005
+    type: test-run
+    command: >-
+      静态审计（ripgrep）: 1) 目录枚举 + 聚合 POM <modules> 核对（AC-1/2）；
+      2) grep mall-common 源码业务领域关键字 class|interface (Product|Order|Inventory|Member|Role|Menu) → 零命中（AC-5）；
+      3) grep mall-contracts 源码 Repository|Mapper|ApplicationService|DomainService|@Entity → 零命中（AC-6）；
+      4) grep mall-services 全部 POM <artifactId>mall- → 仅 parent/自身坐标，无跨服务实现依赖（AC-7）；
+      5) grep mall-common 全部 POM mall-common-(core|web|...) → 仅 module 声明与自身坐标，无 <dependency> 横向互依（R2/R3）
+    result: passed
+    summary:
+      total: 5
+      passed: 5
+      failed: 0
+      skipped: 0
+    log: delivery/changes/CHG-0002/工程基础/Maven 工程与版本治理/工程结构与公共模块/建立 mall-common 与 mall-contracts 公共基础模块/evidence/ac-verification.md（§1 规则执行记录、§2 AC 复验表、§3 审计明细）
+    covers: [AC-1, AC-2, AC-5, AC-6, AC-7, AC-9, AC-10]
+    recorded-at: "2026-08-31T23:10:00+08:00"
