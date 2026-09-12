@@ -30,12 +30,13 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "ff05222409fc62e6e0cf96beda44964a83fb57a4"
+  commit: "d665727914358b8afd27b3c4ca321091c5dbd980"
   paths:
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/persistence/MyBatisAuthorizationRepository.java
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/rbac/AuthorizationSnapshot.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/dto/AuthorizationSnapshot.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/port/AuthorizationRepository.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/query/MyBatisAuthorizationRepository.java
   symbols:
-    - "MyBatisAuthorizationRepository#load"
+    - "AuthorizationSnapshot, AuthorizationRepository, MyBatisAuthorizationRepository#load"
 
 workspace-source:
   story-spec: delivery/changes/CHG-0009/stories/STORY-001-03-01-02/story-spec.md

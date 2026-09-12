@@ -30,11 +30,12 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "ff05222409fc62e6e0cf96beda44964a83fb57a4"
+  commit: "d665727914358b8afd27b3c4ca321091c5dbd980"
   paths:
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/api/AdminSessionController.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/service/AdminSessionQueryService.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/interfaces/rest/admin/AdminSessionController.java
   symbols:
-    - "AdminSessionController#bootstrap"
+    - "AdminSessionQueryService#bootstrap, AdminSessionController#bootstrap"
 
 workspace-source:
   story-spec: delivery/changes/CHG-0009/stories/STORY-001-03-01-01/story-spec.md

@@ -2,5 +2,4 @@
 
 | Commit | DU | 消息 |
 |---|---|---|
-| ff05222 | DU-BE-102 | feat(auth): implement M1 admin authentication |
-
+| d665727 | DU-BE-102 | refactor(identity): align M1 implementation with DDD |

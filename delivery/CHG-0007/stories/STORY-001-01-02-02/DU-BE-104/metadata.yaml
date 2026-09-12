@@ -30,12 +30,13 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "ff05222409fc62e6e0cf96beda44964a83fb57a4"
+  commit: "d665727914358b8afd27b3c4ca321091c5dbd980"
   paths:
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/token/RefreshTokenService.java
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/persistence/RefreshTokenMapper.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/domain/model/session/RefreshSession.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/service/RefreshSessionApplicationService.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/session/MyBatisRefreshSessionRepository.java
   symbols:
-    - "RefreshTokenService#rotate, RefreshTokenMapper#consume"
+    - "RefreshSession, RefreshSessionApplicationService#rotate"
 
 workspace-source:
   story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-02-02/story-spec.md

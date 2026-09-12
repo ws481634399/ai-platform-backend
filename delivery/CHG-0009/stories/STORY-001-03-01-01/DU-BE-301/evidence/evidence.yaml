@@ -2,14 +2,14 @@ evidence:
   - id: EV-CODE-001
     type: code-change
     delivery-unit: DU-BE-301
-    symbol: "AdminSessionController#bootstrap"
-    commit: ff05222409fc62e6e0cf96beda44964a83fb57a4
+    symbol: "AdminSessionQueryService#bootstrap, AdminSessionController#bootstrap"
+    commit: d665727914358b8afd27b3c4ca321091c5dbd980
     evidence-ref: evidence/changeset.md
     created-at: "2026-09-12T03:30:00Z"
   - id: EV-TEST-002
     type: test-run
     delivery-unit: DU-BE-301
-    command: "mvn test -q（全量通过）"
+    command: "mvn test -q（全量通过，含 DDD 分层架构测试与 H2/Flyway/MyBatis 集成测试）"
     result: passed
     evidence-ref: evidence/red-green.md
     created-at: "2026-09-12T03:30:00Z"

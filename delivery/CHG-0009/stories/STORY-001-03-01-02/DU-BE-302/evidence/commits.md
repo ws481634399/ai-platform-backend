@@ -2,5 +2,4 @@
 
 | Commit | DU | 消息 |
 |---|---|---|
-| ff05222 | DU-BE-302 | feat(rbac): implement M1 authorization lifecycle |
-
+| d665727 | DU-BE-302 | refactor(identity): align M1 implementation with DDD |

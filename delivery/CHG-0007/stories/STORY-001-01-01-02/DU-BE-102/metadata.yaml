@@ -30,12 +30,13 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "ff05222409fc62e6e0cf96beda44964a83fb57a4"
+  commit: "d665727914358b8afd27b3c4ca321091c5dbd980"
   paths:
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/auth/AdminAuthenticationService.java
-    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/api/AdminAuthController.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/service/AdminAuthenticationApplicationService.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/domain/model/admin/AdminUser.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/interfaces/rest/admin/AdminAuthController.java
   symbols:
-    - "AdminAuthenticationService#authenticate, AdminAuthController#login"
+    - "AdminAuthenticationApplicationService#authenticate, AdminUser#assertCanSignIn"
 
 workspace-source:
   story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-01-02/story-spec.md
