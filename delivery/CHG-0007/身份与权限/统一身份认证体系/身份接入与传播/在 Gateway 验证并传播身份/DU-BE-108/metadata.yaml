@@ -30,7 +30,7 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "217a5327bda68bb756e32e1e371326e3e62c57b3"
+  commit: "5666b546f6cdfe7c6f6fee00b89e88fd45e65000"
   paths:
     - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java
     - mall-gateway/src/main/java/com/ai/mall/gateway/security/IdentityPropagationFilter.java
@@ -38,6 +38,8 @@ result:
     - "GatewaySecurityConfiguration, IdentityPropagationFilter#filter"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/在 Gateway 验证并传播身份/story-spec.md
-  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/在 Gateway 验证并传播身份/story-design.md
+  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/在 Gateway
+    验证并传播身份/story-spec.md
+  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/在 Gateway
+    验证并传播身份/story-design.md
   tasks: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/在 Gateway 验证并传播身份/tasks.md
