@@ -1,0 +1,2 @@
+package com.ai.mall.identity.domain.model.rbac;import static org.assertj.core.api.Assertions.*;import org.junit.jupiter.api.Test;
+class RbacValueObjectsTest{@Test void normalizesCodes(){assertThat(new RoleCode(" admin_role ").value()).isEqualTo("ADMIN_ROLE");assertThat(new PermissionCode("admin:read").value()).isEqualTo("admin:read");}@Test void rejectsMalformedCodes(){assertThatThrownBy(()->new PermissionCode("Admin:Read")).isInstanceOf(IllegalArgumentException.class);assertThatThrownBy(()->new RoleCode("a-")).isInstanceOf(IllegalArgumentException.class);}}

@@ -1,0 +1,3 @@
+package com.ai.mall.identity.infrastructure.persistence.admin;
+import com.ai.mall.identity.application.port.AdminUserQuery;import java.util.List;import org.springframework.stereotype.Repository;
+@Repository public class MyBatisAdminUserQuery implements AdminUserQuery {private final AdminUserMapper mapper;public MyBatisAdminUserQuery(AdminUserMapper mapper){this.mapper=mapper;}public long count(){return mapper.count();}public List<Summary> page(long offset,int size){return mapper.page(offset,size).stream().map(p->new Summary(p.id(),p.username(),p.status(),p.authVersion(),p.permissionVersion())).toList();}}

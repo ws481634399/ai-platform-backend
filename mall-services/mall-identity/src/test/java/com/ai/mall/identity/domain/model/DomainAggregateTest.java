@@ -1,0 +1,7 @@
+package com.ai.mall.identity.domain.model;
+import static org.assertj.core.api.Assertions.*;import com.ai.mall.identity.domain.model.admin.*;import com.ai.mall.identity.domain.model.rbac.*;import java.time.Instant;import java.util.List;import org.junit.jupiter.api.Test;
+class DomainAggregateTest {
+ @Test void adminOwnsSecurityVersionTransitions(){var admin=AdminUser.reconstitute(1,"admin","hash","ENABLED",1,1,List.of(),Instant.now(),Instant.now());admin.changeStatus(AdminUserStatus.DISABLED,Instant.now());admin.resetPassword("next-hash",Instant.now());admin.replaceRoles(List.of(2L,3L),Instant.now());assertThat(admin.authVersion()).isEqualTo(3);assertThat(admin.permissionVersion()).isEqualTo(3);assertThat(admin.roleIds()).containsExactlyInAnyOrder(2L,3L);}
+ @Test void builtInRoleProtectsItsLifecycle(){var role=Role.reconstitute(1,"SUPER_ADMIN","Super",null,"ENABLED",true,List.of(1L),List.of(1L));assertThatThrownBy(()->role.revise("renamed",null,"DISABLED")).hasMessageContaining("built-in");assertThatThrownBy(role::ensureDeletable).hasMessageContaining("built-in");}
+ @Test void menuOwnsRouteAndParentInvariants(){assertThatThrownBy(()->Menu.create(null,"Page","PAGE","external","View",null,1,true)).hasMessageContaining("PAGE");var menu=Menu.reconstitute(3,null,"Action","ACTION",null,null,"admin:update",1,true,"ENABLED");assertThatThrownBy(()->menu.revise(3L,"Action","ACTION",null,null,"admin:update",1,true,"ENABLED")).hasMessageContaining("parent");}
+}
