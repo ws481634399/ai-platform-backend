@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 class AuthorizationQueryServiceTest {
-    @Test void cachesByAdminAndPermissionVersion() {
+    @Test @org.junit.jupiter.api.DisplayName("STORY-001-02-03-02/TC-001..002 versioned cache hit and invalidation") void cachesByAdminAndPermissionVersion() {
         var loads = new AtomicInteger();
         AuthorizationRepository repository = (id, version) -> {
             loads.incrementAndGet();
@@ -26,7 +26,7 @@ class AuthorizationQueryServiceTest {
         assertThat(loads).hasValue(2);
     }
 
-    @Test void fallsBackToDatabaseWhenCacheFailsButNeverMasksDatabaseFailure() {
+    @Test @org.junit.jupiter.api.DisplayName("STORY-001-02-03-02/TC-003 cache failure falls back but database failure is denied") void fallsBackToDatabaseWhenCacheFailsButNeverMasksDatabaseFailure() {
         AuthorizationCache broken = new AuthorizationCache() {
             public Optional<AuthorizationSnapshot> get(long id, long version) { throw new IllegalStateException("redis down"); }
             public void put(AuthorizationSnapshot snapshot) { throw new IllegalStateException("redis down"); }

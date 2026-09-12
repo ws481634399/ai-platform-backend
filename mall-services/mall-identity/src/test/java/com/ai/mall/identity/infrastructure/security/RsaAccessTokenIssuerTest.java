@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.security.oauth2.jwt.*;
 
 class RsaAccessTokenIssuerTest {
-    @Test void issuesRs256AdminTokenWithFrozenClaimsAndAudience() throws Exception {
+    @Test @org.junit.jupiter.api.DisplayName("STORY-001-01-02-01/TC-001..003 RS256 pair claims and protected refresh material") void issuesRs256AdminTokenWithFrozenClaimsAndAudience() throws Exception {
         var generator = KeyPairGenerator.getInstance("RSA"); generator.initialize(2048);
         var pair = generator.generateKeyPair();
         var publicKey = (RSAPublicKey) pair.getPublic(); var privateKey = (RSAPrivateKey) pair.getPrivate();

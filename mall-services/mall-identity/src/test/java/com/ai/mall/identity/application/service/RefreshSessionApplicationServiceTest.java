@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 class RefreshSessionApplicationServiceTest {
     @Test
+    @org.junit.jupiter.api.DisplayName("STORY-001-01-02-02/TC-001..003 refresh rotation, replay, and family revocation")
     void rotatesOnceAndRevokesFamilyOnReplay() {
         var repository = new MemoryRepository();
         var service = new RefreshSessionApplicationService(repository,

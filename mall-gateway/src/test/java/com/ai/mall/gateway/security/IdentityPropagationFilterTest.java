@@ -14,7 +14,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 class IdentityPropagationFilterTest {
-    @Test void stripsSpoofedIdentityHeadersAndWritesVerifiedClaims() {
+    @Test @org.junit.jupiter.api.DisplayName("STORY-001-01-03-03/TC-001..003 verified propagation and spoof rejection") void stripsSpoofedIdentityHeadersAndWritesVerifiedClaims() {
         var request = MockServerHttpRequest.get("/api/admin/users")
                 .header("Authorization", "Bearer signed")
                 .header("X-Subject-Id", "spoof")
