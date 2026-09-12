@@ -30,7 +30,7 @@ evidence-ref: []
 baseline:
   commit: "892eecbfc9d0de0fe15c8dbec8897009296b3888"
 result:
-  commit: "efe8c27a3b22d05bc833e77579d04dcf60edfe69"
+  commit: "217a5327bda68bb756e32e1e371326e3e62c57b3"
   paths:
     - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/service/AdminSessionQueryService.java
     - mall-services/mall-identity/src/main/java/com/ai/mall/identity/interfaces/rest/admin/AdminSessionController.java
