@@ -17,12 +17,12 @@ evidence:
     type: test-run
     delivery-unit: DU-BE-202
     command: "mvn -q -pl mall-gateway,mall-services/mall-identity -am test"
-    result: partial
+    result: passed
     summary:
-      total: 58
-      passed: 58
+      total: 88
+      passed: 88
       failed: 0
       skipped: 0
     covers: [AC-001, AC-002, AC-003]
     evidence-ref: evidence/test-output.log
-    created-at: "2026-09-12T17:02:00+08:00"
+    created-at: "2026-09-12T23:51:17+08:00"
