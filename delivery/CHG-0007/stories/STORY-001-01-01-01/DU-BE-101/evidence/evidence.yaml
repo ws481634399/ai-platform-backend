@@ -13,3 +13,16 @@ evidence:
     result: passed
     evidence-ref: evidence/red-green.md
     created-at: "2026-09-12T03:30:00Z"
+  - id: EV-INDEPENDENT-TEST-003
+    type: test-run
+    delivery-unit: DU-BE-101
+    command: "mvn -q -pl mall-gateway,mall-services/mall-identity -am test"
+    result: partial
+    summary:
+      total: 58
+      passed: 58
+      failed: 0
+      skipped: 0
+    covers: [AC-001, AC-002, AC-003]
+    evidence-ref: evidence/test-output.log
+    created-at: "2026-09-12T17:02:00+08:00"

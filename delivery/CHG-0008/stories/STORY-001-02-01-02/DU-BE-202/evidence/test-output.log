@@ -1,0 +1,12 @@
+Independent test evidence — DU-BE-202
+
+Tested at: 2026-09-12T17:02:00+08:00
+Repository: repo-1
+Command: mvn -q -pl mall-gateway,mall-services/mall-identity -am test
+Exit result: PASSED
+Automated checks: JUnit/Spring/H2/Flyway/MyBatis：58/58 通过；含 DDD 分层架构与持久化集成测试。
+Operational note: mvn clean test 曾因 mall-identity JAR 被本机进程占用而无法删除 target；清理 Surefire 报告后，非 clean 独立重跑退出码 0。
+
+Acceptance trace status: PARTIAL
+Reason: 自动化套件通过，但当前测试名称/报告未按 test-design.md 的 TC 编号逐条输出，无法独立证明该 DU 的全部验收意图。
+
