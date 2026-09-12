@@ -7,6 +7,20 @@ spring:
       server-addr: ${NACOS_ADDR:}
       discovery:
         enabled: ${NACOS_ENABLED:false}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
 
 server:
   port: 8080
+
+mall:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+
+spring.security.oauth2.resourceserver.jwt.public-key-location: ${JWT_PUBLIC_KEY_LOCATION}

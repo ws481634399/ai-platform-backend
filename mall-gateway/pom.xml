@@ -20,6 +20,10 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-gateway</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
     <!-- Nacos 服务发现预留：默认关闭（NACOS_ENABLED:false），禁启动断言；WebFlux 栈隔离，禁依赖 mall-common-web -->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>

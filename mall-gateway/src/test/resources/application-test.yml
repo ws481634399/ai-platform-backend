@@ -1,0 +1,10 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: ""
+  cloud:
+    nacos:
+      discovery:
+        enabled: false

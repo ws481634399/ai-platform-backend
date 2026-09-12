@@ -46,6 +46,12 @@ public class GlobalExceptionHandler {
                 .body(UnifyResult.fail(ex.getErrorCode(), ex.getMessage()));
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public UnifyResult<Void> handleIllegalArgument(IllegalArgumentException ex) {
+        return UnifyResult.fail(CommonErrorCode.PARAM_INVALID, ex.getMessage());
+    }
+
     /** 未预期异常 → 500 + S 段通用文案；服务端日志留痕，响应体不泄露内部信息 */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
