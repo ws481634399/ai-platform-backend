@@ -1,6 +1,6 @@
 # DU Task — DU-BE-101
 
-> Workspace 权威来源：delivery/changes/CHG-0007/stories/STORY-001-01-01-01/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0007/身份与权限/统一身份认证体系/管理员凭证认证/安全存储与校验管理员凭证/tasks.md
 
 ### DU-BE-101: 安全存储与校验管理员凭证
 

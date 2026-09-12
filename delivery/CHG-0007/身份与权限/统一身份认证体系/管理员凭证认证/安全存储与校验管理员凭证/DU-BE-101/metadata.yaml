@@ -39,6 +39,6 @@ result:
     - "AdminUser, PasswordHash, BCryptPasswordHasher"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-01-01/story-spec.md
-  story-design: delivery/changes/CHG-0007/stories/STORY-001-01-01-01/story-design.md
-  tasks: delivery/changes/CHG-0007/stories/STORY-001-01-01-01/tasks.md
+  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/管理员凭证认证/安全存储与校验管理员凭证/story-spec.md
+  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/管理员凭证认证/安全存储与校验管理员凭证/story-design.md
+  tasks: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/管理员凭证认证/安全存储与校验管理员凭证/tasks.md

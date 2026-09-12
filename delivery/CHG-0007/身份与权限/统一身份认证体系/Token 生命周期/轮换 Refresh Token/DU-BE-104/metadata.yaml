@@ -39,6 +39,6 @@ result:
     - "RefreshSession, RefreshSessionApplicationService#rotate"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-02-02/story-spec.md
-  story-design: delivery/changes/CHG-0007/stories/STORY-001-01-02-02/story-design.md
-  tasks: delivery/changes/CHG-0007/stories/STORY-001-01-02-02/tasks.md
+  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/轮换 Refresh Token/story-spec.md
+  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/轮换 Refresh Token/story-design.md
+  tasks: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/轮换 Refresh Token/tasks.md

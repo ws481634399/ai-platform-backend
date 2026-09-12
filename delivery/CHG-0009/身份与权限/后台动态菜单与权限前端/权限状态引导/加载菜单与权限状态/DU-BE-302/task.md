@@ -1,6 +1,6 @@
 # DU Task — DU-BE-302
 
-> Workspace 权威来源：delivery/changes/CHG-0009/stories/STORY-001-03-01-02/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0009/身份与权限/后台动态菜单与权限前端/权限状态引导/加载菜单与权限状态/tasks.md
 
 ### DU-BE-302: 加载菜单与权限状态
 

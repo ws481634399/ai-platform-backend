@@ -1,6 +1,6 @@
 # DU Task — DU-BE-208
 
-> Workspace 权威来源：delivery/changes/CHG-0008/stories/STORY-001-02-03-02/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0008/身份与权限/后台 RBAC 权限体系/授权执行与治理/缓存并及时失效权限/tasks.md
 
 ### DU-BE-208: 缓存并及时失效权限
 

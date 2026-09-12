@@ -38,6 +38,6 @@ result:
     - "SecurityContextFacade, JwtConfiguration#securityFilterChain"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-03-02/story-spec.md
-  story-design: delivery/changes/CHG-0007/stories/STORY-001-01-03-02/story-design.md
-  tasks: delivery/changes/CHG-0007/stories/STORY-001-01-03-02/tasks.md
+  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/建立统一 SecurityContext/story-spec.md
+  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/建立统一 SecurityContext/story-design.md
+  tasks: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/建立统一 SecurityContext/tasks.md

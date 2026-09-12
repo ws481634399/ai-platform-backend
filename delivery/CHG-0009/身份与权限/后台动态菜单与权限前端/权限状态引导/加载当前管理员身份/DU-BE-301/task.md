@@ -1,6 +1,6 @@
 # DU Task — DU-BE-301
 
-> Workspace 权威来源：delivery/changes/CHG-0009/stories/STORY-001-03-01-01/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0009/身份与权限/后台动态菜单与权限前端/权限状态引导/加载当前管理员身份/tasks.md
 
 ### DU-BE-301: 加载当前管理员身份
 

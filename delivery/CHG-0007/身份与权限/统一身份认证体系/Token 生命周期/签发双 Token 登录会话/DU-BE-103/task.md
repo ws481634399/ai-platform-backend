@@ -1,6 +1,6 @@
 # DU Task — DU-BE-103
 
-> Workspace 权威来源：delivery/changes/CHG-0007/stories/STORY-001-01-02-01/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/签发双 Token 登录会话/tasks.md
 
 ### DU-BE-103: 签发双 Token 登录会话
 

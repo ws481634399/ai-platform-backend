@@ -1,6 +1,6 @@
 # DU Task — DU-BE-205
 
-> Workspace 权威来源：delivery/changes/CHG-0008/stories/STORY-001-02-02-02/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0008/身份与权限/后台 RBAC 权限体系/权限资源管理/维护操作与 API 权限编码/tasks.md
 
 ### DU-BE-205: 维护操作与 API 权限编码
 

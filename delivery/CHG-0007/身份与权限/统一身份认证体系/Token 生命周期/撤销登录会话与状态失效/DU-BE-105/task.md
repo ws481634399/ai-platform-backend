@@ -1,6 +1,6 @@
 # DU Task — DU-BE-105
 
-> Workspace 权威来源：delivery/changes/CHG-0007/stories/STORY-001-01-02-03/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/撤销登录会话与状态失效/tasks.md
 
 ### DU-BE-105: 撤销登录会话与状态失效
 

@@ -38,6 +38,6 @@ result:
     - "SubjectType, JwtSubjectConverter#convert"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0007/stories/STORY-001-01-03-01/story-spec.md
-  story-design: delivery/changes/CHG-0007/stories/STORY-001-01-03-01/story-design.md
-  tasks: delivery/changes/CHG-0007/stories/STORY-001-01-03-01/tasks.md
+  story-spec: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/隔离多类型身份主体/story-spec.md
+  story-design: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/隔离多类型身份主体/story-design.md
+  tasks: delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/隔离多类型身份主体/tasks.md

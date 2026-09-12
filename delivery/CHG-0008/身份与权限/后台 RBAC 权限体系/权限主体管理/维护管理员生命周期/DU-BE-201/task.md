@@ -1,6 +1,6 @@
 # DU Task — DU-BE-201
 
-> Workspace 权威来源：delivery/changes/CHG-0008/stories/STORY-001-02-01-01/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0008/身份与权限/后台 RBAC 权限体系/权限主体管理/维护管理员生命周期/tasks.md
 
 ### DU-BE-201: 维护管理员生命周期
 

@@ -1,6 +1,6 @@
 # DU Task — DU-BE-106
 
-> Workspace 权威来源：delivery/changes/CHG-0007/stories/STORY-001-01-03-01/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0007/身份与权限/统一身份认证体系/身份接入与传播/隔离多类型身份主体/tasks.md
 
 ### DU-BE-106: 隔离多类型身份主体
 

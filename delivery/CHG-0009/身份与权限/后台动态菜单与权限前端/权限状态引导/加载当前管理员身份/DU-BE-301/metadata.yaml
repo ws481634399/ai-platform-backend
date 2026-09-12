@@ -38,6 +38,6 @@ result:
     - "AdminSessionQueryService#bootstrap, AdminSessionController#bootstrap"
 
 workspace-source:
-  story-spec: delivery/changes/CHG-0009/stories/STORY-001-03-01-01/story-spec.md
-  story-design: delivery/changes/CHG-0009/stories/STORY-001-03-01-01/story-design.md
-  tasks: delivery/changes/CHG-0009/stories/STORY-001-03-01-01/tasks.md
+  story-spec: delivery/changes/CHG-0009/身份与权限/后台动态菜单与权限前端/权限状态引导/加载当前管理员身份/story-spec.md
+  story-design: delivery/changes/CHG-0009/身份与权限/后台动态菜单与权限前端/权限状态引导/加载当前管理员身份/story-design.md
+  tasks: delivery/changes/CHG-0009/身份与权限/后台动态菜单与权限前端/权限状态引导/加载当前管理员身份/tasks.md

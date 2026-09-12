@@ -1,6 +1,6 @@
 # DU Task — DU-BE-104
 
-> Workspace 权威来源：delivery/changes/CHG-0007/stories/STORY-001-01-02-02/tasks.md
+> Workspace 权威来源：delivery/changes/CHG-0007/身份与权限/统一身份认证体系/Token 生命周期/轮换 Refresh Token/tasks.md
 
 ### DU-BE-104: 轮换 Refresh Token
 
