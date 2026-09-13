@@ -22,6 +22,11 @@ spring:
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:
             - Path=/api/admin/categories/**,/api/admin/brands/**
+        # CHG-0011：商品 SPU/SKU 管理端路由（含 /{id}/skus 子资源），同一直连 URI
+        - id: mall-product-admin-spu
+          uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
+          predicates:
+            - Path=/api/admin/products/**
         # CHG-0013：库存服务管理端与内部接口路由
         - id: mall-inventory-admin
           uri: ${MALL_GATEWAY_INVENTORY_URI:http://localhost:8106}
