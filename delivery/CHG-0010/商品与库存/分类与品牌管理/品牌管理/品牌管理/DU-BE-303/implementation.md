@@ -43,3 +43,8 @@ completed
 - task-design 预期"大小写不敏感依赖 MySQL collation"，但 H2 2.x 默认字符串比较大小写敏感，无法仅靠 collation 对齐；existsByName 改为 `LOWER(name)=LOWER(?)` 参数化条件，跨库行为一致；生产侧唯一索引（utf8mb4_0900_ai_ci）继续承担并发兜底，TC-009 以完全同名验证唯一索引。
 - MyBatis-Plus 3.5.12 的 PaginationInnerInterceptor 已从 extension 拆至 mybatis-plus-jsqlparser 独立模块，pom 显式补依赖（版本由 mybatis-plus-bom 管理）。
 - 测试安全链从 CategoryAdminApiTest 抽取为共享 @TestConfiguration（support/ApiTestSecurityConfig），消除两份内嵌配置重复。
+
+## 交付后联调补全（2026-09-13）：跨服务权限传播
+
+品牌管理接口与分类管理共用同一 ProductSecurityConfiguration 与 V3 权限种子，真实集成环境 403 的根因与修复见姊妹 Story DU-BE-302 implementation.md「交付后联调补全」章节（mall-common-security 新增 RedisSnapshotAuthorityConverter，经共享 Redis 授权快照加载权限码）。
+修复后实测 `GET /api/admin/brands?pageNo=1&pageSize=10` 经网关 → 200（空分页）。本 DU 无独立代码改动。

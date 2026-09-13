@@ -54,3 +54,36 @@ completed
 - 原跨 Story 公共 DU-BE-301（权限种子/安全配置/网关路由独立成 DU）在 task 阶段被 harness 拒绝（非 story §5 DU 表成员不被识别），已并入本 DU 实施，文档与 design gate 已同步。
 - gateway 未引入 spring-cloud-starter-loadbalancer（当前注册中心默认关闭），路由默认 URI 采用 http://localhost:8103 直连，保留 `MALL_GATEWAY_PRODUCT_URI=lb://mall-product` 的覆写口子供部署环境启用服务发现。
 - 根 pom 增加 `<parameters>true</parameters>`：`@PathVariable long id` 未显式指定 value 时依赖参数名反射，属于 Spring Boot 生态标准编译选项，全仓一次性补齐。
+
+## 交付后联调补全（2026-09-13）：跨服务权限传播
+
+### 缺陷现象
+
+真实集成环境（网关 → mall-product）登录后访问 `GET /api/admin/categories/tree` 返回 403 permission denied。
+自动化测试（ApiTestSecurityConfig 直接授予权限）与 MockMvc 契约测试无法暴露，属 converge 时登记的"浏览器手工联调走查"遗留项（见 workspace 仓 CHG-0010 convergence.md §3）。
+
+### 根因
+
+- mall-identity 签发的 JWT 不含权限码（仅 sub/subject_type/username/auth_version）；
+- 网关 IdentityPropagationFilter 只透传身份头，不透传权限；
+- mall-product 的 JwtSubjectConverter 从 JWT `permissions` claim 取权限，该 claim 恒为空 → `@PreAuthorize` 必 403；
+- 另发现 identity 旧进程未配置 REDIS_PASSWORD，授权快照写 Redis 被静默吞掉（AuthorizationQueryService 对缓存异常 fail-open），快照实际从未落库。
+
+### 修复内容（跨 CHG-0007 公共组件，由本 Story 公共前置 DU-BE-302 首个消费并承接）
+
+- `mall-common-security` 新增：
+  - `AuthorizationKeys`：授权快照键规范单点定义（`authz:{adminId}:{permissionVersion}` 快照 + `authz:current:{adminId}` 当前版本指针）；
+  - `AuthoritySnapshot`：资源服务侧快照反序列化记录（忽略 menus 等无关字段）；
+  - `RedisSnapshotAuthorityConverter`：JWT 解析身份 + 经共享 Redis 指针/快照加载权限码；快照缺失 → 401，Redis 故障 fail-closed；
+  - pom 增加 spring-boot-starter-data-redis、jackson-databind。
+- `mall-identity`：RedisAuthorizationCache.put 同步写版本快照与当前版本指针（同 15min TTL）；application.yml 增加 spring.data.redis.*（host/port/password 经环境变量注入）。
+- `mall-product`：ProductSecurityConfiguration 改用 RedisSnapshotAuthorityConverter；application.yml 增加 spring.data.redis.*。
+
+### 验证（2026-09-13 真实环境）
+
+登录 → bootstrap 后 Redis 存在 `authz:current:1` 与 `authz:1:2`；
+经网关 `GET /api/admin/categories/tree` → 200（空树）、`GET /api/admin/brands?pageNo=1&pageSize=10` → 200（空分页）。
+
+### 对后续 Story/Change 的约束
+
+CHG-0011/0012/0013 等下游资源服务的资源服务器应统一改用 RedisSnapshotAuthorityConverter 并配置 spring.data.redis.*；mall-inventory 尚未接入（CHG-0013 范围内）。

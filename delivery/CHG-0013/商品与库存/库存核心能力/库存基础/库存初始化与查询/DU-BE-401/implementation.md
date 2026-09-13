@@ -28,20 +28,27 @@
 - `infrastructure/config/InventorySecurityConfiguration.java`（新增）：JWT 资源服务器，`/api/admin/**` 需 ADMIN 角色。
 - `db/migration/V1__create_inventory_stock_and_log.sql`（新增）：inventory_stock（sku_id 唯一）+ inventory_log 表。
 - mall-product：新增 `existsBySkuId` 仓储方法与 `/api/internal/products/skus/{skuId}` 内部接口。
-- mall-identity：V6 迁移添加 inventory:stock:* 权限点与库存菜单。
+- mall-identity：V6 迁移添加 inventory:stock:\* 权限点与库存菜单。
 - mall-gateway：添加 `/api/admin/inventory/**`、`/api/internal/inventory/**` 路由到 8106。
 
 ## Commits
 
-| Commit | DU | 消息 |
-| --- | --- | --- |
-| 08d619f | DU-BE-401/402/403/404 | feat(inventory): 库存核心领域模型与持久化层 |
+| Commit  | DU                    | 消息                                           |
+| ------- | --------------------- | ---------------------------------------------- |
+| 08d619f | DU-BE-401/402/403/404 | feat(inventory): 库存核心领域模型与持久化层    |
 | e2bff4b | DU-BE-401/402/403/404 | feat(inventory): 库存应用服务与管理端/内部接口 |
-| eacca66 | DU-BE-401/402/403/404 | feat: 库存跨服务支持与权限路由 |
+| eacca66 | DU-BE-401/402/403/404 | feat: 库存跨服务支持与权限路由                 |
 
 ## Deviations
 
 无。
+
+## 交付后联调补全（2026-09-13，未提交）
+
+- V6 迁移修复：超管菜单授权补 `/inventory` 目录（原仅授两个 PAGE，菜单树不装配目录），已重跑迁移验证。
+- `InventorySecurityConfiguration` 由 JwtSubjectConverter 切换为 RedisSnapshotAuthorityConverter + application.yml 增加 spring.data.redis 只读配置，修复管理端库存接口在真实链路必 403 的问题（JWT 不含权限 claim，权限经共享 Redis 授权快照获取）。`/api/internal/**` 维持 permitAll。
+- 实测：GET /api/admin/inventory/stocks、/logs 经网关均 200，无 Token 401；模块测试全绿。
+- 公共修复同时惠及 DU-BE-402/403/404 的管理端接口；详细记录见 workspace 仓 CHG-0013 implementation.md §4。
 
 ## 自检
 
