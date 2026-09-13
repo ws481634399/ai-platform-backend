@@ -1,0 +1,22 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-305
+    symbol: "Sku, SpecificationHash, Product.addSku/updateSku, ProductRepositoryImpl"
+    commit: 23a1dfb
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-13T16:30:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-305
+    command: "mvn -pl mall-services/mall-product -am test -Dtest=ProductAdminApiTest"
+    result: passed
+    summary:
+      total: 9
+      passed: 9
+      failed: 0
+      skipped: 0
+    summary-note: "SKU 编码唯一、规格组合唯一（顺序无关）、价格非负、独立启停"
+    covers: [AC-003, AC-004, AC-005, AC-006, AC-008, AC-013, AC-014, AC-015]
+    evidence-ref: evidence/test-output.log
+    created-at: "2026-09-13T16:28:00+08:00"

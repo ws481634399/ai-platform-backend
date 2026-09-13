@@ -1,0 +1,22 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-304
+    symbol: "Product, ProductApplicationService, ProductAdminController, ProductRepositoryImpl"
+    commit: 23a1dfb
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-13T16:30:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-304
+    command: "mvn -pl mall-services/mall-product -am test"
+    result: passed
+    summary:
+      total: 36
+      passed: 36
+      failed: 0
+      skipped: 0
+    summary-note: "商品与 SKU 9（ProductAdminApiTest），品牌 14，分类 12，冒烟 1"
+    covers: [AC-001, AC-002, AC-007, AC-008, AC-010, AC-012, AC-013, AC-014, AC-015]
+    evidence-ref: evidence/test-output.log
+    created-at: "2026-09-13T16:28:00+08:00"
