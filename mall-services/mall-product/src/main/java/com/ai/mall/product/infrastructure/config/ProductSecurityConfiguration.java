@@ -2,7 +2,7 @@ package com.ai.mall.product.infrastructure.config;
 
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.core.result.UnifyResult;
-import com.ai.mall.common.security.JwtSubjectConverter;
+import com.ai.mall.common.security.RedisSnapshotAuthorityConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +29,8 @@ import org.springframework.security.web.SecurityFilterChain;
  * mall-product 资源服务器安全链。
  *
  * <p>仅解码验证（与 mall-identity/mall-gateway 共用验签公钥），不签发 Token；
- * 主体权限由 {@link JwtSubjectConverter} 从 permissions claim 映射，
+ * 主体身份从 JWT 解析，细粒度权限码经共享 Redis 授权快照获取
+ * （{@link RedisSnapshotAuthorityConverter}），
  * 业务接口用 {@code @PreAuthorize("hasAuthority(...)")} 细粒度判定。
  */
 @Configuration
@@ -52,9 +54,10 @@ public class ProductSecurityConfiguration {
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder decoder, ObjectMapper objectMapper)
+    SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder decoder, ObjectMapper objectMapper,
+                                            StringRedisTemplate redisTemplate)
             throws Exception {
-        var converter = new JwtSubjectConverter();
+        var converter = new RedisSnapshotAuthorityConverter(redisTemplate, objectMapper);
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()

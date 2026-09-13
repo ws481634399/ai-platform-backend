@@ -1,5 +1,6 @@
 package com.ai.mall.identity.infrastructure.cache;
 
+import com.ai.mall.common.security.AuthorizationKeys;
 import com.ai.mall.identity.application.dto.AuthorizationSnapshot;
 import com.ai.mall.identity.application.port.AuthorizationCache;
 
@@ -14,5 +15,8 @@ public class InMemoryAuthorizationCache implements AuthorizationCache {
     @Override public void put(AuthorizationSnapshot snapshot) {
         values.put(key(snapshot.adminId(), snapshot.permissionVersion()), snapshot);
     }
-    public static String key(long adminId, long version) { return "authz:" + adminId + ":" + version; }
+    /** 键规范单点定义在 mall-common-security AuthorizationKeys，保留委托方法兼容现有引用 */
+    public static String key(long adminId, long version) {
+        return AuthorizationKeys.snapshot(adminId, version);
+    }
 }

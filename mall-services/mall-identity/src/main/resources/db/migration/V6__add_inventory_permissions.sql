@@ -33,6 +33,7 @@ WHERE r.code='SUPER_ADMIN' AND p.code IN (
   'inventory:stock:list','inventory:stock:detail','inventory:stock:init','inventory:stock:adjust','inventory:log:list'
 );
 
+-- 目录与两个页面必须同时授权：bootstrap 菜单树仅装配已授权目录（漏目录会导致整组菜单不可见）
 INSERT IGNORE INTO auth_role_menu(role_id,menu_id)
 SELECT r.id,m.id FROM auth_role r CROSS JOIN auth_menu m
-WHERE r.code='SUPER_ADMIN' AND m.path IN ('/inventory/stocks','/inventory/logs');
+WHERE r.code='SUPER_ADMIN' AND m.path IN ('/inventory','/inventory/stocks','/inventory/logs');

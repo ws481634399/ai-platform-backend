@@ -18,6 +18,13 @@ spring:
       discovery:
         enabled: ${NACOS_ENABLED:false}
 
+  # 授权快照缓存：写入 authz:{adminId}:{version} 供下游资源服务读取（CHG-0010 跨服务权限传播补全）
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true

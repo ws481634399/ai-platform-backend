@@ -18,6 +18,13 @@ spring:
       discovery:
         enabled: ${NACOS_ENABLED:false}
 
+  # 授权快照只读：经共享 Redis 取 mall-identity 写入的权限码集合（跨服务权限传播）
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
