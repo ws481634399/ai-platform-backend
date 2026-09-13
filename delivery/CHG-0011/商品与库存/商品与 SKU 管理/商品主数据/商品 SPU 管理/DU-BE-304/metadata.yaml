@@ -37,7 +37,7 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: testing # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
   commit: "7cba45e3d04dae4925551342249465a179e8ca05"
 result:
@@ -52,5 +52,6 @@ result:
   symbols:
     - "domain/product/Product.java::Product"
     - "domain/product/Sku.java::Sku"
-    - "application/product/ProductApplicationService.java::ProductApplicationService"
+    - "application/product/ProductApplicationService.java::ProductApplicationSe\
+      rvice"
     - "interfaces/rest/admin/ProductAdminController.java::ProductAdminController"
