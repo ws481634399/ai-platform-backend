@@ -1,21 +1,52 @@
 # DU Implementation — DU-BE-401
 
-> DU 级实施记录（Actual Implementation，sdd-dev 绑定本 DU 产出）。实施正文归属本仓库。
-> 本文件固定为 Actual Implementation（实际修改模块/文件、Commit、Task/DU Mapping、实现偏离、完成情况），
-> 与 task-design.md / task-spec.md（Expected Implementation）分立，不得合并。
+> DU 级实施记录（Actual Implementation，sdd-dev 绑定本 DU 产出）。
 
 ## 变更内容
 
+新建 mall-inventory 服务库存核心能力：库存初始化与查询。库存作为独立限界上下文，不与商品共享表结构。
+
+### 领域层
+
+- `domain/inventory/Inventory.java`（新增）：聚合根。`initialize(skuId, totalQuantity)` 校验 totalQuantity >= 0，创建库存记录（locked=0）；`getAvailableQuantity() = totalQuantity - lockedQuantity`。
+- `domain/inventory/InventoryRepository.java`（新增）：端口。`findBySkuId`、`findBySkuIds`、`page`、`insert`、`update`、`insertLog`。
+- `domain/inventory/InventoryLog.java`（新增）：流水实体。
+- `domain/inventory/InventoryException.java` / `InventoryErrorCode.java`（新增）：B2201 库存不存在、B2202 已存在、B2203 数量非法、B2205 SKU 不存在。
+
+### 应用层
+
+- `application/inventory/InventoryApplicationService.java`（新增）：`init(skuId, totalQuantity)` 经 SkuClient 校验 SKU 存在 → 查重 → Inventory.initialize → insert + insertLog(INIT)。`getBySkuId`、`batchGet`、`page`。
+
+### 接口层
+
+- `interfaces/rest/admin/InventoryAdminController.java`（新增）：`GET /api/admin/inventory/stocks`（分页）、`GET /{skuId}`（详情）、`POST /batch`（批量）、`POST /stocks/init`（初始化），权限码 `inventory:stock:list/detail/init`。
+
+### 基础设施
+
+- `infrastructure/persistence/inventory/InventoryRepositoryImpl.java`（新增）：MyBatis-Plus 实现。
+- `infrastructure/client/SkuClient.java`（新增）：调用 mall-product `/api/internal/products/skus/{skuId}` 校验 SKU。
+- `infrastructure/config/InventorySecurityConfiguration.java`（新增）：JWT 资源服务器，`/api/admin/**` 需 ADMIN 角色。
+- `db/migration/V1__create_inventory_stock_and_log.sql`（新增）：inventory_stock（sku_id 唯一）+ inventory_log 表。
+- mall-product：新增 `existsBySkuId` 仓储方法与 `/api/internal/products/skus/{skuId}` 内部接口。
+- mall-identity：V6 迁移添加 inventory:stock:* 权限点与库存菜单。
+- mall-gateway：添加 `/api/admin/inventory/**`、`/api/internal/inventory/**` 路由到 8106。
+
 ## Commits
+
+| Commit | DU | 消息 |
+| --- | --- | --- |
+| 08d619f | DU-BE-401/402/403/404 | feat(inventory): 库存核心领域模型与持久化层 |
+| e2bff4b | DU-BE-401/402/403/404 | feat(inventory): 库存应用服务与管理端/内部接口 |
+| eacca66 | DU-BE-401/402/403/404 | feat: 库存跨服务支持与权限路由 |
 
 ## Deviations
 
-<!-- 实现与 DU 建议（Sketch / Pseudocode）明显偏离时必须记录；无偏离写「无」。
-     每条偏离三要素缺一不可：原 DU 建议 / 实际实现 / 原因（建议附影响评估）。
-     格式：### DEV-N
-           - 原 DU 建议:
-           - 实际实现:
-           - 原因:
-           - 影响评估: -->
+无。
 
 ## 自检
+
+- [x] SKU 不存在时初始化返回 400（B2205）
+- [x] 库存已存在时初始化返回 409（B2202）
+- [x] 初始化后 locked=0，available=total
+- [x] 分页/详情/批量查询可用
+- [x] 库存与商品独立上下文，product_spu/product_sku 无 stock 字段
