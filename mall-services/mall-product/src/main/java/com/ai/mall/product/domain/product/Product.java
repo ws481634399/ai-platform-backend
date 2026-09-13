@@ -1,5 +1,8 @@
 package com.ai.mall.product.domain.product;
 
+import com.ai.mall.product.domain.product.event.ProductDomainEvent;
+import com.ai.mall.product.domain.product.event.ProductPublishedDomainEvent;
+import com.ai.mall.product.domain.product.event.ProductUnpublishedDomainEvent;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,7 @@ public class Product {
     private List<Sku> skus;
     private Instant createdAt;
     private Instant updatedAt;
+    private final List<ProductDomainEvent> domainEvents = new ArrayList<>();
 
     private Product(long id, String code, String name, String subtitle, String description,
                     long categoryId, long brandId, ProductStatus status, String mainImageUrl,
@@ -109,6 +113,48 @@ public class Product {
         if (this.status == ProductStatus.DISABLED) {
             this.status = ProductStatus.DRAFT;
         }
+    }
+
+    /** 上架：校验通过后 DRAFT/OFF_SALE → ON_SALE，并注册 ProductPublished 事件。 */
+    public void publish() {
+        if (this.status == ProductStatus.DISABLED) {
+            throw ProductException.publishValidationFailed("商品已禁用，不可上架");
+        }
+        if (this.status == ProductStatus.ON_SALE) {
+            throw ProductException.alreadyOnSale();
+        }
+        if (!hasMainImage()) {
+            throw ProductException.publishValidationFailed("缺少主图");
+        }
+        boolean hasEnabledSku = skus.stream().anyMatch(s -> s.getStatus() == SkuStatus.ENABLED);
+        if (!hasEnabledSku) {
+            throw ProductException.publishValidationFailed("至少需要一个启用状态的 SKU");
+        }
+        boolean invalidPrice = skus.stream()
+                .filter(s -> s.getStatus() == SkuStatus.ENABLED)
+                .anyMatch(s -> s.getSalePrice().amountInCents() < 0);
+        if (invalidPrice) {
+            throw ProductException.publishValidationFailed("存在价格非法的 SKU");
+        }
+        this.status = ProductStatus.ON_SALE;
+        domainEvents.add(new ProductPublishedDomainEvent(this.id));
+    }
+
+    /** 下架：ON_SALE → OFF_SALE，并注册 ProductUnpublished 事件。 */
+    public void unpublish() {
+        if (this.status != ProductStatus.ON_SALE) {
+            throw ProductException.notOnSale();
+        }
+        this.status = ProductStatus.OFF_SALE;
+        domainEvents.add(new ProductUnpublishedDomainEvent(this.id));
+    }
+
+    public List<ProductDomainEvent> getDomainEvents() {
+        return List.copyOf(domainEvents);
+    }
+
+    public void clearDomainEvents() {
+        domainEvents.clear();
     }
 
     public boolean isDisabled() {

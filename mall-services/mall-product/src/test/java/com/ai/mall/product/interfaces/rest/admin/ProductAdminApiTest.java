@@ -236,7 +236,130 @@ class ProductAdminApiTest {
                 .andExpect(jsonPath("$.data.skus[0].status").value("DISABLED"));
     }
 
+    @Test
+    @DisplayName("CHG-0012 上架：满足条件 DRAFT 商品上架成功 ON_SALE")
+    void publishDraftProduct() throws Exception {
+        long productId = createProductWithSkuAndImage("P-PUB");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/admin/products/" + productId)
+                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                .andExpect(jsonPath("$.data.status").value("ON_SALE"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 上架：无主图商品拒绝")
+    void publishWithoutMainImageRejected() throws Exception {
+        long productId = createProduct("P-NOIMG");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/skus")
+                        .header("Authorization", "Bearer " + token(List.of("product:sku:create")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(skuBody("SKU-NOIMG", List.of(spec("颜色", "黑")), 100L))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("B2150"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 上架：无 ENABLED SKU 拒绝")
+    void publishWithoutEnabledSkuRejected() throws Exception {
+        long productId = createProductWithImage("P-NOSKU");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("B2150"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 上架：DISABLED 商品拒绝")
+    void publishDisabledRejected() throws Exception {
+        long productId = createProductWithSkuAndImage("P-DIS");
+        mockMvc.perform(put("/api/admin/products/" + productId + "/status")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:disable")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("status", "DISABLED"))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("B2150"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 下架：ON_SALE 商品下架成功 OFF_SALE")
+    void unpublishOnSaleProduct() throws Exception {
+        long productId = createProductWithSkuAndImage("P-UNPUB");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/admin/products/" + productId + "/unpublish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/admin/products/" + productId)
+                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                .andExpect(jsonPath("$.data.status").value("OFF_SALE"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 下架后重新上架成功")
+    void republishAfterUnpublish() throws Exception {
+        long productId = createProductWithSkuAndImage("P-REPUB");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/admin/products/" + productId + "/unpublish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/admin/products/" + productId)
+                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                .andExpect(jsonPath("$.data.status").value("ON_SALE"));
+    }
+
+    @Test
+    @DisplayName("CHG-0012 无 product:product:publish 权限 403")
+    void publishPermissionEnforced() throws Exception {
+        long productId = createProductWithSkuAndImage("P-NOPERM");
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:create"))))
+                .andExpect(status().isForbidden());
+    }
+
     // ---------- helpers ----------
+
+    private long createProductWithImage(String code) throws Exception {
+        List<Map<String, Object>> images = List.of(
+                imageBody("k1", "https://cdn.example.com/1.png", "MAIN", 0, true));
+        Map<String, Object> body = productBody(code, code + "-name", images);
+        String resp = mockMvc.perform(post("/api/admin/products")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:create")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(body)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        return objectMapper.readTree(resp).path("data").path("id").asLong();
+    }
+
+    private long createProductWithSkuAndImage(String code) throws Exception {
+        long productId = createProductWithImage(code);
+        mockMvc.perform(post("/api/admin/products/" + productId + "/skus")
+                        .header("Authorization", "Bearer " + token(List.of("product:sku:create")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(skuBody(code + "-SKU", List.of(spec("颜色", "黑")), 9900L))))
+                .andExpect(status().isOk());
+        return productId;
+    }
 
     private long createProduct(String code) throws Exception {
         Map<String, Object> body = productBody(code, code + "-name", null);

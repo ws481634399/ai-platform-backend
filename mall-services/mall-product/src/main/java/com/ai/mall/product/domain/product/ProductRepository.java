@@ -17,6 +17,8 @@ public interface ProductRepository {
 
     ProductPageResult page(ProductPageQuery query);
 
+    ProductPageResult mallPage(ProductPageQuery query);
+
     void insert(Product product);
 
     boolean update(Product product);

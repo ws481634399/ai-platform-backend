@@ -27,6 +27,9 @@ public enum ProductErrorCode implements ErrorCode {
     PRODUCT_MAIN_IMAGE_DUPLICATED("B2147", "一个商品仅能有一张主图"),
     PRODUCT_NOT_DRAFT("B2148", "仅 DRAFT 状态商品可修改"),
     PRODUCT_INVALID_STATUS_TRANSITION("B2149", "非法商品状态流转"),
+    PRODUCT_PUBLISH_VALIDATION_FAILED("B2150", "商品不满足上架条件"),
+    PRODUCT_ALREADY_ON_SALE("B2151", "商品已上架"),
+    PRODUCT_NOT_ON_SALE("B2152", "商品未上架，无法下架"),
 
     SKU_NOT_FOUND("B2161", "SKU 不存在"),
     SKU_CODE_DUPLICATED("B2162", "SKU 编码已存在"),

@@ -127,6 +127,20 @@ public class ProductAdminController {
         return UnifyResult.ok();
     }
 
+    @PostMapping("/{id}/publish")
+    @PreAuthorize("hasAuthority('product:product:publish')")
+    public UnifyResult<Void> publish(@PathVariable long id) {
+        service.publish(id);
+        return UnifyResult.ok();
+    }
+
+    @PostMapping("/{id}/unpublish")
+    @PreAuthorize("hasAuthority('product:product:publish')")
+    public UnifyResult<Void> unpublish(@PathVariable long id) {
+        service.unpublish(id);
+        return UnifyResult.ok();
+    }
+
     private static List<com.ai.mall.product.application.product.ProductCommands.ImageParam> toImageParams(List<ImageRequest> images) {
         if (images == null) return null;
         return images.stream().map(i -> new com.ai.mall.product.application.product.ProductCommands.ImageParam(

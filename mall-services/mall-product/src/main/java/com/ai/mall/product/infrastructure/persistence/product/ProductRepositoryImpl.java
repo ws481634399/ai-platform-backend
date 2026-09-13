@@ -4,6 +4,7 @@ import com.ai.mall.product.domain.product.Product;
 import com.ai.mall.product.domain.product.ProductAttribute;
 import com.ai.mall.product.domain.product.ProductImage;
 import com.ai.mall.product.domain.product.ProductRepository;
+import com.ai.mall.product.domain.product.ProductStatus;
 import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.Specification;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -71,6 +72,21 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .eq(query.categoryId() != null, ProductPo::getCategoryId, query.categoryId())
                 .eq(query.brandId() != null, ProductPo::getBrandId, query.brandId())
                 .eq(query.status() != null && !query.status().isBlank(), ProductPo::getStatus, query.status())
+                .orderByDesc(ProductPo::getCreatedAt);
+        Page<ProductPo> result = productMapper.selectPage(new Page<>(query.page(), query.size()), wrapper);
+        List<Product> records = result.getRecords().stream()
+                .map(po -> toDomain(po, loadImages(po.getId()), loadAttributes(po.getId()), loadSkus(po.getId())))
+                .toList();
+        return new ProductPageResult(records, result.getTotal(), query.page(), query.size());
+    }
+
+    @Override
+    public ProductPageResult mallPage(ProductPageQuery query) {
+        LambdaQueryWrapper<ProductPo> wrapper = new LambdaQueryWrapper<ProductPo>()
+                .like(query.keyword() != null && !query.keyword().isBlank(), ProductPo::getProductName, query.keyword())
+                .eq(query.categoryId() != null, ProductPo::getCategoryId, query.categoryId())
+                .eq(query.brandId() != null, ProductPo::getBrandId, query.brandId())
+                .eq(ProductPo::getStatus, ProductStatus.ON_SALE.name())
                 .orderByDesc(ProductPo::getCreatedAt);
         Page<ProductPo> result = productMapper.selectPage(new Page<>(query.page(), query.size()), wrapper);
         List<Product> records = result.getRecords().stream()

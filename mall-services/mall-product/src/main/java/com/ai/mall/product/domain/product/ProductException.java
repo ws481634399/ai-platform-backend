@@ -61,4 +61,19 @@ public class ProductException extends BusinessException {
         return new ProductException(ProductErrorCode.SKU_PRICE_INVALID, HttpStatus.BAD_REQUEST,
                 "SKU 价格不能为负");
     }
+
+    public static ProductException publishValidationFailed(String reason) {
+        return new ProductException(ProductErrorCode.PRODUCT_PUBLISH_VALIDATION_FAILED, HttpStatus.BAD_REQUEST,
+                "商品不满足上架条件: " + reason);
+    }
+
+    public static ProductException alreadyOnSale() {
+        return new ProductException(ProductErrorCode.PRODUCT_ALREADY_ON_SALE, HttpStatus.BAD_REQUEST,
+                "商品已上架");
+    }
+
+    public static ProductException notOnSale() {
+        return new ProductException(ProductErrorCode.PRODUCT_NOT_ON_SALE, HttpStatus.BAD_REQUEST,
+                "商品未上架，无法下架");
+    }
 }

@@ -65,6 +65,34 @@ public class ProductApplicationService {
         return productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
     }
 
+    @Transactional(readOnly = true)
+    public ProductPageResult mallPage(ProductPageQuery query) {
+        int page = query.page() == null || query.page() < 1 ? 1 : query.page();
+        int size = query.size() == null || query.size() < 1 ? DEFAULT_PAGE_SIZE : Math.min(query.size(), MAX_PAGE_SIZE);
+        String keyword = query.keyword() == null || query.keyword().isBlank() ? null : query.keyword().trim();
+        return productRepository.mallPage(new ProductRepository.ProductPageQuery(
+                keyword, query.categoryId(), query.brandId(), null, page, size));
+    }
+
+    @Transactional(readOnly = true)
+    public Product getMallById(long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
+        if (product.getStatus() != ProductStatus.ON_SALE) {
+            throw ProductException.notFound(id);
+        }
+        return product;
+    }
+
+    @Transactional(readOnly = true)
+    public Product getSkuSnapshot(long productId, long skuId) {
+        Product product = productRepository.findById(productId).orElseThrow(() -> ProductException.notFound(productId));
+        product.getSkus().stream()
+                .filter(s -> s.getId() == skuId)
+                .findFirst()
+                .orElseThrow(() -> ProductException.skuNotFound(skuId));
+        return product;
+    }
+
     @Transactional
     public long create(CreateProductCommand command) {
         ensureCategoryEnabled(command.categoryId());
@@ -138,6 +166,22 @@ public class ProductApplicationService {
         } else {
             product.disableSku(skuId);
         }
+        productRepository.update(product);
+    }
+
+    @Transactional
+    public void publish(long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
+        ensureCategoryEnabled(product.getCategoryId());
+        ensureBrandEnabled(product.getBrandId());
+        product.publish();
+        productRepository.update(product);
+    }
+
+    @Transactional
+    public void unpublish(long id) {
+        Product product = productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
+        product.unpublish();
         productRepository.update(product);
     }
 
