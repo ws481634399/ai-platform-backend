@@ -38,10 +38,17 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: testing # pending / developing / testing / completed
 baseline:
-  commit: "23a1dfb7d1c86138f40de5cc6a173a50bff09953"
+  commit: "7cba45e3d04dae4925551342249465a179e8ca05"
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "23a1dfb"
+  paths:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/domain/product/Sku.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/product
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/admin
+    - mall-services/mall-product/src/main/resources/db/migration/V3__create_product_sku.sql
+  symbols:
+    - "domain/product/Sku.java::Sku"
+    - "domain/product/SpecificationHash.java::SpecificationHash"
+    - "application/product/ProductApplicationService.java::ProductApplicationService"
