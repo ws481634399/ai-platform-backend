@@ -31,6 +31,7 @@ start-dev.ps1
 
 # 本地 JWT 密钥（含私钥，勿提交）
 local-jwt/
+local-keys/
 
 # 沙箱构建用的临时本地仓库（不影响真实缓存 D:\maven-repository）
 .m2-repo/
