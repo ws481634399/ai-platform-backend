@@ -9,9 +9,9 @@ INSERT INTO auth_permission(code,name,type,status,api_pattern,http_method) VALUE
 ON DUPLICATE KEY UPDATE name=VALUES(name),type=VALUES(type),status='ENABLED',
     api_pattern=VALUES(api_pattern),http_method=VALUES(http_method);
 
--- 库存管理目录
+-- 库存管理目录（顶级目录 parent_id 必须为 NULL：auth_menu.fk_auth_menu_parent 不允许 0）
 INSERT INTO auth_menu(parent_id,name,type,path,component_key,permission_code,sort_order,visible,status)
-SELECT 0,'库存管理','DIRECTORY','/inventory',NULL,NULL,50,TRUE,'ENABLED'
+SELECT NULL,'库存管理','DIRECTORY','/inventory',NULL,NULL,50,TRUE,'ENABLED'
 WHERE NOT EXISTS (SELECT 1 FROM auth_menu WHERE path='/inventory' AND type='DIRECTORY');
 
 -- 库存列表页

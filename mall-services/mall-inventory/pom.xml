@@ -34,6 +34,11 @@
       <artifactId>mall-common-security</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- OAuth2 资源服务器：JWT 解码（仅验证侧，不签发） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>
