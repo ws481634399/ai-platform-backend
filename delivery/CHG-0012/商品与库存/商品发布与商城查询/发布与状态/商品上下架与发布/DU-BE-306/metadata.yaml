@@ -41,10 +41,10 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending
+status: testing
 baseline:
-  commit: "f0a26b3d9a34af760407bc2debe7c809ba736fe9"
+  commit: "25fcddc"
 result:
-  commit: ""
+  commit: "5a6d951"
   paths: []
   symbols: []
