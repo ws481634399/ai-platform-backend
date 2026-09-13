@@ -1,0 +1,8 @@
+evidence:
+  - id: EV-CODE-307-001
+    type: code-change
+    delivery-unit: DU-BE-307
+    symbol: interfaces/rest/mall/MallProductController.java#mallPage
+    commit: f0a26b3
+    evidence-ref: changeset.md#DU-BE-307
+    created-at: "2026-09-13T09:20:00Z"
