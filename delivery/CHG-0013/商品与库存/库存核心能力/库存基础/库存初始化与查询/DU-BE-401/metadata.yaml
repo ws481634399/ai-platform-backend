@@ -1,4 +1,4 @@
-﻿# OpenSpec Repository Delivery Unit Metadata
+# OpenSpec Repository Delivery Unit Metadata
 #
 # 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
 # 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
@@ -41,7 +41,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "c93d113"
 result:
-  commit: "78ffd23"
+  commit: "f6515de0650e4ff85ba031f3f579922f2ed26eca"
   paths:
     - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/domain/inventory
     - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/application/inventory
@@ -51,4 +51,5 @@ result:
   symbols:
     - "domain/inventory/Inventory.java::initialize"
     - "application/inventory/InventoryApplicationService.java::init"
-    - "interfaces/rest/admin/InventoryAdminController.java::InventoryAdminController"
+    - "interfaces/rest/admin/InventoryAdminController.java::InventoryAdminContr\
+      oller"

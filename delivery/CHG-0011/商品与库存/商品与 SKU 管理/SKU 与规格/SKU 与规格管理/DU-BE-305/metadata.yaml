@@ -42,7 +42,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "7cba45e3d04dae4925551342249465a179e8ca05"
 result:
-  commit: "23a1dfb"
+  commit: "25fcddc00ea2ef43c045b8fa8a9ad28def4f5191"
   paths:
     - mall-services/mall-product/src/main/java/com/ai/mall/product/domain/product/Sku.java
     - mall-services/mall-product/src/main/java/com/ai/mall/product/application/product
