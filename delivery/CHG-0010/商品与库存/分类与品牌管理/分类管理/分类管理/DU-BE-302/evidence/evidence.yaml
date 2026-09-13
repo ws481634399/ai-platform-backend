@@ -1,0 +1,35 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-302
+    symbol: "Category, CategoryRules, CategoryApplicationService, CategoryAdminController, ProductSecurityConfiguration"
+    commit: ca7eb95
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-13T14:00:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-302
+    command: "mvn -pl mall-services/mall-product -am test"
+    result: passed
+    summary:
+      total: 22
+      passed: 22
+      failed: 0
+      skipped: 0
+    covers: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006, AC-007, AC-008, AC-009, AC-010, AC-012]
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-13T13:55:00+08:00"
+  - id: EV-INDEPENDENT-TEST-003
+    type: test-run
+    delivery-unit: DU-BE-302
+    command: "mvn -pl mall-gateway,mall-services/mall-product,mall-services/mall-identity -am test"
+    result: passed
+    summary:
+      total: 77
+      passed: 77
+      failed: 0
+      skipped: 0
+    summary-note: "受影响三服务模块：mall-product 22、mall-identity 50（含 Flyway V3 迁移验证）、mall-gateway 5"
+    covers: [AC-013]
+    evidence-ref: evidence/test-output.log
+    created-at: "2026-09-13T13:56:00+08:00"
