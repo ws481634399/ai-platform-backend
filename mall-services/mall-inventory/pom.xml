@@ -28,6 +28,12 @@
       <artifactId>mall-common-log</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- 安全：JWT 资源服务器 + JwtSubjectConverter 权限映射 -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>

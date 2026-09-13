@@ -25,6 +25,15 @@ mybatis-plus:
 server:
   port: 8106
 
+mall:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+  inventory:
+    sku-service-uri: ${MALL_PRODUCT_URI:http://localhost:8103}
+
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId:-}] %logger{40} - %msg%n"
