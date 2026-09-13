@@ -16,7 +16,23 @@ public enum ProductErrorCode implements ErrorCode {
     CATEGORY_CYCLE("B2107", "不能将分类挂载到自己的子分类下"),
 
     BRAND_NOT_FOUND("B2121", "品牌不存在"),
-    BRAND_NAME_DUPLICATED("B2122", "品牌名称已存在");
+    BRAND_NAME_DUPLICATED("B2122", "品牌名称已存在"),
+
+    PRODUCT_NOT_FOUND("B2141", "商品不存在"),
+    PRODUCT_CODE_DUPLICATED("B2142", "商品编码已存在"),
+    PRODUCT_CATEGORY_INVALID("B2143", "分类不存在或已禁用"),
+    PRODUCT_BRAND_INVALID("B2144", "品牌不存在或已禁用"),
+    PRODUCT_CATEGORY_DISABLED("B2145", "分类已禁用"),
+    PRODUCT_BRAND_DISABLED("B2146", "品牌已禁用"),
+    PRODUCT_MAIN_IMAGE_DUPLICATED("B2147", "一个商品仅能有一张主图"),
+    PRODUCT_NOT_DRAFT("B2148", "仅 DRAFT 状态商品可修改"),
+    PRODUCT_INVALID_STATUS_TRANSITION("B2149", "非法商品状态流转"),
+
+    SKU_NOT_FOUND("B2161", "SKU 不存在"),
+    SKU_CODE_DUPLICATED("B2162", "SKU 编码已存在"),
+    SKU_SPEC_DUPLICATED("B2163", "同商品下规格组合已存在"),
+    SKU_PRICE_INVALID("B2164", "SKU 售价不能为负"),
+    SKU_SPEC_EMPTY("B2165", "SKU 规格不能为空");
 
     private final String code;
     private final String message;
