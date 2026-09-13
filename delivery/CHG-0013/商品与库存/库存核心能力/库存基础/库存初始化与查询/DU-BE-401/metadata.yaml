@@ -37,10 +37,18 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: testing # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "c93d113"
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "78ffd23"
+  paths:
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/domain/inventory
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/application/inventory
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/interfaces/rest/admin
+    - mall-services/mall-inventory/src/main/resources/db/migration
+    - mall-services/mall-identity/src/main/resources/db/migration
+  symbols:
+    - "domain/inventory/Inventory.java::initialize"
+    - "application/inventory/InventoryApplicationService.java::init"
+    - "interfaces/rest/admin/InventoryAdminController.java::InventoryAdminController"
