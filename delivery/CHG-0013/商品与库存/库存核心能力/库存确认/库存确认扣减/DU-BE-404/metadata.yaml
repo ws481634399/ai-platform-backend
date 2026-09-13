@@ -1,4 +1,4 @@
-# OpenSpec Repository Delivery Unit Metadata
+﻿# OpenSpec Repository Delivery Unit Metadata
 #
 # 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
 # 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
@@ -38,7 +38,7 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: testing
+status: completed
 baseline:
   commit: "c93d113"
 result:
