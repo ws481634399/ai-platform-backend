@@ -1,0 +1,8 @@
+evidence:
+  - id: EV-CODE-308-001
+    type: code-change
+    delivery-unit: DU-BE-308
+    symbol: interfaces/rest/internal/InternalProductController.java#getSkuSnapshot
+    commit: f0a26b3
+    evidence-ref: changeset.md#DU-BE-308
+    created-at: "2026-09-13T09:20:00Z"
