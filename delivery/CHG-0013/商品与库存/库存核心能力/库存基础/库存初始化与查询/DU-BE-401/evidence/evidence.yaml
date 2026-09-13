@@ -1,0 +1,22 @@
+evidence:
+  - id: EV-CODE-401-001
+    type: code-change
+    delivery-unit: DU-BE-401
+    symbol: domain/inventory/Inventory.java#initialize
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-401
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-401-002
+    type: code-change
+    delivery-unit: DU-BE-401
+    symbol: application/inventory/InventoryApplicationService.java#init
+    commit: e2bff4b
+    evidence-ref: changeset.md#DU-BE-401
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-401-003
+    type: code-change
+    delivery-unit: DU-BE-401
+    symbol: interfaces/rest/admin/InventoryAdminController.java#page
+    commit: e2bff4b
+    evidence-ref: changeset.md#DU-BE-401
+    created-at: "2026-09-13T10:00:00Z"

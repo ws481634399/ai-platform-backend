@@ -1,0 +1,29 @@
+evidence:
+  - id: EV-CODE-404-001
+    type: code-change
+    delivery-unit: DU-BE-404
+    symbol: domain/inventory/Inventory.java#confirmDeduction
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-404
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-404-002
+    type: code-change
+    delivery-unit: DU-BE-404
+    symbol: domain/inventory/InventoryReservation.java#confirmDeduction
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-404
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-404-003
+    type: code-change
+    delivery-unit: DU-BE-404
+    symbol: application/inventory/InventoryApplicationService.java#confirmDeduction
+    commit: e2bff4b
+    evidence-ref: changeset.md#DU-BE-404
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-404-004
+    type: code-change
+    delivery-unit: DU-BE-404
+    symbol: interfaces/rest/internal/InternalInventoryController.java#confirm
+    commit: e2bff4b
+    evidence-ref: changeset.md#DU-BE-404
+    created-at: "2026-09-13T10:00:00Z"

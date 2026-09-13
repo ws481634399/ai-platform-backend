@@ -1,0 +1,29 @@
+evidence:
+  - id: EV-CODE-403-001
+    type: code-change
+    delivery-unit: DU-BE-403
+    symbol: domain/inventory/Inventory.java#lock
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-403
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-403-002
+    type: code-change
+    delivery-unit: DU-BE-403
+    symbol: domain/inventory/InventoryReservation.java#release
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-403
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-403-003
+    type: code-change
+    delivery-unit: DU-BE-403
+    symbol: infrastructure/persistence/inventory/InventoryMapper.java#lockStock
+    commit: 08d619f
+    evidence-ref: changeset.md#DU-BE-403
+    created-at: "2026-09-13T10:00:00Z"
+  - id: EV-CODE-403-004
+    type: code-change
+    delivery-unit: DU-BE-403
+    symbol: interfaces/rest/internal/InternalInventoryController.java#lock
+    commit: e2bff4b
+    evidence-ref: changeset.md#DU-BE-403
+    created-at: "2026-09-13T10:00:00Z"
