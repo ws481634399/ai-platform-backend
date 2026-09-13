@@ -93,6 +93,11 @@ public class ProductApplicationService {
         return product;
     }
 
+    @Transactional(readOnly = true)
+    public boolean existsSku(long skuId) {
+        return productRepository.existsBySkuId(skuId);
+    }
+
     @Transactional
     public long create(CreateProductCommand command) {
         ensureCategoryEnabled(command.categoryId());

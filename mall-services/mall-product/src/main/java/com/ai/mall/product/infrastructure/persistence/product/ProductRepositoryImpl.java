@@ -66,6 +66,11 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public boolean existsBySkuId(long skuId) {
+        return skuMapper.selectById(skuId) != null;
+    }
+
+    @Override
     public ProductPageResult page(ProductPageQuery query) {
         LambdaQueryWrapper<ProductPo> wrapper = new LambdaQueryWrapper<ProductPo>()
                 .like(query.keyword() != null && !query.keyword().isBlank(), ProductPo::getProductName, query.keyword())

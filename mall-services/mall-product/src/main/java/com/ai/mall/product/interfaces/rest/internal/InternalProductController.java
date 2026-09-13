@@ -48,4 +48,9 @@ public class InternalProductController {
                 attributes, sku.getSalePrice().amountInCents(), image, product.getStatus().name());
         return UnifyResult.ok(snapshot);
     }
+
+    @GetMapping("/skus/{skuId}")
+    public UnifyResult<Boolean> existsSku(@PathVariable long skuId) {
+        return UnifyResult.ok(service.existsSku(skuId));
+    }
 }

@@ -22,6 +22,11 @@ spring:
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:
             - Path=/api/admin/categories/**,/api/admin/brands/**
+        # CHG-0013：库存服务管理端与内部接口路由
+        - id: mall-inventory-admin
+          uri: ${MALL_GATEWAY_INVENTORY_URI:http://localhost:8106}
+          predicates:
+            - Path=/api/admin/inventory/**,/api/internal/inventory/**
   security:
     oauth2:
       resourceserver:

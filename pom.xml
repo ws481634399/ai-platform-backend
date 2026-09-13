@@ -95,6 +95,11 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <!-- 编译器：启用 -parameters 使 Spring MVC @PathVariable 省略 value 时可反射读取参数名 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
       <!-- 环境守门：全模块生效，版本不满足时显式失败（AC-3） -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

@@ -15,6 +15,8 @@ public interface ProductRepository {
 
     boolean existsBySkuCode(String skuCode, Long excludeSkuId);
 
+    boolean existsBySkuId(long skuId);
+
     ProductPageResult page(ProductPageQuery query);
 
     ProductPageResult mallPage(ProductPageQuery query);
