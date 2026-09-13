@@ -1,0 +1,8 @@
+evidence:
+  - id: EV-CODE-306-001
+    type: code-change
+    delivery-unit: DU-BE-306
+    symbol: domain/product/Product.java#publish
+    commit: f0a26b3
+    evidence-ref: changeset.md#DU-BE-306
+    created-at: "2026-09-13T09:20:00Z"

@@ -24,7 +24,7 @@ workspace-source:
   design: delivery/changes/CHG-0012/requirement-design.md
   story-design: delivery/changes/CHG-0012/商品与库存/商品发布与商城查询/内部契约与快照/内部查询契约与商品快照/story-design.md
   test-design: delivery/changes/CHG-0012/商品与库存/商品发布与商城查询/内部契约与快照/内部查询契约与商品快照/test-design.md
-scope: [S5, S6]
+scope: [ S5, S6 ]
 acceptance:
   - AC-001
   - AC-002
@@ -39,7 +39,7 @@ implementation-guidance:
   complexity-trigger: []
 status: pending
 baseline:
-  commit: ""
+  commit: "f0a26b3d9a34af760407bc2debe7c809ba736fe9"
 result:
   commit: ""
   paths: []
