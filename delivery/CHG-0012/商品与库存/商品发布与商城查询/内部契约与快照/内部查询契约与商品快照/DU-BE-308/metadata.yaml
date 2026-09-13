@@ -41,6 +41,10 @@ status: completed
 baseline:
   commit: "25fcddc"
 result:
-  commit: "f1e75f6"
-  paths: []
-  symbols: []
+  commit: "c6baa1a"
+  paths:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/internal
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/product
+  symbols:
+    - "interfaces/rest/internal/InternalProductController.java::InternalProductController"
+    - "interfaces/rest/internal/dto/ProductSnapshotView.java::ProductSnapshotView"

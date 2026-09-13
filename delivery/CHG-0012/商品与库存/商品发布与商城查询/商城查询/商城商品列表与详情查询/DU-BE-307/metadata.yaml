@@ -42,6 +42,11 @@ status: completed
 baseline:
   commit: "25fcddc"
 result:
-  commit: "5df94fc"
-  paths: []
-  symbols: []
+  commit: "f1e75f6"
+  paths:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/persistence/product
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/config
+  symbols:
+    - "interfaces/rest/mall/MallProductController.java::MallProductController"
+    - "infrastructure/persistence/product/ProductRepositoryImpl.java::mallPage"

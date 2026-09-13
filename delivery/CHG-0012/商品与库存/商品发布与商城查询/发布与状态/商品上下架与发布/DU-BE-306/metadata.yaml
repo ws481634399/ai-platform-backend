@@ -45,6 +45,15 @@ status: completed
 baseline:
   commit: "25fcddc"
 result:
-  commit: "5a6d951"
-  paths: []
-  symbols: []
+  commit: "5df94fc"
+  paths:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/domain/product
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/product
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/admin
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/domain/shared
+    - mall-services/mall-identity/src/main/resources/db/migration
+  symbols:
+    - "domain/product/Product.java::publish"
+    - "domain/product/Product.java::unpublish"
+    - "application/product/ProductApplicationService.java::ProductApplicationService"
+    - "interfaces/rest/admin/ProductAdminController.java::ProductAdminController"
