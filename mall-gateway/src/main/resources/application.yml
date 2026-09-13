@@ -7,6 +7,21 @@ spring:
       server-addr: ${NACOS_ADDR:}
       discovery:
         enabled: ${NACOS_ENABLED:false}
+    # CHG-0010：商品服务管理端路由。本地默认直连（无 loadbalancer/注册中心），
+    # 部署环境可经 MALL_GATEWAY_PRODUCT_URI=lb://mall-product 覆写为服务发现寻址
+    gateway:
+      routes:
+        # CHG-0007 遗漏补配：身份认证与会话引导路由（设计见 CHG-0007 design.md 集成边界）
+        - id: mall-identity-admin
+          uri: ${MALL_GATEWAY_IDENTITY_URI:http://localhost:8101}
+          predicates:
+            - Path=/api/admin/auth/**,/api/admin/session/**
+        # CHG-0010：商品服务管理端路由。本地默认直连（无 loadbalancer/注册中心），
+        # 部署环境可经 MALL_GATEWAY_PRODUCT_URI=lb://mall-product 覆写为服务发现寻址
+        - id: mall-product-admin
+          uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
+          predicates:
+            - Path=/api/admin/categories/**,/api/admin/brands/**
   security:
     oauth2:
       resourceserver:

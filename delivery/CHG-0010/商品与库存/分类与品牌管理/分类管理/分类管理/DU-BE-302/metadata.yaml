@@ -1,0 +1,62 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-302
+repository: "repo-1"
+parent:
+  change: "CHG-0010"
+feature-path:
+  level-1:
+    id: FEAT-002
+    name: 商品与库存
+  level-2:
+    id: FEAT-002-01
+    name: 分类与品牌管理
+  level-3:
+    id: FEAT-002-01-01
+    name: 分类管理
+  story:
+    id: STORY-002-01-01-01
+    name: 分类管理
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0010/requirement.md
+  spec: delivery/changes/CHG-0010/requirement-spec.md
+  design: delivery/changes/CHG-0010/requirement-design.md
+  story-design: delivery/changes/CHG-0010/商品与库存/分类与品牌管理/分类管理/分类管理/story-design.md
+  test-design: delivery/changes/CHG-0010/商品与库存/分类与品牌管理/分类管理/分类管理/test-design.md
+scope:
+  - "[S1] 分类层级与树结构（含公共前置：安全配置/权限码/网关路由）"
+  - "[S2] 分类增改与不变量"
+  - "[S3] 分类启停"
+  - "[S4] RBAC 权限点"
+  - "[S8] 数据一致性与迁移"
+acceptance:
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  - AC-007
+  - AC-008
+  - AC-009
+  - AC-010
+  - AC-012
+dependencies: []
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: true
+  complexity-trigger:
+    - algorithm
+status: pending # pending / developing / testing / completed
+baseline:
+  commit: ""
+result:
+  commit: ""
+  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
+  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
