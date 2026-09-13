@@ -26,6 +26,12 @@ logs/
 # 本地环境配置
 *.local
 
+# 本地联调启动脚本（含本机端口与密码，勿提交）
+start-dev.ps1
+
+# 本地 JWT 密钥（含私钥，勿提交）
+local-jwt/
+
 # 沙箱构建用的临时本地仓库（不影响真实缓存 D:\maven-repository）
 .m2-repo/
 .m2-sandbox/
