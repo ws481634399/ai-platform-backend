@@ -1,7 +1,10 @@
 package com.ai.mall.product.interfaces.rest.admin.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 /**
@@ -21,7 +24,8 @@ public final class ProductDtos {
             @NotNull Long categoryId,
             @NotNull Long brandId,
             List<ImageRequest> images,
-            List<AttributeRequest> attributes
+            List<AttributeRequest> attributes,
+            @NotEmpty List<@Valid CreateSkuRequest> skus
     ) {}
 
     public record UpdateProductRequest(
@@ -78,8 +82,8 @@ public final class ProductDtos {
 
     public record CreateSkuRequest(
             @NotBlank String skuCode,
-            List<SpecificationRequest> specifications,
-            long salePriceInCents,
+            @NotEmpty List<@Valid SpecificationRequest> specifications,
+            @PositiveOrZero long salePriceInCents,
             String mainImageUrl
     ) {}
 

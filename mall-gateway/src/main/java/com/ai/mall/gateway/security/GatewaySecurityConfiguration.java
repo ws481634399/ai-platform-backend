@@ -33,7 +33,8 @@ public class GatewaySecurityConfiguration {
                 ? Flux.just(new SimpleGrantedAuthority("ROLE_ADMIN")) : Flux.empty());
         return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/admin/auth/login", "/api/admin/auth/refresh", "/actuator/health").permitAll()
+                        .pathMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
+                                "/api/mall/products/**", "/actuator/health").permitAll()
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .exceptionHandling(errors -> errors

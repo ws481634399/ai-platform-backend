@@ -161,13 +161,7 @@ class MallProductApiTest {
                         .content(json(body)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        long productId = objectMapper.readTree(resp).path("data").path("id").asLong();
-        mockMvc.perform(post("/api/admin/products/" + productId + "/skus")
-                        .header("Authorization", "Bearer " + token(List.of("product:sku:create")))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json(skuBody(code + "-SKU", List.of(spec("颜色", "黑")), 9900L))))
-                .andExpect(status().isOk());
-        return productId;
+        return objectMapper.readTree(resp).path("data").path("id").asLong();
     }
 
     private Map<String, Object> productBody(String code, String name, List<Map<String, Object>> images) {
@@ -178,6 +172,7 @@ class MallProductApiTest {
         body.put("brandId", brandId);
         body.put("images", images != null ? images : List.of());
         body.put("attributes", List.of());
+        body.put("skus", List.of(skuBody(code + "-SKU", List.of(spec("颜色", "黑")), 9900L)));
         return body;
     }
 

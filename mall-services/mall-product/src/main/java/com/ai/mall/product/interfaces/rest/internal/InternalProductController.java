@@ -29,8 +29,8 @@ public class InternalProductController {
     }
 
     @GetMapping("/{productId}/skus/{skuId}")
-    public UnifyResult<ProductSnapshotView> getSkuSnapshot(@PathVariable long productId,
-                                                           @PathVariable long skuId) {
+    public UnifyResult<ProductSnapshotView> getSkuSnapshot(@PathVariable("productId") long productId,
+                                                           @PathVariable("skuId") long skuId) {
         Product product = service.getSkuSnapshot(productId, skuId);
         Sku sku = product.getSkus().stream()
                 .filter(s -> s.getId() == skuId)
@@ -50,7 +50,7 @@ public class InternalProductController {
     }
 
     @GetMapping("/skus/{skuId}")
-    public UnifyResult<Boolean> existsSku(@PathVariable long skuId) {
+    public UnifyResult<Boolean> existsSku(@PathVariable("skuId") long skuId) {
         return UnifyResult.ok(service.existsSku(skuId));
     }
 }

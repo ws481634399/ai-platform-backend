@@ -19,7 +19,8 @@ public final class ProductCommands {
             long categoryId,
             long brandId,
             List<ImageParam> images,
-            List<AttributeParam> attributes
+            List<AttributeParam> attributes,
+            List<CreateSkuCommand> skus
     ) {}
 
     public record UpdateProductCommand(

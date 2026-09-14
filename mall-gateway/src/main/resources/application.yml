@@ -27,6 +27,15 @@ spring:
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:
             - Path=/api/admin/products/**
+        # CHG-0014：商城公开查询与服务间商品快照路由
+        - id: mall-product-mall
+          uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
+          predicates:
+            - Path=/api/mall/products/**
+        - id: mall-product-internal
+          uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
+          predicates:
+            - Path=/api/internal/products/**
         # CHG-0013：库存服务管理端与内部接口路由
         - id: mall-inventory-admin
           uri: ${MALL_GATEWAY_INVENTORY_URI:http://localhost:8106}

@@ -1,5 +1,6 @@
 package com.ai.mall.product.interfaces.rest.admin;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -79,6 +80,41 @@ class ProductAdminApiTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.records[0].status").value("DRAFT"))
                 .andExpect(jsonPath("$.data.records[0].name").value("iPhone 15"));
+    }
+
+    @Test
+    @DisplayName("CHG-0014 创建商品时原子保存至少一个 SKU")
+    void createProductWithSkuAtomically() throws Exception {
+        Map<String, Object> body = productBody("P-ATOMIC", "Atomic Product", null);
+        body.put("skus", List.of(skuBody("P-ATOMIC-SKU", List.of(spec("颜色", "黑")), 129900L)));
+
+        String response = mockMvc.perform(post("/api/admin/products")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:create")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(body)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        long productId = objectMapper.readTree(response).path("data").path("id").asLong();
+        mockMvc.perform(get("/api/admin/products/" + productId)
+                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.skus.length()").value(1))
+                .andExpect(jsonPath("$.data.skus[0].skuCode").value("P-ATOMIC-SKU"))
+                .andExpect(jsonPath("$.data.skus[0].salePriceInCents").value(129900));
+    }
+
+    @Test
+    @DisplayName("CHG-0014 创建商品缺少 SKU 时拒绝")
+    void createProductWithoutSkuRejected() throws Exception {
+        Map<String, Object> body = productBody("P-NO-SKU", "No Sku Product", null);
+        body.put("skus", List.of());
+
+        mockMvc.perform(post("/api/admin/products")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:create")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(body)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -194,10 +230,10 @@ class ProductAdminApiTest {
                         .content(json(Map.of("salePriceInCents", 20000L, "mainImageUrl", "https://cdn.example.com/sku.png"))))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/api/admin/products/" + productId)
-                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
-                .andExpect(jsonPath("$.data.skus[0].salePriceInCents").value(20000))
-                .andExpect(jsonPath("$.data.skus[0].mainImageUrl").value("https://cdn.example.com/sku.png"));
+        assertEquals(20000L, jdbc.queryForObject(
+                "SELECT sale_price FROM product_sku WHERE sku_code='SKU-UP'", Long.class));
+        assertEquals("https://cdn.example.com/sku.png", jdbc.queryForObject(
+                "SELECT main_image_url FROM product_sku WHERE sku_code='SKU-UP'", String.class));
     }
 
     @Test
@@ -231,9 +267,8 @@ class ProductAdminApiTest {
                         .content(json(Map.of("status", "DISABLED"))))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get("/api/admin/products/" + productId)
-                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
-                .andExpect(jsonPath("$.data.skus[0].status").value("DISABLED"));
+        assertEquals("DISABLED", jdbc.queryForObject(
+                "SELECT status FROM product_sku WHERE sku_code='SKU-T'", String.class));
     }
 
     @Test
@@ -253,11 +288,6 @@ class ProductAdminApiTest {
     @DisplayName("CHG-0012 上架：无主图商品拒绝")
     void publishWithoutMainImageRejected() throws Exception {
         long productId = createProduct("P-NOIMG");
-        mockMvc.perform(post("/api/admin/products/" + productId + "/skus")
-                        .header("Authorization", "Bearer " + token(List.of("product:sku:create")))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json(skuBody("SKU-NOIMG", List.of(spec("颜色", "黑")), 100L))))
-                .andExpect(status().isOk());
 
         mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
                         .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
@@ -269,6 +299,12 @@ class ProductAdminApiTest {
     @DisplayName("CHG-0012 上架：无 ENABLED SKU 拒绝")
     void publishWithoutEnabledSkuRejected() throws Exception {
         long productId = createProductWithImage("P-NOSKU");
+        long skuId = jdbc.queryForObject("SELECT id FROM product_sku WHERE product_id=?", Long.class, productId);
+        mockMvc.perform(put("/api/admin/products/" + productId + "/skus/" + skuId + "/status")
+                        .header("Authorization", "Bearer " + token(List.of("product:sku:disable")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json(Map.of("status", "DISABLED"))))
+                .andExpect(status().isOk());
         mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
                         .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
                 .andExpect(status().isBadRequest())
@@ -352,13 +388,7 @@ class ProductAdminApiTest {
     }
 
     private long createProductWithSkuAndImage(String code) throws Exception {
-        long productId = createProductWithImage(code);
-        mockMvc.perform(post("/api/admin/products/" + productId + "/skus")
-                        .header("Authorization", "Bearer " + token(List.of("product:sku:create")))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(json(skuBody(code + "-SKU", List.of(spec("颜色", "黑")), 9900L))))
-                .andExpect(status().isOk());
-        return productId;
+        return createProductWithImage(code);
     }
 
     private long createProduct(String code) throws Exception {
@@ -380,6 +410,7 @@ class ProductAdminApiTest {
         body.put("brandId", brandId);
         body.put("images", images != null ? images : List.of());
         body.put("attributes", List.of());
+        body.put("skus", List.of(skuBody(code + "-DEFAULT", List.of(spec("默认", "默认")), 9900L)));
         return body;
     }
 

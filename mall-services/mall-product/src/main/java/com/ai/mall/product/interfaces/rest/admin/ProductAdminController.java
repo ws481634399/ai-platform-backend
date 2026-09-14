@@ -59,12 +59,12 @@ public class ProductAdminController {
     @GetMapping
     @PreAuthorize("hasAuthority('product:product:list')")
     public UnifyResult<PageView<ProductView>> page(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Long brandId,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "categoryId", required = false) Long categoryId,
+            @RequestParam(name = "brandId", required = false) Long brandId,
+            @RequestParam(name = "status", required = false) String status,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size) {
         ProductPageResult result = service.page(new ProductPageQuery(keyword, categoryId, brandId, status, page, size));
         List<ProductView> records = result.records().stream().map(ProductAdminController::toView).toList();
         return UnifyResult.ok(new PageView<>(records, result.total(), result.page(), result.size()));
@@ -72,7 +72,7 @@ public class ProductAdminController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('product:product:detail')")
-    public UnifyResult<ProductView> get(@PathVariable long id) {
+    public UnifyResult<ProductView> get(@PathVariable("id") long id) {
         return UnifyResult.ok(toView(service.getById(id)));
     }
 
@@ -81,13 +81,15 @@ public class ProductAdminController {
     public UnifyResult<Map<String, Long>> create(@Valid @RequestBody CreateProductRequest request) {
         long id = service.create(new CreateProductCommand(request.code(), request.name(), request.subtitle(),
                 request.description(), request.categoryId(), request.brandId(),
-                toImageParams(request.images()), toAttributeParams(request.attributes())));
+                toImageParams(request.images()), toAttributeParams(request.attributes()),
+                request.skus().stream().map(s -> new CreateSkuCommand(s.skuCode(),
+                        toSpecificationParams(s.specifications()), s.salePriceInCents(), s.mainImageUrl())).toList()));
         return UnifyResult.ok(Map.of("id", id));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('product:product:update')")
-    public UnifyResult<Void> update(@PathVariable long id, @Valid @RequestBody UpdateProductRequest request) {
+    public UnifyResult<Void> update(@PathVariable("id") long id, @Valid @RequestBody UpdateProductRequest request) {
         service.update(id, new UpdateProductCommand(request.name(), request.subtitle(), request.description(),
                 request.categoryId(), request.brandId(),
                 toImageParams(request.images()), toAttributeParams(request.attributes())));
@@ -96,7 +98,7 @@ public class ProductAdminController {
 
     @PutMapping("/{id}/status")
     @PreAuthorize("hasAuthority('product:product:disable')")
-    public UnifyResult<Void> changeStatus(@PathVariable long id,
+    public UnifyResult<Void> changeStatus(@PathVariable("id") long id,
                                           @Valid @RequestBody ProductStatusRequest request) {
         service.changeStatus(id, new ChangeProductStatusCommand(request.status()));
         return UnifyResult.ok();
@@ -104,7 +106,7 @@ public class ProductAdminController {
 
     @PostMapping("/{id}/skus")
     @PreAuthorize("hasAuthority('product:sku:create')")
-    public UnifyResult<Map<String, Long>> addSku(@PathVariable long id,
+    public UnifyResult<Map<String, Long>> addSku(@PathVariable("id") long id,
                                                  @Valid @RequestBody CreateSkuRequest request) {
         long skuId = service.addSku(id, new CreateSkuCommand(request.skuCode(),
                 toSpecificationParams(request.specifications()), request.salePriceInCents(), request.mainImageUrl()));
@@ -113,7 +115,7 @@ public class ProductAdminController {
 
     @PutMapping("/{id}/skus/{skuId}")
     @PreAuthorize("hasAuthority('product:sku:update')")
-    public UnifyResult<Void> updateSku(@PathVariable long id, @PathVariable long skuId,
+    public UnifyResult<Void> updateSku(@PathVariable("id") long id, @PathVariable("skuId") long skuId,
                                        @Valid @RequestBody UpdateSkuRequest request) {
         service.updateSku(id, skuId, new UpdateSkuCommand(request.salePriceInCents(), request.mainImageUrl()));
         return UnifyResult.ok();
@@ -121,7 +123,7 @@ public class ProductAdminController {
 
     @PutMapping("/{id}/skus/{skuId}/status")
     @PreAuthorize("hasAuthority('product:sku:disable')")
-    public UnifyResult<Void> changeSkuStatus(@PathVariable long id, @PathVariable long skuId,
+    public UnifyResult<Void> changeSkuStatus(@PathVariable("id") long id, @PathVariable("skuId") long skuId,
                                              @Valid @RequestBody SkuStatusRequest request) {
         service.changeSkuStatus(id, skuId, new ChangeSkuStatusCommand(request.status()));
         return UnifyResult.ok();
@@ -129,14 +131,14 @@ public class ProductAdminController {
 
     @PostMapping("/{id}/publish")
     @PreAuthorize("hasAuthority('product:product:publish')")
-    public UnifyResult<Void> publish(@PathVariable long id) {
+    public UnifyResult<Void> publish(@PathVariable("id") long id) {
         service.publish(id);
         return UnifyResult.ok();
     }
 
     @PostMapping("/{id}/unpublish")
     @PreAuthorize("hasAuthority('product:product:publish')")
-    public UnifyResult<Void> unpublish(@PathVariable long id) {
+    public UnifyResult<Void> unpublish(@PathVariable("id") long id) {
         service.unpublish(id);
         return UnifyResult.ok();
     }

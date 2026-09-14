@@ -24,6 +24,8 @@ import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.SkuStatus;
 import com.ai.mall.product.domain.product.Specification;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,6 +109,15 @@ public class ProductApplicationService {
                 toImages(command.images()), toAttributes(command.attributes()));
         if (productRepository.existsByCode(product.getCode(), null)) {
             throw ProductException.codeDuplicated(product.getCode());
+        }
+        Set<String> skuCodes = new HashSet<>();
+        for (CreateSkuCommand skuCommand : command.skus()) {
+            Sku sku = Sku.createNew(skuCommand.skuCode(), toSpecifications(skuCommand.specifications()),
+                    skuCommand.salePriceInCents(), skuCommand.mainImageUrl());
+            if (!skuCodes.add(sku.getCode()) || productRepository.existsBySkuCode(sku.getCode(), null)) {
+                throw ProductException.skuCodeDuplicated(sku.getCode());
+            }
+            product.addSku(sku);
         }
         try {
             productRepository.insert(product);

@@ -38,11 +38,11 @@ public class MallProductController {
 
     @GetMapping
     public UnifyResult<PageView<MallProductListItemView>> page(
-            @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) Long categoryId,
-            @RequestParam(required = false) Long brandId,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "categoryId", required = false) Long categoryId,
+            @RequestParam(name = "brandId", required = false) Long brandId,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size) {
         ProductPageResult result = service.mallPage(new ProductPageQuery(keyword, categoryId, brandId, null, page, size));
         List<MallProductListItemView> records = result.records().stream()
                 .map(MallProductController::toListItemView).toList();
@@ -50,7 +50,7 @@ public class MallProductController {
     }
 
     @GetMapping("/{id}")
-    public UnifyResult<MallProductDetailView> get(@PathVariable long id) {
+    public UnifyResult<MallProductDetailView> get(@PathVariable("id") long id) {
         return UnifyResult.ok(toDetailView(service.getMallById(id)));
     }
 
