@@ -1,0 +1,246 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-inventory >---------------------
+[INFO] Building mall-inventory 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-inventory ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-inventory ---
+[INFO] Copying 4 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-inventory ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 25 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-inventory ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-inventory ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 6 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-inventory ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.inventory.domain.inventory.InventoryReservationTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in com.ai.mall.inventory.domain.inventory.InventoryReservationTest
+[INFO] Running com.ai.mall.inventory.domain.inventory.InventoryTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in com.ai.mall.inventory.domain.inventory.InventoryTest
+[INFO] Running com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+00:44:18.040 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest]: InventoryAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:44:18.217 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:44:18.612 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Starting InventoryAdminApiTest using Java 21.0.12 with PID 38436 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 00:44:18.613 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - The following 1 profile is active: "test"
+2026-09-15 00:44:19.529 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:44:19.531 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:44:19.555 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:44:19.894 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=f6df9dd2-c9b2-3a67-b361-fad8adaeef57
+2026-09-15 00:44:20.469 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-15 00:44:20.614 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 00:44:20.617 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-15 00:44:20.687 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 00:44:20.736 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-15 00:44:20.739 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.029s)
+2026-09-15 00:44:20.748 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-15 00:44:20.788 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-15 00:44:20.796 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - create inventory stock and log"
+2026-09-15 00:44:20.811 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - create inventory reservation"
+2026-09-15 00:44:20.818 [main] INFO  [] o.f.core.internal.command.DbMigrate - Successfully applied 2 migrations to schema "public", now at version v2 (execution time 00:00.006s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:44:22.139 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@7428de63
+2026-09-15 00:44:22.726 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 00:44:22.726 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 00:44:22.726 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 0 ms
+2026-09-15 00:44:22.759 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Started InventoryAdminApiTest in 4.442 seconds (process running for 5.454)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2518
++ ... tform-backend; mvn -pl mall-services/mall-inventory test 2>&1 | Tee-O ...
++                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/admin/inventory/stocks
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAzIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0ODYzLCJpYXQiOjE3ODk0MDQyNTgsInVzZXJuYW1lIjoiaW52ZW50b3J5X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.gDV4OxtTPcjkz-w9GDb7Y0myYYZO_h0CarJ3P4mNOWQ1cifIR_6ViCg-LIQ9k5TisOs7LCMSoX8679fnHyjKY0qlgiVnPbyKKsdd0F1AW_DfNKdkPF61sm5MoXvfaMTr_iP2LBBujLJuOUSFE4nEGO89eK5jvXCVArjgxqBkWV9tNfuDh3bk-dc8Z_AzAtCUWuqL06AEEmabqMyWBXxAVIOE5ReNuYP59pd60xoj0HpNrKhH4ll8M2kcJ_SeovE1-CGhV9JuEvJovGnAZerlu7hkrqpCcP5FgsKYZpu2q2f9RXPIjYfx5KURPvFqFFrpZbgLyhHwojSb83uVWtXi7w"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController
+           Method = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController#page(Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.IllegalArgumentException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"51220031ef984addbef845686ba739f1"]
+     Content type = application/json
+             Body = {"success":false,"code":"A0001","message":"Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.","data":null,"traceId":"51220031ef984addbef845686ba739f1"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/admin/inventory/stocks
+       Parameters = {page=[1], size=[10]}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAzIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbImludmVudG9yeTpzdG9jazpsaXN0Il0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0ODYzLCJpYXQiOjE3ODk0MDQyNTgsInVzZXJuYW1lIjoiaW52ZW50b3J5X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sS3QxQ9C0oEyqYqEFy4BFfb_bv6HAu93LXq7fQkscWY0CXZ2nHMR2nul4lceqNbD3e7cTEapIWt9NlwKGe11Egn0Z1KyQRBxaeel2D20Xv1yXGps5rvnG8pCcbKJQhJ4eaQVdqfG6BnesMkiuguX8Pr5ucMsdj_UEJ_NfHmvP6DPQaJ1KmR0Q35-V2hscqzfMfXWb5O10Z21VFzDrtB38FkUfMMO5T0Y_iD5Ev6kwFYmNMDf9QXebjNJvfdmyDHUchoQQPfwI4dnIrBSETkj5n9qqz4peoATfYpcRP_JQE2FMip97Nqz7K00KfdTmQUQFbc6L9gp7UEjtDaS7kaaYw"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController
+           Method = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController#page(Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = java.lang.IllegalArgumentException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"a0463d80949d41b7b7ae7138b11e636a"]
+     Content type = application/json
+             Body = {"success":false,"code":"A0001","message":"Name for argument of type [java.lang.Long] not specified, and parameter name information not available via reflection. Ensure that the compiler uses the '-parameters' flag.","data":null,"traceId":"a0463d80949d41b7b7ae7138b11e636a"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 5.316 s <<< FAILURE! -- in com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+[ERROR] com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.permissionEnforced -- Time elapsed: 0.453 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<403> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.permissionEnforced(InventoryAdminApiTest.java:79)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.paginationTotalStableAcrossPages -- Time elapsed: 0.016 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<400>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.paginationTotalStableAcrossPages(InventoryAdminApiTest.java:56)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] Running com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+2026-09-15 00:44:23.244 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.inventory.MallInventoryApplicationSmokeTest]: MallInventoryApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:44:23.254 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:44:23.287 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Starting MallInventoryApplicationSmokeTest using Java 21.0.12 with PID 38436 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 00:44:23.287 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-15 00:44:23.465 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:44:23.466 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:44:23.475 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:44:23.528 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=3f3f00ee-75e3-32e7-8f4e-666dacbc5827
+2026-09-15 00:44:23.565 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-09-15 00:44:23.565 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 00:44:23.566 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-09-15 00:44:23.567 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 00:44:23.571 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.003s)
+2026-09-15 00:44:23.573 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": 2
+2026-09-15 00:44:23.573 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:44:23.687 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@3b910a4b
+2026-09-15 00:44:23.777 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Started MallInventoryApplicationSmokeTest in 0.52 seconds (process running for 6.473)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.540 s -- in com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   InventoryAdminApiTest.paginationTotalStableAcrossPages:56 Status expected:<200> but was:<400>
+[ERROR]   InventoryAdminApiTest.permissionEnforced:79 Status expected:<403> but was:<400>
+[INFO] 
+[ERROR] Tests run: 15, Failures: 2, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10.797 s
+[INFO] Finished at: 2026-09-15T00:44:23+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project mall-inventory: There are test failures.
+[ERROR] 
+[ERROR] See D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

@@ -1,0 +1,1204 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-product >----------------------
+[INFO] Building mall-product 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-product ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-product ---
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-product ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-product ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.product.domain.brand.BrandTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.059 s -- in com.ai.mall.product.domain.brand.BrandTest
+[INFO] Running com.ai.mall.product.domain.category.CategoryRulesTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.ai.mall.product.domain.category.CategoryRulesTest
+[INFO] Running com.ai.mall.product.domain.category.CategoryTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.005 s -- in com.ai.mall.product.domain.category.CategoryTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+00:30:20.235 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest]: BrandAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:30:20.353 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:30:20.758 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - Starting BrandAdminApiTest using Java 21.0.12 with PID 36392 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product)
+2026-09-15 00:30:20.760 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - The following 1 profile is active: "test"
+2026-09-15 00:30:21.600 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:30:21.602 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:30:21.637 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:30:22.029 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=6d592d0c-e86c-39b6-bf7b-8bf56e80aff3
+2026-09-15 00:30:22.607 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-15 00:30:22.777 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_product_test user=SA
+2026-09-15 00:30:22.779 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-15 00:30:22.827 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_product_test (H2 2.3)
+2026-09-15 00:30:22.874 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-15 00:30:22.878 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 3 migrations (execution time 00:00.022s)
+2026-09-15 00:30:22.884 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-15 00:30:22.914 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-15 00:30:22.921 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - create product category and brand"
+2026-09-15 00:30:22.941 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - create product spu image attribute"
+2026-09-15 00:30:22.949 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "3 - create product sku"
+2026-09-15 00:30:22.959 [main] INFO  [] o.f.core.internal.command.DbMigrate - Successfully applied 3 migrations to schema "public", now at version v3 (execution time 00:00.014s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:30:24.167 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6eb82908
+2026-09-15 00:30:24.599 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 00:30:24.599 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 00:30:24.599 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 0 ms
+2026-09-15 00:30:24.634 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - Started BrandAdminApiTest in 4.19 seconds (process running for 5.314)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2684
++ ... latform-backend; mvn -pl mall-services/mall-product test 2>&1 | Tee-O ...
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.516 s -- in com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+2026-09-15 00:30:25.637 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest]: CategoryAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:30:25.641 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.217 s -- in com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+2026-09-15 00:30:25.857 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest]: ProductAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:30:25.858 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.402 s -- in com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+2026-09-15 00:30:26.259 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest]: InternalProductApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:30:26.281 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/internal/products/1/skus/1
+       Parameters = {}
+          Headers = [X-Internal-Token:"wrong-secret"]
+             Body = null
+    Session Attrs = {SPRING_SECURITY_SAVED_REQUEST=DefaultSavedRequest [http://localhost/api/internal/products/1/skus/1?continue]}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"1a600f67cbcd4ea699f7b9bb70a0c05c"]
+     Content type = application/json
+             Body = {"success":false,"code":"B0001","message":"authentication required","data":null,"traceId":"1a600f67cbcd4ea699f7b9bb70a0c05c"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"333"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"I-404","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"I-404-SKU"}],"brandId":200,"name":"I-404-name","attributes":[],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"513791834dba4dc18e15570d9af36749"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536258943561729},"traceId":"513791834dba4dc18e15570d9af36749"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/internal/products/2099536258943561729/skus/99999
+       Parameters = {}
+          Headers = [X-Internal-Token:"dev-internal-secret"]
+             Body = null
+    Session Attrs = {SPRING_SECURITY_SAVED_REQUEST=DefaultSavedRequest [http://localhost/api/internal/products/2099536258943561729/skus/99999?continue]}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"851d33c732ce48658a07337da66d74b5"]
+     Content type = application/json
+             Body = {"success":false,"code":"B0001","message":"authentication required","data":null,"traceId":"851d33c732ce48658a07337da66d74b5"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"336"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"I-AUTH","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"I-AUTH-SKU"}],"brandId":200,"name":"I-AUTH-name","attributes":[],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"de155c04bb024cd7bf1be9c0af829411"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536259010670593},"traceId":"de155c04bb024cd7bf1be9c0af829411"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/internal/products/2099536259010670593/skus/2099536259010670595
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {SPRING_SECURITY_SAVED_REQUEST=DefaultSavedRequest [http://localhost/api/internal/products/2099536259010670593/skus/2099536259010670595?continue]}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"4b97bf10e4d443a3a88c5192a5a01ef6"]
+     Content type = application/json
+             Body = {"success":false,"code":"B0001","message":"authentication required","data":null,"traceId":"4b97bf10e4d443a3a88c5192a5a01ef6"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/internal/products/99999/skus/1
+       Parameters = {}
+          Headers = [X-Internal-Token:"dev-internal-secret"]
+             Body = null
+    Session Attrs = {SPRING_SECURITY_SAVED_REQUEST=DefaultSavedRequest [http://localhost/api/internal/products/99999/skus/1?continue]}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"8c5ee461a00b4ade8b67fa74baebea6c"]
+     Content type = application/json
+             Body = {"success":false,"code":"B0001","message":"authentication required","data":null,"traceId":"8c5ee461a00b4ade8b67fa74baebea6c"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"336"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"I-SNAP","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"I-SNAP-SKU"}],"brandId":200,"name":"I-SNAP-name","attributes":[],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"cef3a44018e54e7699a5ae46ce382eba"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536259077779457},"traceId":"cef3a44018e54e7699a5ae46ce382eba"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/internal/products/2099536259077779457/skus/2099536259077779459
+       Parameters = {}
+          Headers = [X-Internal-Token:"dev-internal-secret"]
+             Body = null
+    Session Attrs = {SPRING_SECURITY_SAVED_REQUEST=DefaultSavedRequest [http://localhost/api/internal/products/2099536259077779457/skus/2099536259077779459?continue]}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"74453541d29f43ca80da16fa1f181290"]
+     Content type = application/json
+             Body = {"success":false,"code":"B0001","message":"authentication required","data":null,"traceId":"74453541d29f43ca80da16fa1f181290"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 5, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.067 s <<< FAILURE! -- in com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+[ERROR] com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalWithWrongTokenUnauthorized -- Time elapsed: 0.006 s <<< FAILURE!
+java.lang.AssertionError: JSON path "$.code" expected:<INTERNAL_UNAUTHORIZED> but was:<B0001>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:172)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:112)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalWithWrongTokenUnauthorized(InternalProductApiTest.java:86)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalSkuNotBelongsToProduct -- Time elapsed: 0.010 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalSkuNotBelongsToProduct(InternalProductApiTest.java:122)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalWithoutTokenUnauthorized -- Time elapsed: 0.009 s <<< FAILURE!
+java.lang.AssertionError: JSON path "$.code" expected:<INTERNAL_UNAUTHORIZED> but was:<B0001>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:172)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:112)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalWithoutTokenUnauthorized(InternalProductApiTest.java:77)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalProductNotFound -- Time elapsed: 0.004 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<404> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalProductNotFound(InternalProductApiTest.java:113)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalSnapshotFullFields -- Time elapsed: 0.009 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200> but was:<401>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.servlet.result.StatusResultMatchers.lambda$matcher$9(StatusResultMatchers.java:640)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest.internalSnapshotFullFields(InternalProductApiTest.java:97)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] Running com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+2026-09-15 00:30:26.327 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.mall.MallProductApiTest]: MallProductApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:30:26.346 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"513"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"M-PRICE","skus":[{"salePriceInCents":5000,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-PRICE-SKU-1"},{"salePriceInCents":19900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-PRICE-SKU-2"}],"brandId":200,"name":"M-PRICE-name","attributes":[{"sortOrder":0,"name":"�ͺ�","value":"�콢"}],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"551429dafa944ebbbf4a9a731e722d93"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536259727896578},"traceId":"551429dafa944ebbbf4a9a731e722d93"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products/2099536259727896578/publish
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpwdWJsaXNoIl0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0MDI2LCJpYXQiOjE3ODk0MDM0MjEsInVzZXJuYW1lIjoicHJvZHVjdF9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.Fn4cebcFPpE1bI0b7c96B_D8TRw_NQwYuv6HWDxqhjdWkgVfqvqgCh6IPN7KankP6PcF_G9oA46Y_Mq4ZlnpG3Rj0OZVQJ3_7U781uoqZrmlLvpzxasi8avKycUBZF_AUtQQ71Y23y6_8SjBBebJZnUIxHdFF1WU39JRCwa47xQxzckTTIyqtZJoBkHUUX5Uk2Yy6mrGIASRWdT3TD6KD-v12jPb5Pzu95j2lv4Y5z1yJpejhxh5YFQseMdHs5O1HBd_7fltmu4tkLGrcI8ClBt6itFLvsh8moKsQRgHjV_Lin5YUsBd0s0k3VUe4MXfOaJKPV8yKFJYRY7p_3_hkg"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#publish(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"1d8065b6897d4439aa6d098ca02c04b4"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"1d8065b6897d4439aa6d098ca02c04b4"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#page(String, Long, Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"94bda163f9754e15b46d831bfaf61649"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"records":[{"id":2099536259727896578,"productCode":"M-PRICE","productName":"M-PRICE-name","subtitle":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","minPrice":null,"maxPrice":null,"status":"ON_SALE"}],"total":1,"page":1,"size":20},"traceId":"94bda163f9754e15b46d831bfaf61649"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"390"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"M-DETAIL","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-DETAIL-SKU"}],"brandId":200,"name":"M-DETAIL-name","attributes":[{"sortOrder":0,"name":"�ͺ�","value":"�콢"}],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"a7a2e1eb8e1a493eabcab71ca0b01a25"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536259987943426},"traceId":"a7a2e1eb8e1a493eabcab71ca0b01a25"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products/2099536259987943426/publish
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpwdWJsaXNoIl0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0MDI2LCJpYXQiOjE3ODk0MDM0MjEsInVzZXJuYW1lIjoicHJvZHVjdF9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.Fn4cebcFPpE1bI0b7c96B_D8TRw_NQwYuv6HWDxqhjdWkgVfqvqgCh6IPN7KankP6PcF_G9oA46Y_Mq4ZlnpG3Rj0OZVQJ3_7U781uoqZrmlLvpzxasi8avKycUBZF_AUtQQ71Y23y6_8SjBBebJZnUIxHdFF1WU39JRCwa47xQxzckTTIyqtZJoBkHUUX5Uk2Yy6mrGIASRWdT3TD6KD-v12jPb5Pzu95j2lv4Y5z1yJpejhxh5YFQseMdHs5O1HBd_7fltmu4tkLGrcI8ClBt6itFLvsh8moKsQRgHjV_Lin5YUsBd0s0k3VUe4MXfOaJKPV8yKFJYRY7p_3_hkg"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#publish(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"a6db89998c4f4618972c7b40f66282ee"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"a6db89998c4f4618972c7b40f66282ee"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products/2099536259987943426
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#get(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"dbef5d6b831049d2b3424d0ba107aeaf"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536259987943426,"productCode":"M-DETAIL","productName":"M-DETAIL-name","subtitle":null,"description":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","images":[{"id":2099536259987943430,"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","imageType":"MAIN","sortOrder":0,"mainFlag":true}],"attributes":[{"id":2099536259987943431,"name":"�ͺ�","value":"�콢","sortOrder":0}],"skus":[{"id":2099536259987943429,"skuCode":"M-DETAIL-SKU","specifications":[{"name":"��ɫ","value":"��"}],"salePriceInCents":9900,"status":"ENABLED","mainImageUrl":null}],"status":"ON_SALE"},"traceId":"dbef5d6b831049d2b3424d0ba107aeaf"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"384"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"M-NEST","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-NEST-SKU"}],"brandId":200,"name":"M-NEST-name","attributes":[{"sortOrder":0,"name":"�ͺ�","value":"�콢"}],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"863fda2f7fa545bf9784db6f5c2e6e8e"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536260050857986},"traceId":"863fda2f7fa545bf9784db6f5c2e6e8e"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products/2099536260050857986/publish
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpwdWJsaXNoIl0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0MDI2LCJpYXQiOjE3ODk0MDM0MjEsInVzZXJuYW1lIjoicHJvZHVjdF9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.Fn4cebcFPpE1bI0b7c96B_D8TRw_NQwYuv6HWDxqhjdWkgVfqvqgCh6IPN7KankP6PcF_G9oA46Y_Mq4ZlnpG3Rj0OZVQJ3_7U781uoqZrmlLvpzxasi8avKycUBZF_AUtQQ71Y23y6_8SjBBebJZnUIxHdFF1WU39JRCwa47xQxzckTTIyqtZJoBkHUUX5Uk2Yy6mrGIASRWdT3TD6KD-v12jPb5Pzu95j2lv4Y5z1yJpejhxh5YFQseMdHs5O1HBd_7fltmu4tkLGrcI8ClBt6itFLvsh8moKsQRgHjV_Lin5YUsBd0s0k3VUe4MXfOaJKPV8yKFJYRY7p_3_hkg"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#publish(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"b8e080b95e7643cbbc95f1d3c0991f4a"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"b8e080b95e7643cbbc95f1d3c0991f4a"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products/2099536260050857986
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#get(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"79e9218ba8b04147b40716d6a8905a8b"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536260050857986,"productCode":"M-NEST","productName":"M-NEST-name","subtitle":null,"description":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","images":[{"id":2099536260050857990,"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","imageType":"MAIN","sortOrder":0,"mainFlag":true}],"attributes":[{"id":2099536260050857991,"name":"�ͺ�","value":"�콢","sortOrder":0}],"skus":[{"id":2099536260050857989,"skuCode":"M-NEST-SKU","specifications":[{"name":"��ɫ","value":"��"}],"salePriceInCents":9900,"status":"ENABLED","mainImageUrl":null}],"status":"ON_SALE"},"traceId":"79e9218ba8b04147b40716d6a8905a8b"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"516"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"M-EXISTS","skus":[{"salePriceInCents":1000,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-EXISTS-SKU-1"},{"salePriceInCents":2000,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-EXISTS-SKU-2"}],"brandId":200,"name":"M-EXISTS-name","attributes":[{"sortOrder":0,"name":"�ͺ�","value":"�콢"}],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"39d694285b16462995c2ac9be98691e2"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536260113772546},"traceId":"39d694285b16462995c2ac9be98691e2"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products/2099536260113772546/publish
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpwdWJsaXNoIl0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0MDI2LCJpYXQiOjE3ODk0MDM0MjEsInVzZXJuYW1lIjoicHJvZHVjdF9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.Fn4cebcFPpE1bI0b7c96B_D8TRw_NQwYuv6HWDxqhjdWkgVfqvqgCh6IPN7KankP6PcF_G9oA46Y_Mq4ZlnpG3Rj0OZVQJ3_7U781uoqZrmlLvpzxasi8avKycUBZF_AUtQQ71Y23y6_8SjBBebJZnUIxHdFF1WU39JRCwa47xQxzckTTIyqtZJoBkHUUX5Uk2Yy6mrGIASRWdT3TD6KD-v12jPb5Pzu95j2lv4Y5z1yJpejhxh5YFQseMdHs5O1HBd_7fltmu4tkLGrcI8ClBt6itFLvsh8moKsQRgHjV_Lin5YUsBd0s0k3VUe4MXfOaJKPV8yKFJYRY7p_3_hkg"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#publish(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"5fd156cc81aa42388ea04a0853d1d3cf"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"5fd156cc81aa42388ea04a0853d1d3cf"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#page(String, Long, Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"04a4bf8f27bf4ff68383a644d36d3fad"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"records":[{"id":2099536260113772546,"productCode":"M-EXISTS","productName":"M-EXISTS-name","subtitle":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","minPrice":null,"maxPrice":null,"status":"ON_SALE"}],"total":1,"page":1,"size":20},"traceId":"04a4bf8f27bf4ff68383a644d36d3fad"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = PUT
+      Request URI = /api/admin/products/2099536260113772546/skus/2099536260113772549/status
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6c2t1OmRpc2FibGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.qPj1l2aZahXX19B5FyshqrFLW__QQ-nbR7WB2iFIiwoooI0Lls-FlEvXRk1JcvNBgBN34KUy3-GWCymToRe1aey3iK0300QWe3iOy8Nsl4HGk5LepxRBHJxRiOO8qUenHThbq51oJvDnth8TTXvUZj88spy0eWgNGD8BfPCQ_DT2jQNwjNw2od3Q6o7-HZApqx-zNO4nTp3Cjl2JiBrO8vTBhKmfHqoIgctcFS7Dpz-K-bijO4KKBnpDHwN-7qpkoxX5vixGl7Sf5M5ONWfephhifxCvTcLdx4NSaH_WkEhQSRRCdUnaC5mrg_MMBsiqRJ3Q6IXHidKdJ8qmvdSVqA", Content-Length:"21"]
+             Body = {"status":"DISABLED"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#changeSkuStatus(long, long, SkuStatusRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"6f99d95dbd0d4ecb99b59504f8f5d75d"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"6f99d95dbd0d4ecb99b59504f8f5d75d"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#page(String, Long, Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"0c9de3eedeb24f7f9fc18428ea21deb5"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"records":[{"id":2099536260113772546,"productCode":"M-EXISTS","productName":"M-EXISTS-name","subtitle":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","minPrice":null,"maxPrice":null,"status":"ON_SALE"}],"total":1,"page":1,"size":20},"traceId":"0c9de3eedeb24f7f9fc18428ea21deb5"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpjcmVhdGUiXSwiaXNzIjoiYWktcGxhdGZvcm0iLCJleHAiOjE3ODk0MDQwMjYsImlhdCI6MTc4OTQwMzQyMSwidXNlcm5hbWUiOiJwcm9kdWN0X2FkbWluIiwiYXV0aF92ZXJzaW9uIjoxfQ.sflEtp3ADgmo4W84reL0A5TSaZ7zbXylY6yyIj0Q5zwsNrdE_uuffWoWb-2J4PfthaHZfrkoCM6heuxmTJ-Nd_4eAIH-SZX73NiDImHWUW8KpipvWZ6l5SsBHPDCj7Xsl3mIdfkI19cJFdwVxk2GW-o9QNBdyK2BIw8rhXh05M1NGADB3bfRkJtZSaV-antHV5lift2eCYjb74EFGVyLBtPNQChJ3Kdb6whAqjcBL6J49SBXPQWiZakJnthQceR8KM6xzqJdH7yftxM7RurRwAW-Bw1kXlzzLJvyLGz9C2T0Gq6UMbrS7KfSzIODz_rA2lIP60s07cJtrnPqgU69iQ", Content-Length:"381"]
+             Body = {"images":[{"objectKey":"k1","imageUrl":"https://cdn.example.com/1.png","sortOrder":0,"imageType":"MAIN","mainFlag":true}],"code":"M-SID","skus":[{"salePriceInCents":9900,"specifications":[{"name":"��ɫ","value":"��"}],"mainImageUrl":null,"skuCode":"M-SID-SKU"}],"brandId":200,"name":"M-SID-name","attributes":[{"sortOrder":0,"name":"�ͺ�","value":"�콢"}],"categoryId":100}
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#create(CreateProductRequest)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"dc6f6d0382554315841949616ab2686f"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"id":2099536260243795970},"traceId":"dc6f6d0382554315841949616ab2686f"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/admin/products/2099536260243795970/publish
+       Parameters = {}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAyIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbInByb2R1Y3Q6cHJvZHVjdDpwdWJsaXNoIl0sImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA0MDI2LCJpYXQiOjE3ODk0MDM0MjEsInVzZXJuYW1lIjoicHJvZHVjdF9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.Fn4cebcFPpE1bI0b7c96B_D8TRw_NQwYuv6HWDxqhjdWkgVfqvqgCh6IPN7KankP6PcF_G9oA46Y_Mq4ZlnpG3Rj0OZVQJ3_7U781uoqZrmlLvpzxasi8avKycUBZF_AUtQQ71Y23y6_8SjBBebJZnUIxHdFF1WU39JRCwa47xQxzckTTIyqtZJoBkHUUX5Uk2Yy6mrGIASRWdT3TD6KD-v12jPb5Pzu95j2lv4Y5z1yJpejhxh5YFQseMdHs5O1HBd_7fltmu4tkLGrcI8ClBt6itFLvsh8moKsQRgHjV_Lin5YUsBd0s0k3VUe4MXfOaJKPV8yKFJYRY7p_3_hkg"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.admin.ProductAdminController
+           Method = com.ai.mall.product.interfaces.rest.admin.ProductAdminController#publish(long)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"37ec4104e60b4cf78761a66b0b037b26"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":null,"traceId":"37ec4104e60b4cf78761a66b0b037b26"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/mall/products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.product.interfaces.rest.mall.MallProductController
+           Method = com.ai.mall.product.interfaces.rest.mall.MallProductController#page(String, Long, Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"e2b8016ca8f34a55934a872a82464cbb"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"records":[{"id":2099536260243795970,"productCode":"M-SID","productName":"M-SID-name","subtitle":null,"categoryId":100,"brandId":200,"mainImageUrl":"https://cdn.example.com/1.png","minPrice":null,"maxPrice":null,"status":"ON_SALE"}],"total":1,"page":1,"size":20},"traceId":"e2b8016ca8f34a55934a872a82464cbb"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 11, Failures: 5, Errors: 0, Skipped: 0, Time elapsed: 0.298 s <<< FAILURE! -- in com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+[ERROR] com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.listPriceRangeFromEnabledSkus -- Time elapsed: 0.024 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting value to be true but was false
+	at com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.listPriceRangeFromEnabledSkus(MallProductApiTest.java:224)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.mallDetailOnSale -- Time elapsed: 0.013 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting value to be true but was false
+	at com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.mallDetailOnSale(MallProductApiTest.java:130)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.nestedIdsStringAndNumbersNumeric -- Time elapsed: 0.014 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting value to be true but was false
+	at com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.nestedIdsStringAndNumbersNumeric(MallProductApiTest.java:184)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.productDisappearsWhenAllSkusDisabled -- Time elapsed: 0.026 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+expected: 2000L
+ but was: 0L
+	at com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.productDisappearsWhenAllSkusDisabled(MallProductApiTest.java:246)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.listIdsAreStringsWithoutPrecisionLoss -- Time elapsed: 0.028 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: 
+
+Expecting value to be true but was false
+	at com.ai.mall.product.interfaces.rest.mall.MallProductApiTest.listIdsAreStringsWithoutPrecisionLoss(MallProductApiTest.java:169)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] Running com.ai.mall.product.MallProductApplicationSmokeTest
+2026-09-15 00:30:26.625 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.MallProductApplicationSmokeTest]: MallProductApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:30:26.638 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.MallProductApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:30:26.667 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Starting MallProductApplicationSmokeTest using Java 21.0.12 with PID 36392 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product)
+2026-09-15 00:30:26.667 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-15 00:30:26.873 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:30:26.874 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:30:26.885 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:30:26.925 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=8235b253-0450-3ad4-8fd9-45a65aebff66
+2026-09-15 00:30:26.983 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-09-15 00:30:26.985 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:mall_product_test user=SA
+2026-09-15 00:30:26.985 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-09-15 00:30:26.986 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_product_test (H2 2.3)
+2026-09-15 00:30:26.996 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 3 migrations (execution time 00:00.007s)
+2026-09-15 00:30:26.998 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": 3
+2026-09-15 00:30:26.998 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:30:27.186 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@3d577add
+2026-09-15 00:30:27.292 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Started MallProductApplicationSmokeTest in 0.651 seconds (process running for 7.972)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.672 s -- in com.ai.mall.product.MallProductApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   InternalProductApiTest.internalProductNotFound:113 Status expected:<404> but was:<401>
+[ERROR]   InternalProductApiTest.internalSkuNotBelongsToProduct:122 Status expected:<404> but was:<401>
+[ERROR]   InternalProductApiTest.internalSnapshotFullFields:97 Status expected:<200> but was:<401>
+[ERROR]   InternalProductApiTest.internalWithWrongTokenUnauthorized:86 JSON path "$.code" expected:<INTERNAL_UNAUTHORIZED> but was:<B0001>
+[ERROR]   InternalProductApiTest.internalWithoutTokenUnauthorized:77 JSON path "$.code" expected:<INTERNAL_UNAUTHORIZED> but was:<B0001>
+[ERROR]   MallProductApiTest.listIdsAreStringsWithoutPrecisionLoss:169 
+Expecting value to be true but was false
+[ERROR]   MallProductApiTest.listPriceRangeFromEnabledSkus:224 
+Expecting value to be true but was false
+[ERROR]   MallProductApiTest.mallDetailOnSale:130 
+Expecting value to be true but was false
+[ERROR]   MallProductApiTest.nestedIdsStringAndNumbersNumeric:184 
+Expecting value to be true but was false
+[ERROR]   MallProductApiTest.productDisappearsWhenAllSkusDisabled:246 
+expected: 2000L
+ but was: 0L
+[INFO] 
+[ERROR] Tests run: 70, Failures: 10, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10.017 s
+[INFO] Finished at: 2026-09-15T00:30:27+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project mall-product: There are test failures.
+[ERROR] 
+[ERROR] See D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

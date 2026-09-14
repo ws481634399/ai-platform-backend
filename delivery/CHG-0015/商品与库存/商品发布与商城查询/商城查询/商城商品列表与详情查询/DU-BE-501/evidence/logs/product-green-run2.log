@@ -1,0 +1,152 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-product >----------------------
+[INFO] Building mall-product 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-product ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-product ---
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-product ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-product ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-product ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.product.domain.brand.BrandTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.057 s -- in com.ai.mall.product.domain.brand.BrandTest
+[INFO] Running com.ai.mall.product.domain.category.CategoryRulesTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in com.ai.mall.product.domain.category.CategoryRulesTest
+[INFO] Running com.ai.mall.product.domain.category.CategoryTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.ai.mall.product.domain.category.CategoryTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+00:39:34.280 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest]: BrandAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+00:39:34.405 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:39:34.806 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - Starting BrandAdminApiTest using Java 21.0.12 with PID 38916 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product)
+2026-09-15 00:39:34.808 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - The following 1 profile is active: "test"
+2026-09-15 00:39:35.646 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:39:35.648 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:39:35.688 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:39:36.184 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=6d592d0c-e86c-39b6-bf7b-8bf56e80aff3
+2026-09-15 00:39:36.766 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-15 00:39:36.909 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_product_test user=SA
+2026-09-15 00:39:36.913 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-15 00:39:36.984 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_product_test (H2 2.3)
+2026-09-15 00:39:37.036 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-15 00:39:37.041 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 3 migrations (execution time 00:00.027s)
+2026-09-15 00:39:37.052 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-15 00:39:37.103 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-15 00:39:37.111 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - create product category and brand"
+2026-09-15 00:39:37.130 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - create product spu image attribute"
+2026-09-15 00:39:37.139 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "3 - create product sku"
+2026-09-15 00:39:37.152 [main] INFO  [] o.f.core.internal.command.DbMigrate - Successfully applied 3 migrations to schema "public", now at version v3 (execution time 00:00.013s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:39:38.407 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@6eb82908
+2026-09-15 00:39:38.869 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 00:39:38.869 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 00:39:38.870 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 1 ms
+2026-09-15 00:39:38.911 [main] INFO  [] c.a.m.p.i.rest.admin.BrandAdminApiTest - Started BrandAdminApiTest in 4.411 seconds (process running for 5.38)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2518
++ ... latform-backend; mvn -pl mall-services/mall-product test 2>&1 | Tee-O ...
++                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.783 s -- in com.ai.mall.product.interfaces.rest.admin.BrandAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+2026-09-15 00:39:39.943 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest]: CategoryAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:39:39.946 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.215 s -- in com.ai.mall.product.interfaces.rest.admin.CategoryAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+2026-09-15 00:39:40.159 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest]: ProductAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:39:40.161 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.441 s -- in com.ai.mall.product.interfaces.rest.admin.ProductAdminApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+2026-09-15 00:39:40.601 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest]: InternalProductApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:39:40.621 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.069 s -- in com.ai.mall.product.interfaces.rest.internal.InternalProductApiTest
+[INFO] Running com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+2026-09-15 00:39:40.671 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.interfaces.rest.mall.MallProductApiTest]: MallProductApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:39:40.689 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.332 s -- in com.ai.mall.product.interfaces.rest.mall.MallProductApiTest
+[INFO] Running com.ai.mall.product.MallProductApplicationSmokeTest
+2026-09-15 00:39:41.002 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.product.MallProductApplicationSmokeTest]: MallProductApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 00:39:41.017 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.product.MallProductApplication for test class com.ai.mall.product.MallProductApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 00:39:41.049 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Starting MallProductApplicationSmokeTest using Java 21.0.12 with PID 38916 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-product)
+2026-09-15 00:39:41.049 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-15 00:39:41.252 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 00:39:41.252 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 00:39:41.263 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 9 ms. Found 0 Redis repository interfaces.
+2026-09-15 00:39:41.303 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=8235b253-0450-3ad4-8fd9-45a65aebff66
+2026-09-15 00:39:41.344 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-09-15 00:39:41.345 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:mall_product_test user=SA
+2026-09-15 00:39:41.345 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-09-15 00:39:41.346 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_product_test (H2 2.3)
+2026-09-15 00:39:41.354 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 3 migrations (execution time 00:00.006s)
+2026-09-15 00:39:41.357 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": 3
+2026-09-15 00:39:41.357 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 00:39:41.532 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@27bd124a
+2026-09-15 00:39:41.638 [main] INFO  [] c.a.m.p.MallProductApplicationSmokeTest - Started MallProductApplicationSmokeTest in 0.62 seconds (process running for 8.107)
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.641 s -- in com.ai.mall.product.MallProductApplicationSmokeTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 70, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  10.106 s
+[INFO] Finished at: 2026-09-15T00:39:41+08:00
+[INFO] ------------------------------------------------------------------------

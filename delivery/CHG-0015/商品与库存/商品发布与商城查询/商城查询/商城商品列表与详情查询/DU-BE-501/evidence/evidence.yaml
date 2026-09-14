@@ -1,0 +1,37 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-501
+    symbol: "StringId, InternalIdentityFilter, GatewaySecurityConfiguration, SkuMapper#selectEnabledPriceRanges, ProductRepositoryImpl#mallPage, MybatisPlusConfig, SkuClient"
+    commits:
+      - 335c47f7fb6d20eff6539c3dea019f88f5e91c4b
+      - 6c3d5835089ee3f7f2538b4d4e572bd074a07750
+      - 8c500f16043f6d3ecd0ffb950a3bf4e2cc535c6a
+      - 78ed07bdedd8466014bc4f08eeeb39ed457fb1d9
+      - e050ec92adbb320af3dc1271530326ceef50a9d9
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-15T01:20:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-501
+    scope: 模块级转绿（common-web/common-security/product/inventory/gateway）
+    commands:
+      - "mvn -pl mall-services/mall-product test（70/70）"
+      - "mvn -pl mall-services/mall-inventory test（19/19）"
+      - "mvn -pl mall-gateway test（13/13）"
+    result: passed
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-15T01:20:00+08:00"
+  - id: EV-INDEPENDENT-TEST-003
+    type: test-run
+    delivery-unit: DU-BE-501
+    command: "mvn clean package（24 模块全量回归）"
+    result: passed
+    summary:
+      total: 197
+      passed: 197
+      failed: 0
+      skipped: 0
+    covers: [AC-001, AC-012]
+    evidence-ref: evidence/logs/backend-full-package-run1.log
+    created-at: "2026-09-15T01:15:00+08:00"

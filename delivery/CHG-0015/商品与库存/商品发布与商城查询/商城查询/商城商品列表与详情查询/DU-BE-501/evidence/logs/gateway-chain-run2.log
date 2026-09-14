@@ -1,0 +1,561 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-gateway >----------------------
+[INFO] Building mall-gateway 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-gateway ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-gateway ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-gateway ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-gateway ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest
+01:08:04.334 [parallel-1] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [25f8147c] 500 Server Error for HTTP GET "/api/admin/products"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/api/admin/products" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.359 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /api/admin/products
+> WebTestClient-Request-Id: [1]
+> Authorization: [Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJNRU1CRVIiLCJpc3MiOiJhaS1wbGF0Zm9ybSIsImV4cCI6MTc4OTQwNjI4NCwiaWF0IjoxNzg5NDA1Njc5LCJ1c2VybmFtZSI6InRlc3RlciIsImF1dGhfdmVyc2lvbiI6MX0.SVdGfsshWe16J1fIewd7RXPeXuOEXp0GknOGntKc7S5bFEDBVI4yO8W_vJU1q0e_5UV5fMRJP_D8ukn-wVenrTcQ_iryMfH4XhvQE8bkSocOnXIQu6TugiAEb7MXq6Zy-AeeleLfnoGa_HmkKdaDzSuSBuqVs0DxkgpD-PfjFYYbf7xPp2OOHbhksGti80EHd59I6W9MEdal4eKG-fdogmUPM3Gpm0Pk9VERsLeAxoztXtt-czyZk77O2XU0B5KTUddClZHb3bnGcFSmdZ8uUwXWriI_MNtjH0cYUHpGRw1gWatSQQXZ5twsFITeruOVWJjM0NOKCv8Rflg-OxYumw]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.370 [parallel-2] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [7a864b12] 500 Server Error for HTTP GET "/actuator/health"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/actuator/health" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.372 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /actuator/health
+> WebTestClient-Request-Id: [1]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.377 [parallel-3] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [323c0844] 500 Server Error for HTTP GET "/api/mall/products/1"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/api/mall/products/1" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.378 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /api/mall/products/1
+> WebTestClient-Request-Id: [1]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.382 [parallel-4] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [7aff53af] 500 Server Error for HTTP GET "/api/internal/inventory/lock"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/api/internal/inventory/lock" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.383 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /api/internal/inventory/lock
+> WebTestClient-Request-Id: [1]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.388 [parallel-5] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [31470003] 500 Server Error for HTTP GET "/api/admin/products"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/api/admin/products" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.389 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /api/admin/products
+> WebTestClient-Request-Id: [1]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.394 [parallel-6] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [56bba2a6] 500 Server Error for HTTP POST "/api/internal/inventory/lock"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP POST "/api/internal/inventory/lock" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.396 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> POST /api/internal/inventory/lock
+> WebTestClient-Request-Id: [1]
+> Authorization: [Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA2Mjg0LCJpYXQiOjE3ODk0MDU2NzksInVzZXJuYW1lIjoidGVzdGVyIiwiYXV0aF92ZXJzaW9uIjoxfQ.QZ568WyGX84coa5RVug8s-l2cya6D60LPENCzqI-df5ePTHyWUS984N6yQjAwcU6s5QKJpLymZXgVv06zJHTxoxCUjGmJxks3bk_4WkJAnSuvkKwkDE4fNbnKHQbjlFOsjtC2VLI3nG_LDjx_aIlt6moEPCjvIiU-DCeDWIESJhBs_NrCNWF-CS332uP8BFvafdM7A-jXMtafi6ouWQTlZh7ypRwYjnnZmEf2zb9tpdILPOi4q3-ThbP4VMyzDeV5xMTJ24QjltzAe4XoJ2Qtw1BwA4M9ghKT19RsE1Zhgr0FsFZjgJkn6O2H-8sSBX9D-BwmhkPXFcn4DEb2kJBnw]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+01:08:04.400 [parallel-7] ERROR org.springframework.web.server.adapter.HttpWebHandlerAdapter -- [9c50589] 500 Server Error for HTTP GET "/api/admin/products"
+java.lang.NullPointerException: The iterator returned a null value
+	at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
+Error has been observed at the following site(s):
+	*__checkpoint ? org.springframework.security.web.server.WebFilterChainProxy [DefaultWebFilterChain]
+	*__checkpoint ? HTTP GET "/api/admin/products" [ExceptionHandlingWebHandler]
+Original Stack Trace:
+		at java.base/java.util.Objects.requireNonNull(Objects.java:259)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.slowPath(FluxIterable.java:322)
+		at reactor.core.publisher.FluxIterable$IterableSubscription.request(FluxIterable.java:294)
+		at reactor.core.publisher.FluxFilterWhen$FluxFilterWhenSubscriber.onSubscribe(FluxFilterWhen.java:200)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:201)
+		at reactor.core.publisher.FluxIterable.subscribe(FluxIterable.java:83)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxFlatMap.trySubscribeScalarMap(FluxFlatMap.java:202)
+		at reactor.core.publisher.MonoFlatMap.subscribeOrReturn(MonoFlatMap.java:53)
+		at reactor.core.publisher.InternalMonoOperator.subscribe(InternalMonoOperator.java:63)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:53)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoIgnoreThen$ThenIgnoreMain.subscribeNext(MonoIgnoreThen.java:265)
+		at reactor.core.publisher.MonoIgnoreThen.subscribe(MonoIgnoreThen.java:51)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$doConnect$2(HttpHandlerConnector.java:100)
+		at org.springframework.mock.http.client.reactive.MockClientHttpRequest.lambda$writeWith$2(MockClientHttpRequest.java:128)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.FluxConcatIterable$ConcatIterableSubscriber.onComplete(FluxConcatIterable.java:148)
+		at reactor.core.publisher.FluxConcatIterable.subscribe(FluxConcatIterable.java:60)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.Mono.subscribeWith(Mono.java:4641)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4542)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4478)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.doConnect(HttpHandlerConnector.java:114)
+		at org.springframework.test.web.reactive.server.HttpHandlerConnector.lambda$connect$0(HttpHandlerConnector.java:81)
+		at reactor.core.publisher.MonoDefer.subscribe(MonoDefer.java:45)
+		at reactor.core.publisher.Mono.subscribe(Mono.java:4576)
+		at reactor.core.publisher.MonoSubscribeOn$SubscribeOnSubscriber.run(MonoSubscribeOn.java:126)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:84)
+		at reactor.core.scheduler.WorkerTask.call(WorkerTask.java:37)
+		at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+		at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+		at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+		at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+		at java.base/java.lang.Thread.run(Thread.java:1583)
+01:08:04.402 [main] ERROR org.springframework.test.web.reactive.server.ExchangeResult -- Request details for assertion failure:
+
+> GET /api/admin/products
+> WebTestClient-Request-Id: [1]
+> Authorization: [Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsImlzcyI6ImFpLXBsYXRmb3JtIiwiZXhwIjoxNzg5NDA2Mjg0LCJpYXQiOjE3ODk0MDU2NzksInVzZXJuYW1lIjoidGVzdGVyIiwiYXV0aF92ZXJzaW9uIjoxfQ.QZ568WyGX84coa5RVug8s-l2cya6D60LPENCzqI-df5ePTHyWUS984N6yQjAwcU6s5QKJpLymZXgVv06zJHTxoxCUjGmJxks3bk_4WkJAnSuvkKwkDE4fNbnKHQbjlFOsjtC2VLI3nG_LDjx_aIlt6moEPCjvIiU-DCeDWIESJhBs_NrCNWF-CS332uP8BFvafdM7A-jXMtafi6ouWQTlZh7ypRwYjnnZmEf2zb9tpdILPOi4q3-ThbP4VMyzDeV5xMTJ24QjltzAe4XoJ2Qtw1BwA4M9ghKT19RsE1Zhgr0FsFZjgJkn6O2H-8sSBX9D-BwmhkPXFcn4DEb2kJBnw]
+
+No content
+
+< 500 INTERNAL_SERVER_ERROR Internal Server Error
+< 
+
+0 bytes of content (unknown content-type).
+
+[ERROR] Tests run: 7, Failures: 7, Errors: 0, Skipped: 0, Time elapsed: 0.670 s <<< FAILURE! -- in com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.memberTokenForbidden -- Time elapsed: 0.441 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<403 FORBIDDEN> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isForbidden(StatusAssertions.java:146)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.memberTokenForbidden(CHG0015GatewaySecurityChainTest.java:132)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.healthWhitelisted -- Time elapsed: 0.005 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isOk(StatusAssertions.java:68)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.healthWhitelisted(CHG0015GatewaySecurityChainTest.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.mallProductsWhitelisted -- Time elapsed: 0.006 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isOk(StatusAssertions.java:68)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.mallProductsWhitelisted(CHG0015GatewaySecurityChainTest.java:97)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.internalAnonymousReturns404 -- Time elapsed: 0.004 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<404 NOT_FOUND> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isNotFound(StatusAssertions.java:153)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.internalAnonymousReturns404(CHG0015GatewaySecurityChainTest.java:141)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.adminRequiresAuthentication -- Time elapsed: 0.006 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<401 UNAUTHORIZED> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isUnauthorized(StatusAssertions.java:138)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.adminRequiresAuthentication(CHG0015GatewaySecurityChainTest.java:111)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.internalWithAdminTokenStill404 -- Time elapsed: 0.006 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<404 NOT_FOUND> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isNotFound(StatusAssertions.java:153)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.internalWithAdminTokenStill404(CHG0015GatewaySecurityChainTest.java:154)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.adminTokenAccepted -- Time elapsed: 0.005 s <<< FAILURE!
+java.lang.AssertionError: Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.web.reactive.server.StatusAssertions.lambda$assertStatusAndReturn$4(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.ExchangeResult.assertWithDiagnostics(ExchangeResult.java:232)
+	at org.springframework.test.web.reactive.server.StatusAssertions.assertStatusAndReturn(StatusAssertions.java:236)
+	at org.springframework.test.web.reactive.server.StatusAssertions.isOk(StatusAssertions.java:68)
+	at com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest.adminTokenAccepted(CHG0015GatewaySecurityChainTest.java:123)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   CHG0015GatewaySecurityChainTest.adminRequiresAuthentication:111 Status expected:<401 UNAUTHORIZED> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.adminTokenAccepted:123 Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.healthWhitelisted:104 Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.internalAnonymousReturns404:141 Status expected:<404 NOT_FOUND> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.internalWithAdminTokenStill404:154 Status expected:<404 NOT_FOUND> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.mallProductsWhitelisted:97 Status expected:<200 OK> but was:<500 INTERNAL_SERVER_ERROR>
+[ERROR]   CHG0015GatewaySecurityChainTest.memberTokenForbidden:132 Status expected:<403 FORBIDDEN> but was:<500 INTERNAL_SERVER_ERROR>
+[INFO] 
+[ERROR] Tests run: 7, Failures: 7, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
