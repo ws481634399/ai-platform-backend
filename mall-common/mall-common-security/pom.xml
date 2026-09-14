@@ -16,9 +16,21 @@
   <description>安全通用能力：认证授权基础组件（版本由 mall-bom 统一管理）</description>
 
   <dependencies>
+    <!-- security→core：UnifyResult/错误码等纯 Java 基础（内部凭证过滤器输出统一错误体） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <!-- InternalIdentityFilter 基于 servlet 栈；运行期由接入方服务的 starter-web 提供 -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.security</groupId>
