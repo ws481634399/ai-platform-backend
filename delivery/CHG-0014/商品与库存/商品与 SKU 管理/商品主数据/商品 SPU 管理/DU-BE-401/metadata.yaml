@@ -1,0 +1,59 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-401
+repository: "repo-1"
+parent:
+  change: "CHG-0014"
+feature-path:
+  level-1:
+    id: FEAT-002
+    name: 商品与库存
+  level-2:
+    id: FEAT-002-02
+    name: 商品与 SKU 管理
+  level-3:
+    id: FEAT-002-02-01
+    name: 商品主数据
+  story:
+    id: STORY-002-02-01-01
+    name: 商品 SPU 管理
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0014/requirement.md
+  spec: delivery/changes/CHG-0014/requirement-spec.md
+  design: delivery/changes/CHG-0014/requirement-design.md
+  story-design: delivery/changes/CHG-0014/商品与库存/商品与 SKU 管理/商品主数据/商品 SPU 管理/story-design.md
+  test-design: delivery/changes/CHG-0014/商品与库存/商品与 SKU 管理/商品主数据/商品 SPU 管理/test-design.md
+scope:
+  - mall-services/mall-product
+  - mall-gateway
+  - mall-services/mall-inventory
+acceptance:
+  - AC-001
+  - AC-002
+  - AC-005
+  - AC-006
+  - AC-007
+dependencies: []
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: testing # pending / developing / testing / completed
+baseline:
+  commit: "cd45af4"
+result:
+  commit: "6efd0b9"
+  paths:
+    - mall-services/mall-product
+    - mall-gateway
+    - mall-services/mall-inventory
+  symbols:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/product/ProductApplicationService.java::create
+    - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java::springSecurityFilterChain
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/infrastructure/config/InventorySecurityConfiguration.java::securityFilterChain

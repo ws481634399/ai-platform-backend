@@ -1,0 +1,21 @@
+evidence:
+  - id: EV-CODE-BE-001
+    type: code-change
+    delivery-unit: DU-BE-401
+    commit: 6efd0b9
+    symbol: mall-services/mall-product/src/main/java/com/ai/mall/product/application/product/ProductApplicationService.java#create
+    evidence-ref: changeset.md
+    created-at: "2026-09-14T08:32:00+08:00"
+  - id: EV-TEST-BE-001
+    type: test-run
+    delivery-unit: DU-BE-401
+    command: mvn test
+    result: PASS
+    summary:
+      total: 171
+      passed: 171
+      failed: 0
+      skipped: 0
+    covers: [TC-001, TC-002, TC-005, TC-006, TC-007]
+    log: test-output.log
+    created-at: "2026-09-14T08:32:00+08:00"
