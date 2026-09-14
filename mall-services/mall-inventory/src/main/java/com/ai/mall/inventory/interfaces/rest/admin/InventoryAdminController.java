@@ -40,9 +40,9 @@ public class InventoryAdminController {
     @GetMapping("/stocks")
     @PreAuthorize("hasAuthority('inventory:stock:list')")
     public UnifyResult<PageView<InventoryView>> page(
-            @RequestParam(required = false) Long skuId,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+            @RequestParam(name = "skuId", required = false) Long skuId,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size) {
         InventoryPageResult result = service.page(new PageQuery(page, size, skuId));
         List<InventoryView> records = result.records().stream().map(InventoryView::from).toList();
         return UnifyResult.ok(new PageView<>(records, result.total(), result.page(), result.size()));
@@ -50,7 +50,7 @@ public class InventoryAdminController {
 
     @GetMapping("/stocks/{skuId}")
     @PreAuthorize("hasAuthority('inventory:stock:detail')")
-    public UnifyResult<InventoryView> get(@PathVariable long skuId) {
+    public UnifyResult<InventoryView> get(@PathVariable("skuId") long skuId) {
         return UnifyResult.ok(InventoryView.from(service.getBySkuId(skuId)));
     }
 
@@ -71,7 +71,8 @@ public class InventoryAdminController {
 
     @PostMapping("/stocks/{skuId}/adjust")
     @PreAuthorize("hasAuthority('inventory:stock:adjust')")
-    public UnifyResult<InventoryView> adjust(@PathVariable long skuId, @RequestBody AdjustRequest request) {
+    public UnifyResult<InventoryView> adjust(@PathVariable("skuId") long skuId,
+                                             @RequestBody AdjustRequest request) {
         Inventory inventory = service.adjust(skuId,
                 new AdjustCommand(request.delta(), request.reason(), request.businessId()));
         return UnifyResult.ok(InventoryView.from(inventory));
@@ -80,9 +81,9 @@ public class InventoryAdminController {
     @GetMapping("/logs")
     @PreAuthorize("hasAuthority('inventory:log:list')")
     public UnifyResult<PageView<LogView>> logs(
-            @RequestParam(required = false) Long skuId,
-            @RequestParam(required = false) Integer page,
-            @RequestParam(required = false) Integer size) {
+            @RequestParam(name = "skuId", required = false) Long skuId,
+            @RequestParam(name = "page", required = false) Integer page,
+            @RequestParam(name = "size", required = false) Integer size) {
         var logs = service.logs(new PageQuery(page, size, skuId));
         List<LogView> records = logs.stream().map(LogView::from).toList();
         return UnifyResult.ok(new PageView<>(records, records.size(), page == null ? 1 : page, size == null ? 20 : size));

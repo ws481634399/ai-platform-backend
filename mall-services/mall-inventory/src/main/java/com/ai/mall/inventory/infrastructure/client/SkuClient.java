@@ -1,6 +1,7 @@
 package com.ai.mall.inventory.infrastructure.client;
 
 import com.ai.mall.common.core.result.UnifyResult;
+import com.ai.mall.common.security.InternalIdentityFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -8,14 +9,20 @@ import org.springframework.web.client.RestClient;
 
 /**
  * SKU 契约校验客户端：调用 mall-product 内部接口校验 SKU 存在。
+ *
+ * <p>CHG-0015：服务间调用携带 X-Internal-Token 共享凭证。
  */
 @Component
 public class SkuClient {
 
     private final RestClient restClient;
 
-    public SkuClient(@Value("${mall.inventory.sku-service-uri:http://localhost:8103}") String skuServiceUri) {
-        this.restClient = RestClient.builder().baseUrl(skuServiceUri).build();
+    public SkuClient(@Value("${mall.inventory.sku-service-uri:http://localhost:8103}") String skuServiceUri,
+                     @Value("${mall.security.internal.shared-secret:dev-internal-secret}") String sharedSecret) {
+        this.restClient = RestClient.builder()
+                .baseUrl(skuServiceUri)
+                .defaultHeader(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret)
+                .build();
     }
 
     public boolean exists(long skuId) {

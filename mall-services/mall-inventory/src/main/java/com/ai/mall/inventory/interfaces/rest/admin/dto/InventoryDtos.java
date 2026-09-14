@@ -1,11 +1,14 @@
 package com.ai.mall.inventory.interfaces.rest.admin.dto;
 
+import com.ai.mall.common.web.annotation.StringId;
 import com.ai.mall.inventory.domain.inventory.Inventory;
 import com.ai.mall.inventory.domain.inventory.InventoryLog;
 import java.time.Instant;
 
 /**
  * 库存管理端 DTO。
+ *
+ * <p>CHG-0015：业务 ID 标注 {@link StringId} 输出字符串；数量保持 number。
  */
 public final class InventoryDtos {
 
@@ -15,7 +18,8 @@ public final class InventoryDtos {
 
     public record AdjustRequest(long delta, String reason, String businessId) {}
 
-    public record InventoryView(long skuId, long totalQuantity, long lockedQuantity, long availableQuantity) {
+    public record InventoryView(@StringId long skuId, long totalQuantity, long lockedQuantity,
+                                long availableQuantity) {
         public static InventoryView from(Inventory inventory) {
             return new InventoryView(inventory.getSkuId(), inventory.getTotalQuantity(),
                     inventory.getLockedQuantity(), inventory.getAvailableQuantity());
@@ -24,9 +28,9 @@ public final class InventoryDtos {
 
     public record PageView<T>(java.util.List<T> records, long total, int page, int size) {}
 
-    public record LogView(long id, long skuId, String operationType, long quantity,
+    public record LogView(@StringId long id, @StringId long skuId, String operationType, long quantity,
                           long beforeQuantity, long afterQuantity, String businessId,
-                          Long operator, String traceId, Instant occurredAt) {
+                          @StringId Long operator, String traceId, Instant occurredAt) {
         public static LogView from(InventoryLog log) {
             return new LogView(log.getId(), log.getSkuId(), log.getOperationType().name(),
                     log.getQuantity(), log.getBeforeQuantity(), log.getAfterQuantity(),

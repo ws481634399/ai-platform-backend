@@ -44,6 +44,11 @@
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
     </dependency>
+    <!-- MyBatis-Plus 3.5.9+ 分页插件依赖 JSqlParser 独立模块（PaginationInnerInterceptor），CHG-0015 TC-005 -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-jsqlparser</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>

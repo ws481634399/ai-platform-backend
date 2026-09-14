@@ -38,6 +38,9 @@ mall:
       issuer: ${JWT_ISSUER:ai-platform}
       audience: ${JWT_AUDIENCE:mall-admin-api}
       public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+    # CHG-0015 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
   inventory:
     sku-service-uri: ${MALL_PRODUCT_URI:http://localhost:8103}
 
