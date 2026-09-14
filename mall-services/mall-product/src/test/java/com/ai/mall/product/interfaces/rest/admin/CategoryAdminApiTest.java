@@ -65,7 +65,7 @@ class CategoryAdminApiTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].name").value("数码"))
                 .andExpect(jsonPath("$.data[0].level").value(1))
-                .andExpect(jsonPath("$.data[0].parentId").value(0))
+                .andExpect(jsonPath("$.data[0].parentId").value("0"))
                 .andExpect(jsonPath("$.data[0].status").value("ENABLED"));
     }
 
@@ -125,9 +125,9 @@ class CategoryAdminApiTest {
 
         mockMvc.perform(get("/api/admin/categories/tree")
                         .header("Authorization", "Bearer " + token(List.of("product:category:list"))))
-                .andExpect(jsonPath("$.data[?(@.id==" + b + ")].level").value(org.hamcrest.Matchers.hasItem(1)))
-                .andExpect(jsonPath("$.data[?(@.id==" + b + ")].children[0].id").value(org.hamcrest.Matchers.hasItem((int) c)))
-                .andExpect(jsonPath("$.data[?(@.id==" + b + ")].children[0].level").value(org.hamcrest.Matchers.hasItem(2)));
+                .andExpect(jsonPath("$.data[?(@.id=='" + b + "')].level").value(org.hamcrest.Matchers.hasItem(1)))
+                .andExpect(jsonPath("$.data[?(@.id=='" + b + "')].children[0].id").value(org.hamcrest.Matchers.hasItem(String.valueOf(c))))
+                .andExpect(jsonPath("$.data[?(@.id=='" + b + "')].children[0].level").value(org.hamcrest.Matchers.hasItem(2)));
     }
 
     // ---------- TC-005 ----------
@@ -181,10 +181,10 @@ class CategoryAdminApiTest {
                         .header("Authorization", "Bearer " + token(List.of("product:category:list"))))
                 .andExpect(status().isOk())
                 // 根的 children 顺序为 一十(10)、二十(20,禁用)、三十(30)，禁用节点仍在树中
-                .andExpect(jsonPath("$.data[0].children[0].id").value((int) s10))
-                .andExpect(jsonPath("$.data[0].children[1].id").value((int) s20))
+                .andExpect(jsonPath("$.data[0].children[0].id").value(String.valueOf(s10)))
+                .andExpect(jsonPath("$.data[0].children[1].id").value(String.valueOf(s20)))
                 .andExpect(jsonPath("$.data[0].children[1].status").value("DISABLED"))
-                .andExpect(jsonPath("$.data[0].children[2].id").value((int) s30));
+                .andExpect(jsonPath("$.data[0].children[2].id").value(String.valueOf(s30)));
     }
 
     // ---------- TC-008 ----------
@@ -199,7 +199,7 @@ class CategoryAdminApiTest {
         mockMvc.perform(get("/api/admin/categories/tree")
                         .header("Authorization", "Bearer " + token(List.of("product:category:list"))))
                 .andExpect(jsonPath("$.data[0].status").value("DISABLED"))
-                .andExpect(jsonPath("$.data[0].children[0].id").value((int) child))
+                .andExpect(jsonPath("$.data[0].children[0].id").value(String.valueOf(child)))
                 .andExpect(jsonPath("$.data[0].children[0].status").value("ENABLED"));
     }
 

@@ -11,11 +11,11 @@ import com.ai.mall.product.domain.brand.BrandRepository.BrandPageResult;
 import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.BrandStatusRequest;
 import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.BrandView;
 import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.CreateBrandRequest;
+import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.IdView;
 import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.PageView;
 import com.ai.mall.product.interfaces.rest.admin.dto.BrandDtos.UpdateBrandRequest;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,10 +59,10 @@ public class BrandAdminController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('product:brand:create')")
-    public UnifyResult<Map<String, Long>> create(@Valid @RequestBody CreateBrandRequest request) {
+    public UnifyResult<IdView> create(@Valid @RequestBody CreateBrandRequest request) {
         long id = service.create(new CreateBrandCommand(request.name(), request.logo(),
                 request.description(), request.sort()));
-        return UnifyResult.ok(Map.of("id", id));
+        return UnifyResult.ok(new IdView(id));
     }
 
     @PutMapping("/{id}")

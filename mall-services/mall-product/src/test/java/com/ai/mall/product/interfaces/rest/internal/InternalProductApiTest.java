@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.ai.mall.common.security.InternalIdentityFilter;
 import com.ai.mall.product.support.ApiTestSecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -26,7 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 /**
- * 内部商品查询 API 集成测试：覆盖 CHG-0012 Story 3 test-design TC。
+ * 内部商品查询 API 集成测试：CHG-0012 契约 + CHG-0015 内部凭证（X-Internal-Token）。
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,6 +41,10 @@ class InternalProductApiTest {
     @Autowired JwtEncoder encoder;
     @Autowired JdbcTemplate jdbc;
     @Autowired ObjectMapper objectMapper;
+
+    /** 与 application.yml 中 mall.security.internal.shared-secret 占位默认值一致。 */
+    @Value("${mall.security.internal.shared-secret}")
+    String sharedSecret;
 
     private long categoryId;
     private long brandId;
@@ -61,16 +67,36 @@ class InternalProductApiTest {
     }
 
     @Test
-    @DisplayName("内部查询返回完整 ProductSnapshot 字段")
+    @DisplayName("TC-013 无凭证访问内部接口 → 401 INTERNAL_UNAUTHORIZED")
+    void internalWithoutTokenUnauthorized() throws Exception {
+        long productId = createProductWithSkuAndImage("I-AUTH");
+        long skuId = jdbc.queryForObject("SELECT id FROM product_sku WHERE sku_code='I-AUTH-SKU'", Long.class);
+
+        mockMvc.perform(get("/api/internal/products/" + productId + "/skus/" + skuId))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("INTERNAL_UNAUTHORIZED"));
+    }
+
+    @Test
+    @DisplayName("错误凭证 → 401")
+    void internalWithWrongTokenUnauthorized() throws Exception {
+        mockMvc.perform(get("/api/internal/products/1/skus/1")
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, "wrong-secret"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("INTERNAL_UNAUTHORIZED"));
+    }
+
+    @Test
+    @DisplayName("TC-004 携带 X-Internal-Token 返回完整 ProductSnapshot 字段，ID 为字符串")
     void internalSnapshotFullFields() throws Exception {
         long productId = createProductWithSkuAndImage("I-SNAP");
         long skuId = jdbc.queryForObject("SELECT id FROM product_sku WHERE sku_code='I-SNAP-SKU'", Long.class);
 
         mockMvc.perform(get("/api/internal/products/" + productId + "/skus/" + skuId)
-                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.productId").value(productId))
-                .andExpect(jsonPath("$.data.skuId").value(skuId))
+                .andExpect(jsonPath("$.data.productId").value(String.valueOf(productId)))
+                .andExpect(jsonPath("$.data.skuId").value(String.valueOf(skuId)))
                 .andExpect(jsonPath("$.data.productName").value("I-SNAP-name"))
                 .andExpect(jsonPath("$.data.skuName").exists())
                 .andExpect(jsonPath("$.data.skuAttributes.颜色").value("黑"))
@@ -83,7 +109,7 @@ class InternalProductApiTest {
     @DisplayName("商品不存在返回 404")
     void internalProductNotFound() throws Exception {
         mockMvc.perform(get("/api/internal/products/99999/skus/1")
-                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret))
                 .andExpect(status().isNotFound());
     }
 
@@ -92,7 +118,7 @@ class InternalProductApiTest {
     void internalSkuNotBelongsToProduct() throws Exception {
         long productId = createProductWithSkuAndImage("I-404");
         mockMvc.perform(get("/api/internal/products/" + productId + "/skus/99999")
-                        .header("Authorization", "Bearer " + token(List.of("product:product:detail"))))
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret))
                 .andExpect(status().isNotFound());
     }
 

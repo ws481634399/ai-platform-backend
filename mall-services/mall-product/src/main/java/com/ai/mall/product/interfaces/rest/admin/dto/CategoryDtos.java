@@ -1,5 +1,6 @@
 package com.ai.mall.product.interfaces.rest.admin.dto;
 
+import com.ai.mall.common.web.annotation.StringId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.List;
 public final class CategoryDtos {
 
     private CategoryDtos() {
+    }
+
+    /** 新建实体后的 ID 回显（字符串，避免 JS 精度丢失）。 */
+    public record IdView(@StringId long id) {
     }
 
     public record CreateCategoryRequest(
@@ -27,10 +32,11 @@ public final class CategoryDtos {
     public record CategoryStatusRequest(@NotBlank(message = "状态不能为空") String status) {
     }
 
-    public record CategoryView(long id, String name, long parentId, int level, int sort, String status) {
+    public record CategoryView(@StringId long id, String name, @StringId long parentId, int level, int sort,
+                              String status) {
     }
 
-    public record CategoryTreeView(long id, String name, long parentId, int level, int sort,
+    public record CategoryTreeView(@StringId long id, String name, @StringId long parentId, int level, int sort,
                                    String status, List<CategoryTreeView> children) {
     }
 }

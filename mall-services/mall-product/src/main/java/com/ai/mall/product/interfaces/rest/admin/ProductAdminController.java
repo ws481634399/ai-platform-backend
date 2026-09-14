@@ -19,6 +19,7 @@ import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.AttributeReques
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.AttributeView;
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.CreateProductRequest;
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.CreateSkuRequest;
+import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.IdView;
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.ImageRequest;
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.ImageView;
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.PageView;
@@ -32,7 +33,6 @@ import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.UpdateProductRe
 import com.ai.mall.product.interfaces.rest.admin.dto.ProductDtos.UpdateSkuRequest;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,13 +78,13 @@ public class ProductAdminController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('product:product:create')")
-    public UnifyResult<Map<String, Long>> create(@Valid @RequestBody CreateProductRequest request) {
+    public UnifyResult<IdView> create(@Valid @RequestBody CreateProductRequest request) {
         long id = service.create(new CreateProductCommand(request.code(), request.name(), request.subtitle(),
                 request.description(), request.categoryId(), request.brandId(),
                 toImageParams(request.images()), toAttributeParams(request.attributes()),
                 request.skus().stream().map(s -> new CreateSkuCommand(s.skuCode(),
                         toSpecificationParams(s.specifications()), s.salePriceInCents(), s.mainImageUrl())).toList()));
-        return UnifyResult.ok(Map.of("id", id));
+        return UnifyResult.ok(new IdView(id));
     }
 
     @PutMapping("/{id}")
@@ -106,11 +106,11 @@ public class ProductAdminController {
 
     @PostMapping("/{id}/skus")
     @PreAuthorize("hasAuthority('product:sku:create')")
-    public UnifyResult<Map<String, Long>> addSku(@PathVariable("id") long id,
-                                                 @Valid @RequestBody CreateSkuRequest request) {
+    public UnifyResult<IdView> addSku(@PathVariable("id") long id,
+                                      @Valid @RequestBody CreateSkuRequest request) {
         long skuId = service.addSku(id, new CreateSkuCommand(request.skuCode(),
                 toSpecificationParams(request.specifications()), request.salePriceInCents(), request.mainImageUrl()));
-        return UnifyResult.ok(Map.of("id", skuId));
+        return UnifyResult.ok(new IdView(skuId));
     }
 
     @PutMapping("/{id}/skus/{skuId}")

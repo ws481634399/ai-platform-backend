@@ -9,11 +9,11 @@ import com.ai.mall.product.domain.category.Category;
 import com.ai.mall.product.interfaces.rest.admin.dto.CategoryDtos.CategoryStatusRequest;
 import com.ai.mall.product.interfaces.rest.admin.dto.CategoryDtos.CategoryTreeView;
 import com.ai.mall.product.interfaces.rest.admin.dto.CategoryDtos.CreateCategoryRequest;
+import com.ai.mall.product.interfaces.rest.admin.dto.CategoryDtos.IdView;
 import com.ai.mall.product.interfaces.rest.admin.dto.CategoryDtos.UpdateCategoryRequest;
 import com.ai.mall.product.interfaces.rest.admin.dto.CategoryTreeAssembler;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,9 +51,9 @@ public class CategoryAdminController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('product:category:create')")
-    public UnifyResult<Map<String, Long>> create(@Valid @RequestBody CreateCategoryRequest request) {
+    public UnifyResult<IdView> create(@Valid @RequestBody CreateCategoryRequest request) {
         long id = service.create(new CreateCategoryCommand(request.name(), request.parentId(), request.sort()));
-        return UnifyResult.ok(Map.of("id", id));
+        return UnifyResult.ok(new IdView(id));
     }
 
     @PutMapping("/{id}")

@@ -6,6 +6,7 @@ import com.ai.mall.product.application.product.ProductCommands.ProductPageQuery;
 import com.ai.mall.product.domain.product.Product;
 import com.ai.mall.product.domain.product.ProductAttribute;
 import com.ai.mall.product.domain.product.ProductImage;
+import com.ai.mall.product.domain.product.ProductRepository.PriceRange;
 import com.ai.mall.product.domain.product.ProductRepository.ProductPageResult;
 import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.Specification;
@@ -45,7 +46,7 @@ public class MallProductController {
             @RequestParam(name = "size", required = false) Integer size) {
         ProductPageResult result = service.mallPage(new ProductPageQuery(keyword, categoryId, brandId, null, page, size));
         List<MallProductListItemView> records = result.records().stream()
-                .map(MallProductController::toListItemView).toList();
+                .map(product -> toListItemView(product, result.priceRanges().get(product.getId()))).toList();
         return UnifyResult.ok(new PageView<>(records, result.total(), result.page(), result.size()));
     }
 
@@ -54,10 +55,13 @@ public class MallProductController {
         return UnifyResult.ok(toDetailView(service.getMallById(id)));
     }
 
-    private static MallProductListItemView toListItemView(Product product) {
+    private static MallProductListItemView toListItemView(Product product, PriceRange priceRange) {
+        // EXISTS 已保证每个列表商品至少有一个启用 SKU，priceRange 必存在；null 兜底仅作防御
+        Long minPrice = priceRange == null ? null : priceRange.minPrice();
+        Long maxPrice = priceRange == null ? null : priceRange.maxPrice();
         return new MallProductListItemView(product.getId(), product.getCode(), product.getName(),
                 product.getSubtitle(), product.getCategoryId(), product.getBrandId(),
-                product.getMainImageUrl(), null, null, product.getStatus().name());
+                product.getMainImageUrl(), minPrice, maxPrice, product.getStatus().name());
     }
 
     private static MallProductDetailView toDetailView(Product product) {

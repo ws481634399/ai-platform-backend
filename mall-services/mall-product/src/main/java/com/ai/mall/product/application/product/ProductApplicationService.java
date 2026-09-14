@@ -79,7 +79,9 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public Product getMallById(long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
-        if (product.getStatus() != ProductStatus.ON_SALE) {
+        // CHG-0015：下架商品或无任何启用 SKU 的商品，商城详情一律 404（不暴露存在性）
+        if (product.getStatus() != ProductStatus.ON_SALE
+                || product.getSkus().stream().noneMatch(sku -> sku.getStatus() == SkuStatus.ENABLED)) {
             throw ProductException.notFound(id);
         }
         return product;

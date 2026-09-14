@@ -2,11 +2,13 @@ package com.ai.mall.product.infrastructure.config;
 
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.core.result.UnifyResult;
+import com.ai.mall.common.security.InternalIdentityFilter;
 import com.ai.mall.common.security.RedisSnapshotAuthorityConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.interfaces.RSAPublicKey;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
@@ -55,13 +58,17 @@ public class ProductSecurityConfiguration {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder decoder, ObjectMapper objectMapper,
-                                            StringRedisTemplate redisTemplate)
+                                            StringRedisTemplate redisTemplate,
+                                            ObjectProvider<InternalIdentityFilter> internalFilterProvider)
             throws Exception {
         var converter = new RedisSnapshotAuthorityConverter(redisTemplate, objectMapper);
-        return http.csrf(csrf -> csrf.disable())
+        // CHG-0015：内部接口仅接受 X-Internal-Token 共享凭证，不走 JWT
+        InternalIdentityFilter internalFilter = internalFilterProvider.getIfAvailable();
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/api/mall/**").permitAll()
+                        .requestMatchers("/api/internal/**").hasRole("SERVICE")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
@@ -70,8 +77,11 @@ public class ProductSecurityConfiguration {
                         .accessDeniedHandler((request, response, exception) ->
                                 writeError(response, objectMapper, 403, "permission denied")))
                 .oauth2ResourceServer(resource ->
-                        resource.jwt(jwt -> jwt.decoder(decoder).jwtAuthenticationConverter(converter)))
-                .build();
+                        resource.jwt(jwt -> jwt.decoder(decoder).jwtAuthenticationConverter(converter)));
+        if (internalFilter != null) {
+            http.addFilterBefore(internalFilter, UsernamePasswordAuthenticationFilter.class);
+        }
+        return http.build();
     }
 
     private static void writeError(HttpServletResponse response, ObjectMapper objectMapper, int status, String message)

@@ -1,5 +1,6 @@
 package com.ai.mall.product.interfaces.rest.admin.dto;
 
+import com.ai.mall.common.web.annotation.StringId;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.List;
 public final class BrandDtos {
 
     private BrandDtos() {
+    }
+
+    /** 新建实体后的 ID 回显（字符串，避免 JS 精度丢失）。 */
+    public record IdView(@StringId long id) {
     }
 
     public record CreateBrandRequest(
@@ -29,10 +34,11 @@ public final class BrandDtos {
     public record BrandStatusRequest(@NotBlank(message = "状态不能为空") String status) {
     }
 
-    public record BrandView(long id, String name, String logo, String description, int sort, String status) {
+    public record BrandView(@StringId long id, String name, String logo, String description, int sort,
+                            String status) {
     }
 
-    /** 统一分页响应视图：records/total/page/size。 */
+    /** 统一分页视图：records/total/page/size。 */
     public record PageView<T>(List<T> records, long total, int page, int size) {
     }
 }

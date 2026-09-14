@@ -1,5 +1,6 @@
 package com.ai.mall.product.support;
 
+import com.ai.mall.common.security.InternalIdentityFilter;
 import com.ai.mall.common.security.JwtSubjectConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -22,6 +23,7 @@ import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * 管理端 API 集成测试共享安全链：与生产 ProductSecurityConfiguration 等价，
@@ -69,15 +71,21 @@ public class ApiTestSecurityConfig {
         return decoder;
     }
 
+    // CHG-0015：InternalIdentityFilter 由自动装配依据 mall.security.internal.shared-secret 提供
+    // （测试 classpath 加载主 application.yml，含 dev-internal-secret 默认值），此处直接接入安全链。
+
     @Bean
     SecurityFilterChain testSecurityFilterChain(HttpSecurity http, JwtDecoder decoder,
-                                               ObjectMapper objectMapper) throws Exception {
+                                               ObjectMapper objectMapper,
+                                               InternalIdentityFilter internalIdentityFilter) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/api/mall/**").permitAll()
+                        .requestMatchers("/api/internal/**").hasRole("SERVICE")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
+                .addFilterBefore(internalIdentityFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) -> {
                             response.setStatus(401);

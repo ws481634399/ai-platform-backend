@@ -1,5 +1,6 @@
 package com.ai.mall.product.interfaces.rest.admin.dto;
 
+import com.ai.mall.common.web.annotation.StringId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,12 +10,17 @@ import java.util.List;
 
 /**
  * 商品管理端 DTO。
+ *
+ * <p>CHG-0015：业务 ID 标注 {@link StringId}；入参 ID 保持 Long（原生兼容字符串/数字双形态）。
  */
 public final class ProductDtos {
 
     private ProductDtos() {}
 
     public record PageView<T>(List<T> records, long total, int page, int size) {}
+
+    /** 新建实体后的 ID 回显（字符串，避免 JS 精度丢失）。 */
+    public record IdView(@StringId long id) {}
 
     public record CreateProductRequest(
             @NotBlank String code,
@@ -55,13 +61,13 @@ public final class ProductDtos {
     ) {}
 
     public record ProductView(
-            long id,
+            @StringId long id,
             String code,
             String name,
             String subtitle,
             String description,
-            long categoryId,
-            long brandId,
+            @StringId long categoryId,
+            @StringId long brandId,
             String status,
             String mainImageUrl,
             List<ImageView> images,
@@ -70,7 +76,7 @@ public final class ProductDtos {
     ) {}
 
     public record ImageView(
-            long id,
+            @StringId long id,
             String objectKey,
             String imageUrl,
             String imageType,
@@ -78,7 +84,7 @@ public final class ProductDtos {
             boolean mainFlag
     ) {}
 
-    public record AttributeView(long id, String name, String value, int sortOrder) {}
+    public record AttributeView(@StringId long id, String name, String value, int sortOrder) {}
 
     public record CreateSkuRequest(
             @NotBlank String skuCode,
@@ -94,7 +100,7 @@ public final class ProductDtos {
     public record SpecificationRequest(@NotBlank String name, @NotBlank String value) {}
 
     public record SkuView(
-            long id,
+            @StringId long id,
             String skuCode,
             List<SpecificationView> specifications,
             long salePriceInCents,

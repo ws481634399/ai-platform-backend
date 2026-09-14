@@ -2,6 +2,7 @@ package com.ai.mall.product.domain.product;
 
 import com.ai.mall.product.domain.product.ProductRepository.ProductPageResult;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -27,5 +28,20 @@ public interface ProductRepository {
 
     record ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, int page, int size) {}
 
-    record ProductPageResult(List<Product> records, long total, int page, int size) {}
+    /** 商城列表价区（整数分）：仅统计启用 SKU。 */
+    record PriceRange(long minPrice, long maxPrice) {}
+
+    /**
+     * 分页结果。
+     *
+     * @param priceRanges 商城列表价区：productId -> 价区；管理端分页传空 Map
+     */
+    record ProductPageResult(List<Product> records, long total, int page, int size,
+                             Map<Long, PriceRange> priceRanges) {
+
+        /** 管理端分页：无价区。 */
+        public ProductPageResult(List<Product> records, long total, int page, int size) {
+            this(records, total, page, size, Map.of());
+        }
+    }
 }

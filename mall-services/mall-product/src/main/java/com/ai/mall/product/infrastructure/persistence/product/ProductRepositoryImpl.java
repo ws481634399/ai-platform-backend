@@ -6,6 +6,7 @@ import com.ai.mall.product.domain.product.ProductImage;
 import com.ai.mall.product.domain.product.ProductRepository;
 import com.ai.mall.product.domain.product.ProductStatus;
 import com.ai.mall.product.domain.product.Sku;
+import com.ai.mall.product.domain.product.SkuStatus;
 import com.ai.mall.product.domain.product.Specification;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -92,12 +93,33 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .eq(query.categoryId() != null, ProductPo::getCategoryId, query.categoryId())
                 .eq(query.brandId() != null, ProductPo::getBrandId, query.brandId())
                 .eq(ProductPo::getStatus, ProductStatus.ON_SALE.name())
+                // CHG-0015：无任何启用 SKU 的商品在商城任何列表都不可见
+                .apply("EXISTS (SELECT 1 FROM product_sku s WHERE s.product_id = product_spu.id "
+                                + "AND s.status = {0} AND s.deleted = 0)",
+                        SkuStatus.ENABLED.name())
                 .orderByDesc(ProductPo::getCreatedAt);
         Page<ProductPo> result = productMapper.selectPage(new Page<>(query.page(), query.size()), wrapper);
         List<Product> records = result.getRecords().stream()
                 .map(po -> toDomain(po, loadImages(po.getId()), loadAttributes(po.getId()), loadSkus(po.getId())))
                 .toList();
-        return new ProductPageResult(records, result.getTotal(), query.page(), query.size());
+        return new ProductPageResult(records, result.getTotal(), query.page(), query.size(),
+                loadPriceRanges(records));
+    }
+
+    /**
+     * 当页商品启用 SKU 价区：一次分组 SQL 批量加载（禁止 N+1）。
+     */
+    private Map<Long, PriceRange> loadPriceRanges(List<Product> records) {
+        if (records.isEmpty()) {
+            return Map.of();
+        }
+        List<Long> productIds = records.stream().map(Product::getId).toList();
+        Map<Long, PriceRange> priceRanges = new LinkedHashMap<>();
+        for (PriceRangePo po : skuMapper.selectEnabledPriceRanges(productIds)) {
+            priceRanges.put(po.getProductId(),
+                    new PriceRange(po.getMinPrice(), po.getMaxPrice()));
+        }
+        return priceRanges;
     }
 
     @Override
