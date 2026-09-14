@@ -26,6 +26,9 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 @Profile("!test")
 public class GatewaySecurityConfiguration {
+    /** CHG-0015：内部端点仅允许服务间直连服务端口，经网关一律按"不存在"处理，不暴露端点存在性。 */
+    private static final String INTERNAL_PATH_PREFIX = "/api/internal/";
+
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         var authenticationConverter = new ReactiveJwtAuthenticationConverter();
@@ -33,15 +36,29 @@ public class GatewaySecurityConfiguration {
                 ? Flux.just(new SimpleGrantedAuthority("ROLE_ADMIN")) : Flux.empty());
         return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
+                        // CHG-0015 显式白名单（本 Change 最小集；商城其余公开路由在后续 Change 扩展）
                         .pathMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
                                 "/api/mall/products/**", "/actuator/health").permitAll()
+                        // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
+                        .pathMatchers("/api/internal/**").denyAll()
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .exceptionHandling(errors -> errors
-                        .authenticationEntryPoint((exchange, ex) -> writeError(exchange, HttpStatus.UNAUTHORIZED, "authentication required"))
-                        .accessDeniedHandler((exchange, ex) -> writeError(exchange, HttpStatus.FORBIDDEN, "permission denied")))
+                        // 匿名访问被拒：内部端点也必须返回 404（ExceptionTranslation 对匿名走 entryPoint）
+                        .authenticationEntryPoint((exchange, ex) -> isInternal(exchange)
+                                ? writeError(exchange, HttpStatus.NOT_FOUND, "not found")
+                                : writeError(exchange, HttpStatus.UNAUTHORIZED, "authentication required"))
+                        // 已认证但无权：denyAll 命中内部端点时返回 404，其余 403
+                        .accessDeniedHandler((exchange, ex) -> isInternal(exchange)
+                                ? writeError(exchange, HttpStatus.NOT_FOUND, "not found")
+                                : writeError(exchange, HttpStatus.FORBIDDEN, "permission denied")))
                 .oauth2ResourceServer(resource -> resource.jwt(jwt -> jwt.jwtAuthenticationConverter(authenticationConverter)))
                 .build();
+    }
+
+    private static boolean isInternal(org.springframework.web.server.ServerWebExchange exchange) {
+        String path = exchange.getRequest().getPath().pathWithinApplication().value();
+        return path.startsWith(INTERNAL_PATH_PREFIX);
     }
 
     @Bean
