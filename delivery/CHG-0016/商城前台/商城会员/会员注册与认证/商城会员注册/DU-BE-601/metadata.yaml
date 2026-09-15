@@ -43,10 +43,28 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "694fa501ed6c0bbb12dfa7a0ab489cbb3f7fae18"
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "2f70309a7834513300387327a7e7048ebbea0ab8"
+  paths: # 实现影响路径（repo 相对路径；完整文件清单见 DU evidence/changeset.md）
+    - mall-services/mall-identity/src/main/resources/db/migration/V7__create_member_account.sql
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/domain/model/member/
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/member/
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/member/
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/client/MemberProvisionClient.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/interfaces/rest/member/MemberAuthController.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/interfaces/rest/internal/InternalMemberController.java
+    - mall-services/mall-member/src/main/resources/db/migration/V1__create_member_tables.sql
+    - mall-services/mall-member/src/main/java/com/ai/mall/member/application/member/ProfileProvisionService.java
+    - mall-services/mall-member/src/main/java/com/ai/mall/member/interfaces/rest/internal/InternalMemberProvisionController.java
+  symbols: # 关键代码符号（<file>::<symbol>）
+    - "mall-identity/application/member/MemberRegistrationService.java::register"
+    - "mall-identity/application/member/MemberProvisionRelay.java::dispatchPending"
+    - "mall-identity/domain/model/member/MemberAccount.java::register"
+    - "mall-identity/infrastructure/client/MemberProvisionClient.java::provision"
+    - "mall-identity/interfaces/rest/member/MemberAuthController.java::register"
+    - "mall-identity/interfaces/rest/internal/InternalMemberController.java::profileSeed"
+    - "mall-member/application/member/ProfileProvisionService.java::provision"
+    - "mall-member/interfaces/rest/internal/InternalMemberProvisionController.java::provision"
