@@ -24,5 +24,11 @@ public interface MemberProfileRepository {
      */
     MemberProfile add(MemberProfile profile);
 
+    /**
+     * 更新可变资料（昵称/性别/手机/邮箱/头像）（STORY-003-01-02-01）。
+     * updated_at 由数据库 NOW(6) 维护；仅按主键更新，返回受影响行数。
+     */
+    int update(MemberProfile profile);
+
     Optional<MemberProfile> findByMemberId(long memberId);
 }

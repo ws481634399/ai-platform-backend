@@ -3,6 +3,7 @@ package com.ai.mall.member.infrastructure.persistence.member;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * member_profile MyBatis Mapper（CHG-0016）。
@@ -26,4 +27,10 @@ public interface MemberProfileMapper {
             + "VALUES(#{memberId}, #{username}, #{nickname}, #{avatarUrl}, #{gender}, #{phone}, #{email}, "
             + "#{initializedEventId}, #{createdAt}, #{updatedAt})")
     int insert(MemberProfilePo row);
+
+    /* STORY-003-01-02-01：可变资料更新；updated_at 交数据库 NOW(6) 维护（MySQL/H2 MySQL 模式兼容）。 */
+    @Update("UPDATE member_profile SET nickname = #{nickname}, avatar_url = #{avatarUrl}, gender = #{gender}, "
+            + "phone = #{phone}, email = #{email}, updated_at = NOW(6) "
+            + "WHERE member_id = #{memberId}")
+    int update(MemberProfilePo row);
 }

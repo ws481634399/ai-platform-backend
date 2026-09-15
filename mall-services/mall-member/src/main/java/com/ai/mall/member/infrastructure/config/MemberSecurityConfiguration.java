@@ -31,8 +31,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * mall-member 资源服务器安全链（CHG-0016）。
  *
  * <p>JWT 仅解码验证（与 identity 共用验签公钥），主体角色由 {@link JwtSubjectConverter}
- * 从 subject_type claim 映射（会员即 ROLE_MEMBER）；会员资料/地址端点的 MEMBER 授权
- * 随对应 Story 在路径规则与方法级 {@code @PreAuthorize} 双层收口。
+ * 从 subject_type claim 映射（会员即 ROLE_MEMBER）；会员资料/地址端点按
+ * STORY-003-01-02-01 起在路径规则（{@code /api/mall/**} MEMBER）与方法级
+ * {@code @PreAuthorize} 双层收口（ADMIN 越界 403）。
  * /api/internal/** 仅接受 X-Internal-Token（ROLE_SERVICE），任何 JWT 不放行。
  */
 @Configuration
@@ -64,6 +65,8 @@ public class MemberSecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/api/internal/**").hasRole("SERVICE")
+                        // STORY-003-01-02-01：会员 mall 端点路径层 MEMBER 收口（方法级 @PreAuthorize 纵深防御）
+                        .requestMatchers("/api/mall/**").hasRole("MEMBER")
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) ->

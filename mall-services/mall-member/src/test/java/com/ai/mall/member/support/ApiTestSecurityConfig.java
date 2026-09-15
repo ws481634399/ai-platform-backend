@@ -80,6 +80,8 @@ public class ApiTestSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/actuator/health").permitAll()
                         .requestMatchers("/api/internal/**").hasRole("SERVICE")
+                        // STORY-003-01-02-01：与生产安全链一致的路径层 MEMBER 收口
+                        .requestMatchers("/api/mall/**").hasRole("MEMBER")
                         .anyRequest().authenticated())
                 .addFilterBefore(internalIdentityFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(errors -> errors

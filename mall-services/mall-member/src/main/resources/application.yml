@@ -2,6 +2,12 @@ spring:
   application:
     name: mall-member
 
+  # CHG-0016 STORY-003-01-02-01：头像上传 2MB 上限（应用内对字节再做一次显式校验，MockMvc/绕过容器场景同样生效）
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_MEMBER:mall_member}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${MYSQL_USER:root}
@@ -34,6 +40,17 @@ mall:
     # CHG-0016 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
     internal:
       shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+  # CHG-0016 STORY-003-01-02-01：懒补偿反向调用 identity profile-seed
+  identity:
+    service-uri: ${IDENTITY_SERVICE_URI:http://localhost:8101}
+  # CHG-0016 STORY-003-01-02-01：头像对象存储（MinIO 离线不阻断注册登录主链）
+  storage:
+    minio:
+      endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+      access-key: ${MINIO_ACCESS_KEY:minioadmin}
+      secret-key: ${MINIO_SECRET_KEY:minioadmin}
+      bucket: ${MINIO_AVATAR_BUCKET:mall-avatar}
+      public-base-url: ${MALL_MINIO_PUBLIC_BASE_URL:http://localhost:9000}
 
 logging:
   pattern:

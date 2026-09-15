@@ -35,6 +35,21 @@ public class MyBatisMemberProfileRepository implements MemberProfileRepository {
 
     @Override
     public MemberProfile add(MemberProfile profile) {
+        MemberProfilePo po = toPo(profile);
+        try {
+            mapper.insert(po);
+        } catch (DuplicateKeyException ex) {
+            throw new DuplicateResourceException("member profile already exists", ex);
+        }
+        return profile;
+    }
+
+    @Override
+    public int update(MemberProfile profile) {
+        return mapper.update(toPo(profile));
+    }
+
+    private static MemberProfilePo toPo(MemberProfile profile) {
         MemberProfilePo po = new MemberProfilePo();
         po.setMemberId(profile.memberId());
         po.setUsername(profile.username());
@@ -46,12 +61,7 @@ public class MyBatisMemberProfileRepository implements MemberProfileRepository {
         po.setInitializedEventId(profile.initializedEventId());
         po.setCreatedAt(profile.createdAt());
         po.setUpdatedAt(profile.updatedAt());
-        try {
-            mapper.insert(po);
-        } catch (DuplicateKeyException ex) {
-            throw new DuplicateResourceException("member profile already exists", ex);
-        }
-        return profile;
+        return po;
     }
 
     @Override
