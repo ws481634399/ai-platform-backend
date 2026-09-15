@@ -26,7 +26,12 @@ public interface ProductRepository {
 
     boolean update(Product product);
 
-    record ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, int page, int size) {}
+    record ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, int page, int size,
+                            List<Long> brandIds, List<Long> categoryIds, MallProductSort sort) {
+        public ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, int page, int size) {
+            this(keyword, categoryId, brandId, status, page, size, null, null, MallProductSort.DEFAULT);
+        }
+    }
 
     /** 商城列表价区（整数分）：仅统计启用 SKU。 */
     record PriceRange(long minPrice, long maxPrice) {}

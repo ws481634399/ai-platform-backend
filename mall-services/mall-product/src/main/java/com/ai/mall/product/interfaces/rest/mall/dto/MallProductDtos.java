@@ -22,8 +22,8 @@ public final class MallProductDtos {
             @StringId long categoryId,
             @StringId long brandId,
             String mainImageUrl,
-            Long minPrice,
-            Long maxPrice,
+            long minPrice,
+            long maxPrice,
             String status
     ) {}
 

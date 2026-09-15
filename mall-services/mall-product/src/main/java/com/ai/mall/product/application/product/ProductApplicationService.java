@@ -13,6 +13,7 @@ import com.ai.mall.product.application.product.ProductCommands.UpdateSkuCommand;
 import com.ai.mall.product.domain.brand.BrandRepository;
 import com.ai.mall.product.domain.category.Category;
 import com.ai.mall.product.domain.category.CategoryRepository;
+import com.ai.mall.product.domain.product.MallProductSort;
 import com.ai.mall.product.domain.product.Product;
 import com.ai.mall.product.domain.product.ProductAttribute;
 import com.ai.mall.product.domain.product.ProductException;
@@ -24,7 +25,9 @@ import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.SkuStatus;
 import com.ai.mall.product.domain.product.Specification;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,10 @@ public class ProductApplicationService {
 
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 100;
+    /** 商城列表分页上限（区别于管理端 100）。 */
+    private static final int MALL_MAX_PAGE_SIZE = 50;
+    /** brandIds 多选上限（防 IN 过长）。 */
+    private static final int MAX_BRAND_IDS = 50;
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
@@ -70,10 +77,58 @@ public class ProductApplicationService {
     @Transactional(readOnly = true)
     public ProductPageResult mallPage(ProductPageQuery query) {
         int page = query.page() == null || query.page() < 1 ? 1 : query.page();
-        int size = query.size() == null || query.size() < 1 ? DEFAULT_PAGE_SIZE : Math.min(query.size(), MAX_PAGE_SIZE);
+        int size = query.size() == null || query.size() < 1 ? DEFAULT_PAGE_SIZE : Math.min(query.size(), MALL_MAX_PAGE_SIZE);
         String keyword = query.keyword() == null || query.keyword().isBlank() ? null : query.keyword().trim();
+        // 子孙分类：categoryId 命中后展开子树 id 集（深度 ≤3，内存展开）
+        List<Long> categoryIds = query.categoryId() == null ? null : collectDescendantCategoryIds(query.categoryId());
+        // 分类不存在 → 直接返空页（不查库）
+        if (query.categoryId() != null && (categoryIds == null || categoryIds.isEmpty())) {
+            return new ProductRepository.ProductPageResult(List.of(), 0, page, size, Map.of());
+        }
+        // brandIds 去空、去重、上限 50
+        List<Long> brandIds = normalizeBrandIds(query.brandIds());
+        MallProductSort sort = MallProductSort.from(query.sort());
         return productRepository.mallPage(new ProductRepository.ProductPageQuery(
-                keyword, query.categoryId(), query.brandId(), null, page, size));
+                keyword, null, null, null, page, size, brandIds, categoryIds, sort));
+    }
+
+    /**
+     * 收集分类的子孙 id 集（含自身），深度 ≤3。
+     * 若分类不存在则返回空列表（列表返空页而非报错）。
+     */
+    private List<Long> collectDescendantCategoryIds(long rootId) {
+        List<Category> all = categoryRepository.findAll();
+        boolean exists = all.stream().anyMatch(c -> c.getId() == rootId);
+        if (!exists) {
+            return List.of();
+        }
+        Set<Long> result = new HashSet<>();
+        result.add(rootId);
+        // 深度 ≤3：两轮展开足够覆盖 root(level=1) → 子(level=2) → 孙(level=3)
+        Set<Long> currentLevel = Set.of(rootId);
+        for (int depth = 0; depth < 3; depth++) {
+            Set<Long> nextLevel = new HashSet<>();
+            for (Category c : all) {
+                if (currentLevel.contains(c.getParentId())) {
+                    nextLevel.add(c.getId());
+                }
+            }
+            if (nextLevel.isEmpty()) break;
+            result.addAll(nextLevel);
+            currentLevel = nextLevel;
+        }
+        return new ArrayList<>(result);
+    }
+
+    private static List<Long> normalizeBrandIds(List<Long> brandIds) {
+        if (brandIds == null || brandIds.isEmpty()) {
+            return null;
+        }
+        return brandIds.stream()
+                .filter(id -> id != null && id > 0)
+                .distinct()
+                .limit(MAX_BRAND_IDS)
+                .toList();
     }
 
     @Transactional(readOnly = true)

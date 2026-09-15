@@ -42,9 +42,17 @@ public class MallProductController {
             @RequestParam(name = "keyword", required = false) String keyword,
             @RequestParam(name = "categoryId", required = false) Long categoryId,
             @RequestParam(name = "brandId", required = false) Long brandId,
+            @RequestParam(name = "brandIds", required = false) List<Long> brandIds,
+            @RequestParam(name = "sort", required = false) String sort,
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "size", required = false) Integer size) {
-        ProductPageResult result = service.mallPage(new ProductPageQuery(keyword, categoryId, brandId, null, page, size));
+        // brandId 单值兼容：若传了 brandId 但未传 brandIds，合并进 brandIds
+        List<Long> effectiveBrandIds = brandIds;
+        if ((effectiveBrandIds == null || effectiveBrandIds.isEmpty()) && brandId != null) {
+            effectiveBrandIds = List.of(brandId);
+        }
+        ProductPageResult result = service.mallPage(
+                new ProductPageQuery(keyword, categoryId, null, null, page, size, effectiveBrandIds, sort));
         List<MallProductListItemView> records = result.records().stream()
                 .map(product -> toListItemView(product, result.priceRanges().get(product.getId()))).toList();
         return UnifyResult.ok(new PageView<>(records, result.total(), result.page(), result.size()));
@@ -56,9 +64,9 @@ public class MallProductController {
     }
 
     private static MallProductListItemView toListItemView(Product product, PriceRange priceRange) {
-        // EXISTS 已保证每个列表商品至少有一个启用 SKU，priceRange 必存在；null 兜底仅作防御
-        Long minPrice = priceRange == null ? null : priceRange.minPrice();
-        Long maxPrice = priceRange == null ? null : priceRange.maxPrice();
+        // 派生表 pr.product_id IS NOT NULL 保证每个列表商品至少有一个启用 SKU，价区必存在；0 仅作防御
+        long minPrice = priceRange == null ? 0L : priceRange.minPrice();
+        long maxPrice = priceRange == null ? 0L : priceRange.maxPrice();
         return new MallProductListItemView(product.getId(), product.getCode(), product.getName(),
                 product.getSubtitle(), product.getCategoryId(), product.getBrandId(),
                 product.getMainImageUrl(), minPrice, maxPrice, product.getStatus().name());

@@ -8,6 +8,7 @@ import com.ai.mall.product.domain.product.ProductStatus;
 import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.SkuStatus;
 import com.ai.mall.product.domain.product.Specification;
+import com.ai.mall.product.domain.product.MallProductSort;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -88,17 +89,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Override
     public ProductPageResult mallPage(ProductPageQuery query) {
-        LambdaQueryWrapper<ProductPo> wrapper = new LambdaQueryWrapper<ProductPo>()
-                .like(query.keyword() != null && !query.keyword().isBlank(), ProductPo::getProductName, query.keyword())
-                .eq(query.categoryId() != null, ProductPo::getCategoryId, query.categoryId())
-                .eq(query.brandId() != null, ProductPo::getBrandId, query.brandId())
-                .eq(ProductPo::getStatus, ProductStatus.ON_SALE.name())
-                // CHG-0015：无任何启用 SKU 的商品在商城任何列表都不可见
-                .apply("EXISTS (SELECT 1 FROM product_sku s WHERE s.product_id = product_spu.id "
-                                + "AND s.status = {0} AND s.deleted = 0)",
-                        SkuStatus.ENABLED.name())
-                .orderByDesc(ProductPo::getCreatedAt);
-        Page<ProductPo> result = productMapper.selectPage(new Page<>(query.page(), query.size()), wrapper);
+        // CHG-0017：商城列表走自定义 SQL——LEFT JOIN 启用 SKU 价区派生表，
+        // pr.product_id IS NOT NULL 等价 EXISTS 启用 SKU；价区排序走派生表列（禁止内存排序）。
+        Page<ProductPo> result = productMapper.selectMallPage(
+                new Page<>(query.page(), query.size()),
+                query.categoryIds(), query.brandIds(), query.keyword(),
+                query.sort() == null ? MallProductSort.DEFAULT.name() : query.sort().name());
         List<Product> records = result.getRecords().stream()
                 .map(po -> toDomain(po, loadImages(po.getId()), loadAttributes(po.getId()), loadSkus(po.getId())))
                 .toList();

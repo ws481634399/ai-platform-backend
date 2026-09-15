@@ -35,7 +35,12 @@ public final class ProductCommands {
 
     public record ChangeProductStatusCommand(String status) {}
 
-    public record ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, Integer page, Integer size) {}
+    public record ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, Integer page, Integer size,
+                                   List<Long> brandIds, String sort) {
+        public ProductPageQuery(String keyword, Long categoryId, Long brandId, String status, Integer page, Integer size) {
+            this(keyword, categoryId, brandId, status, page, size, null, null);
+        }
+    }
 
     public record ImageParam(String objectKey, String imageUrl, String imageType, int sortOrder, boolean mainFlag) {}
 
