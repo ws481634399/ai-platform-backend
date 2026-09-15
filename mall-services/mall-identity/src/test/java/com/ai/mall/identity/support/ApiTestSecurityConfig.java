@@ -61,6 +61,8 @@ public class ApiTestSecurityConfig {
         return new NimbusJwtEncoder(new ImmutableJWKSet<>(new com.nimbusds.jose.jwk.JWKSet(jwk)));
     }
 
+    // AccessTokenIssuer 由 TestTokenIssuerAutoConfiguration 兜底（复用本配置的进程内 JwtEncoder）。
+
     @Bean
     JwtDecoder testJwtDecoder() {
         var decoder = NimbusJwtDecoder.withPublicKey(KEYS.publicKey()).build();
@@ -79,8 +81,10 @@ public class ApiTestSecurityConfig {
                                                 InternalIdentityFilter internalIdentityFilter) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/member/register", "/actuator/health").permitAll()
+                        .requestMatchers("/api/auth/member/register", "/api/auth/member/login",
+                                "/api/auth/member/refresh", "/actuator/health").permitAll()
                         .requestMatchers("/api/internal/**").hasRole("SERVICE")
+                        .requestMatchers("/api/auth/member/logout").hasRole("MEMBER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(internalIdentityFilter, UsernamePasswordAuthenticationFilter.class)

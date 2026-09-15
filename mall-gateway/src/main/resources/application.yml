@@ -32,6 +32,16 @@ spring:
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:
             - Path=/api/mall/products/**
+        # CHG-0016：会员认证端点（注册/登录/刷新/退出），直连 mall-identity
+        - id: mall-identity-member
+          uri: ${MALL_GATEWAY_IDENTITY_URI:http://localhost:8101}
+          predicates:
+            - Path=/api/auth/member/**
+        # CHG-0016：会员域端点（资料/地址，随后续 Story 落 mall-member:8102）
+        - id: mall-member
+          uri: ${MALL_GATEWAY_MEMBER_URI:http://localhost:8102}
+          predicates:
+            - Path=/api/mall/members/**,/api/mall/shipping-addresses/**
         - id: mall-product-internal
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:

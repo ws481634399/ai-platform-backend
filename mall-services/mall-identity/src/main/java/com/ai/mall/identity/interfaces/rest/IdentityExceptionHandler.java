@@ -16,6 +16,7 @@ public class IdentityExceptionHandler {
             case NOT_FOUND -> HttpStatus.NOT_FOUND;
             case CONFLICT -> HttpStatus.CONFLICT;
             case UNAUTHORIZED -> HttpStatus.UNAUTHORIZED;
+            case FORBIDDEN -> HttpStatus.FORBIDDEN;
         };
         CommonErrorCode code = exception.kind() == UseCaseException.Kind.INVALID
                 ? CommonErrorCode.PARAM_INVALID : CommonErrorCode.BUSINESS_ERROR;

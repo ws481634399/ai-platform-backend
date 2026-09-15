@@ -21,6 +21,12 @@ public interface MemberUserRepository {
      */
     MemberAccount add(MemberAccount account);
 
-    /** 按主键加载（profile-seed 内部端点/后续登录 Story 使用）。 */
+    /** 按主键加载（profile-seed 内部端点/登录刷新加载账号使用）。 */
     Optional<MemberAccount> findById(long memberId);
+
+    /** 按归一化用户名加载（登录查询，大小写不敏感）。 */
+    Optional<MemberAccount> findByUsernameNorm(String usernameNorm);
+
+    /** 退出登录时原子递增认证版本，使版本窗口内的旧 access claim 变为陈旧。 */
+    void incrementAuthVersion(long memberId);
 }

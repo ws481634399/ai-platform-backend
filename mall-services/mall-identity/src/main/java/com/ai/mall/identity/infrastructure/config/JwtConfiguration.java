@@ -73,8 +73,10 @@ public class JwtConfiguration {
         var chain = http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
-                                "/api/auth/member/register", "/actuator/health").permitAll()
+                                "/api/auth/member/register", "/api/auth/member/login",
+                                "/api/auth/member/refresh", "/actuator/health").permitAll()
                         .requestMatchers("/api/internal/**").hasRole("SERVICE")
+                        .requestMatchers("/api/auth/member/logout").hasRole("MEMBER")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors

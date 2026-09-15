@@ -31,16 +31,24 @@ public class GatewaySecurityConfiguration {
 
     @Bean
     SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        // CHG-0016：subject_type claim → ROLE_<TYPE>（ADMIN/MEMBER 双向隔离）；未知/缺失不给角色
         var authenticationConverter = new ReactiveJwtAuthenticationConverter();
-        authenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> "ADMIN".equals(jwt.getClaimAsString("subject_type"))
-                ? Flux.just(new SimpleGrantedAuthority("ROLE_ADMIN")) : Flux.empty());
+        authenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            String subjectType = jwt.getClaimAsString("subject_type");
+            return "ADMIN".equals(subjectType) || "MEMBER".equals(subjectType)
+                    ? Flux.just(new SimpleGrantedAuthority("ROLE_" + subjectType)) : Flux.empty();
+        });
         return http.csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        // CHG-0015 显式白名单（本 Change 最小集；商城其余公开路由在后续 Change 扩展）
+                        // 显式白名单：管理端登录刷新（CHG-0015）+ 会员注册登录刷新（CHG-0016）+ 公开商品浏览
                         .pathMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
+                                "/api/auth/member/register", "/api/auth/member/login",
+                                "/api/auth/member/refresh",
                                 "/api/mall/products/**", "/actuator/health").permitAll()
                         // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
                         .pathMatchers("/api/internal/**").denyAll()
+                        // CHG-0016：会员域仅 MEMBER（与 /api/admin/** 互不重叠，双向 403）
+                        .pathMatchers("/api/mall/members/**", "/api/mall/shipping-addresses/**").hasRole("MEMBER")
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .exceptionHandling(errors -> errors

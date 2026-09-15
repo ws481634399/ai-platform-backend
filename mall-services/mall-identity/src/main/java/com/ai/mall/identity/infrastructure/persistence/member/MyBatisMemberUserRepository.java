@@ -48,11 +48,23 @@ public class MyBatisMemberUserRepository implements MemberUserRepository {
 
     @Override
     public Optional<MemberAccount> findById(long memberId) {
-        return Optional.ofNullable(mapper.findById(memberId)).map(po -> {
-            Instant created = po.getCreatedAt() == null ? Instant.EPOCH : po.getCreatedAt();
-            Instant updated = po.getUpdatedAt() == null ? created : po.getUpdatedAt();
-            return MemberAccount.reconstitute(po.getId(), po.getUsername(), po.getPasswordHash(),
-                    po.getStatus(), po.getAuthVersion(), created, updated);
-        });
+        return Optional.ofNullable(mapper.findById(memberId)).map(this::toDomain);
+    }
+
+    @Override
+    public Optional<MemberAccount> findByUsernameNorm(String usernameNorm) {
+        return Optional.ofNullable(mapper.findByUsernameNorm(usernameNorm)).map(this::toDomain);
+    }
+
+    @Override
+    public void incrementAuthVersion(long memberId) {
+        mapper.incrementAuthVersion(memberId);
+    }
+
+    private MemberAccount toDomain(MemberUserPo po) {
+        Instant created = po.getCreatedAt() == null ? Instant.EPOCH : po.getCreatedAt();
+        Instant updated = po.getUpdatedAt() == null ? created : po.getUpdatedAt();
+        return MemberAccount.reconstitute(po.getId(), po.getUsername(), po.getPasswordHash(),
+                po.getStatus(), po.getAuthVersion(), created, updated);
     }
 }
