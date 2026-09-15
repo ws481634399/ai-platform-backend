@@ -1,0 +1,21 @@
+evidence:
+  - id: EV-CODE-705-001
+    type: code-change
+    delivery-unit: DU-BE-705
+    symbol: "InternalInventoryController, InventoryApplicationService#availabilityMap, MallSkuController, SkuAvailabilityApplicationService, InventoryAvailabilityClient, StockStatus"
+    commits:
+      - b982bf5
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-15T23:30:00+08:00"
+  - id: EV-TEST-705-002
+    type: test-run
+    delivery-unit: DU-BE-705
+    scope: 模块级转绿（inventory 4 例新增 + product 6 例新增，两模块全量零回归）
+    commands:
+      - "mvn -pl mall-services/mall-inventory test（24/24）"
+      - "mvn -pl mall-services/mall-product test（81/81）"
+    result: passed
+    covers: [AC-015, AC-016, AC-017]
+    tc-mapping-ref: evidence/red-green.md
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-15T23:31:00+08:00"
