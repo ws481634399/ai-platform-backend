@@ -28,10 +28,25 @@
       <artifactId>mall-common-log</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- CHG-0016 安全：JWT 资源服务器 + JwtSubjectConverter/InternalIdentityFilter -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-security</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+    </dependency>
+    <!-- MyBatis-Plus 3.5.9+ 分页插件依赖 JSqlParser 独立模块（PaginationInnerInterceptor），CHG-0016 -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-jsqlparser</artifactId>
     </dependency>
     <dependency>
       <groupId>org.flywaydb</groupId>

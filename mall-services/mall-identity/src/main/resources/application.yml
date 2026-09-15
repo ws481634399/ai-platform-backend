@@ -45,6 +45,12 @@ mall:
       refresh-ttl: ${JWT_REFRESH_TTL:P7D}
       public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
       private-key-location: ${JWT_PRIVATE_KEY_LOCATION}
+    # CHG-0015/CHG-0016 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+  # CHG-0016 mall-member 服务地址（会员开通 provision 投递）
+  member:
+    service-uri: ${MALL_MEMBER_URI:http://localhost:8102}
 
 logging:
   pattern:

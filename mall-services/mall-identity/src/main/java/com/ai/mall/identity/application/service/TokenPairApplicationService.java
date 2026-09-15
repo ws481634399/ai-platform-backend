@@ -5,6 +5,7 @@ import com.ai.mall.identity.domain.repository.AdminUserRepository;
 import com.ai.mall.identity.domain.exception.DomainRuleViolation;
 import com.ai.mall.identity.application.port.AccessTokenIssuer;
 import com.ai.mall.identity.application.service.RefreshSessionApplicationService;
+import com.ai.mall.common.security.SubjectType;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,7 +18,7 @@ public class TokenPairApplicationService {
         this.accessTokens = accessTokens; this.refreshTokens = refreshTokens; this.admins = admins;
     }
     public TokenPair issue(AuthenticatedAdmin admin) {
-        var access = accessTokens.issue(admin.id(), admin.username(), admin.authVersion());
+        var access = accessTokens.issue(admin.id(), admin.username(), admin.authVersion(), SubjectType.ADMIN);
         var refresh = refreshTokens.issue(admin.id(), admin.authVersion());
         return new TokenPair(access.value(), access.expiresAt(), refresh.value(), refresh.expiresAt());
     }
@@ -26,7 +27,7 @@ public class TokenPairApplicationService {
         var admin = admins.findById(current.adminId()).orElseThrow(() -> invalid("admin disabled or missing"));
         try { admin.ensureCanSignIn(); } catch (DomainRuleViolation ex) { throw invalid("admin disabled or missing"); }
         var refresh = refreshTokens.rotate(rawRefreshToken, admin.authVersion());
-        var access = accessTokens.issue(refresh.adminId(), admin.account(), refresh.authVersion());
+        var access = accessTokens.issue(refresh.adminId(), admin.account(), refresh.authVersion(), SubjectType.ADMIN);
         return new TokenPair(access.value(), access.expiresAt(), refresh.value(), refresh.expiresAt());
     }
     public void revokeAll(long adminId) { refreshTokens.revokeAll(adminId); }

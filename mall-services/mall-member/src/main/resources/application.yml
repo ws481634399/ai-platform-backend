@@ -25,6 +25,16 @@ mybatis-plus:
 server:
   port: 8102
 
+mall:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+    # CHG-0016 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{traceId:-}] %logger{40} - %msg%n"

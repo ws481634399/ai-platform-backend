@@ -27,13 +27,16 @@ public class RsaAccessTokenIssuer implements AccessTokenIssuer {
         this.lifetime = lifetime;
     }
 
-    @Override public IssuedAccessToken issue(long adminId, String username, long authVersion) {
+    @Override public IssuedAccessToken issue(long subjectId, String username, long authVersion, SubjectType subjectType) {
+        if (subjectType == null || subjectType == SubjectType.GUEST) {
+            throw new IllegalArgumentException("access token subjectType must be an authenticated subject");
+        }
         Instant now = clock.instant();
         Instant expiresAt = now.plus(lifetime);
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer(issuer).audience(java.util.List.of(audience)).subject(Long.toString(adminId))
+                .issuer(issuer).audience(java.util.List.of(audience)).subject(Long.toString(subjectId))
                 .issuedAt(now).expiresAt(expiresAt).id(UUID.randomUUID().toString())
-                .claim("subject_type", SubjectType.ADMIN.name())
+                .claim("subject_type", subjectType.name())
                 .claim("username", username).claim("auth_version", authVersion).build();
         return new IssuedAccessToken(encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue(), expiresAt);
     }

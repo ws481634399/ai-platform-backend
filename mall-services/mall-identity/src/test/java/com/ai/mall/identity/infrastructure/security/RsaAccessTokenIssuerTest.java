@@ -19,7 +19,7 @@ class RsaAccessTokenIssuerTest {
         var encoder = new NimbusJwtEncoder(new ImmutableJWKSet<>(new com.nimbusds.jose.jwk.JWKSet(jwk)));
         var service = new RsaAccessTokenIssuer(encoder, Clock.fixed(Instant.now().plusSeconds(5), ZoneOffset.UTC),
                 "ai-platform", "mall-admin-api", Duration.ofMinutes(15));
-        var issued = service.issue(7, "alice", 3);
+        var issued = service.issue(7, "alice", 3, com.ai.mall.common.security.SubjectType.ADMIN);
         var decoded = NimbusJwtDecoder.withPublicKey(publicKey).build().decode(issued.value());
         assertThat(decoded.getHeaders().get("alg").toString()).isEqualTo("RS256");
         assertThat(decoded.getSubject()).isEqualTo("7");

@@ -27,7 +27,10 @@ import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.ai.mall.common.security.JwtSubjectConverter;
+import com.ai.mall.common.security.InternalIdentityFilter;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.core.result.UnifyResult;
@@ -62,18 +65,26 @@ public class JwtConfiguration {
         return decoder;
     }
 
-    @Bean SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder decoder, ObjectMapper objectMapper) throws Exception {
+    @Bean SecurityFilterChain securityFilterChain(HttpSecurity http, JwtDecoder decoder, ObjectMapper objectMapper,
+                                                  ObjectProvider<InternalIdentityFilter> internalFilterProvider) throws Exception {
         var converter = new JwtSubjectConverter();
-        return http.csrf(csrf -> csrf.disable())
+        // CHG-0015/CHG-0016：/api/internal/** 仅接受 X-Internal-Token（ROLE_SERVICE），JWT 不放行
+        InternalIdentityFilter internalFilter = internalFilterProvider.getIfAvailable();
+        var chain = http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/auth/login", "/api/admin/auth/refresh", "/actuator/health").permitAll()
+                        .requestMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
+                                "/api/auth/member/register", "/actuator/health").permitAll()
+                        .requestMatchers("/api/internal/**").hasRole("SERVICE")
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(errors -> errors
                         .authenticationEntryPoint((request, response, exception) -> writeError(response, objectMapper, 401, "authentication required"))
                         .accessDeniedHandler((request, response, exception) -> writeError(response, objectMapper, 403, "permission denied")))
-                .oauth2ResourceServer(resource -> resource.jwt(jwt -> jwt.decoder(decoder).jwtAuthenticationConverter(converter)))
-                .build();
+                .oauth2ResourceServer(resource -> resource.jwt(jwt -> jwt.decoder(decoder).jwtAuthenticationConverter(converter)));
+        if (internalFilter != null) {
+            chain.addFilterBefore(internalFilter, UsernamePasswordAuthenticationFilter.class);
+        }
+        return chain.build();
     }
 
     private static void writeError(HttpServletResponse response, ObjectMapper objectMapper, int status, String message) throws IOException {
