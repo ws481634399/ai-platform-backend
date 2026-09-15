@@ -22,6 +22,8 @@ public class BrandApplicationService {
 
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 100;
+    /** 商城公开品牌列表单页上限（比管理端宽松，供前端筛选场景一次加载）。 */
+    private static final int MALL_MAX_PAGE_SIZE = 200;
 
     private final BrandRepository repository;
 
@@ -41,6 +43,18 @@ public class BrandApplicationService {
     @Transactional(readOnly = true)
     public Brand getById(long id) {
         return repository.findById(id).orElseThrow(() -> BrandException.notFound(id));
+    }
+
+    /**
+     * 商城公开品牌列表：仅 ENABLED；keyword 对 name 模糊（参数化 LIKE）；
+     * size 收敛至 MALL_MAX_PAGE_SIZE（200）；空结果 records 为 []。
+     */
+    @Transactional(readOnly = true)
+    public BrandPageResult mallPage(String keyword, Integer page, Integer size) {
+        int p = page == null || page < 1 ? 1 : page;
+        int s = size == null || size < 1 ? DEFAULT_PAGE_SIZE : Math.min(size, MALL_MAX_PAGE_SIZE);
+        String kw = keyword == null || keyword.isBlank() ? null : keyword.trim();
+        return repository.page(new BrandRepository.BrandPageQuery(kw, MasterDataStatus.ENABLED.name(), p, s));
     }
 
     @Transactional

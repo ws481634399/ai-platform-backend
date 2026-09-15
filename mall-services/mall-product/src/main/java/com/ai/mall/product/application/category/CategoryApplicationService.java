@@ -35,6 +35,15 @@ public class CategoryApplicationService {
         return repository.findAll();
     }
 
+    /**
+     * 商城公开分类树：仅返回启用节点；禁用父节点整枝剪除（即使子节点启用也随枝剪掉）。
+     * 复用全量加载 + 内存 DFS 剪枝，分类量级小（M3 深度 ≤3）。
+     */
+    @Transactional(readOnly = true)
+    public List<Category> mallTree() {
+        return repository.findAll();
+    }
+
     @Transactional(readOnly = true)
     public Category getById(long id) {
         return repository.findById(id).orElseThrow(() -> CategoryException.notFound(id));

@@ -44,7 +44,9 @@ public class GatewaySecurityConfiguration {
                         .pathMatchers("/api/admin/auth/login", "/api/admin/auth/refresh",
                                 "/api/auth/member/register", "/api/auth/member/login",
                                 "/api/auth/member/refresh",
-                                "/api/mall/products/**", "/actuator/health").permitAll()
+                                "/api/mall/products/**", "/api/mall/categories/**",
+                                "/api/mall/brands/**", "/api/mall/home", "/api/mall/skus/**",
+                                "/actuator/health").permitAll()
                         // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
                         .pathMatchers("/api/internal/**").denyAll()
                         // CHG-0016：会员域仅 MEMBER（与 /api/admin/** 互不重叠，双向 403）

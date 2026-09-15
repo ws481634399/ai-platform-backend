@@ -31,7 +31,7 @@ spring:
         - id: mall-product-mall
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:
-            - Path=/api/mall/products/**
+            - Path=/api/mall/products/**,/api/mall/categories/**,/api/mall/brands/**,/api/mall/home,/api/mall/skus/**
         # CHG-0016：会员认证端点（注册/登录/刷新/退出），直连 mall-identity
         - id: mall-identity-member
           uri: ${MALL_GATEWAY_IDENTITY_URI:http://localhost:8101}

@@ -36,14 +36,22 @@ public class BrandRepositoryImpl implements BrandRepository {
 
     @Override
     public BrandPageResult page(BrandPageQuery query) {
-        LambdaQueryWrapper<BrandPo> wrapper = new LambdaQueryWrapper<BrandPo>()
-                .like(query.keyword() != null && !query.keyword().isBlank(), BrandPo::getName, query.keyword())
-                .eq(query.status() != null && !query.status().isBlank(), BrandPo::getStatus, query.status())
-                .orderByAsc(BrandPo::getSort)
-                .orderByAsc(BrandPo::getId);
+        LambdaQueryWrapper<BrandPo> wrapper = new LambdaQueryWrapper<>();
+        if (query.status() != null && !query.status().isBlank()) {
+            wrapper.eq(BrandPo::getStatus, query.status());
+        }
+        if (query.keyword() != null && !query.keyword().isBlank()) {
+            String escaped = escapeLike(query.keyword());
+            wrapper.apply("LOWER(name) LIKE CONCAT('%', LOWER({0}), '%') ESCAPE '!'", escaped);
+        }
+        wrapper.orderByAsc(BrandPo::getSort).orderByAsc(BrandPo::getId);
         Page<BrandPo> result = mapper.selectPage(new Page<>(query.page(), query.size()), wrapper);
         return new BrandPageResult(result.getRecords().stream().map(BrandRepositoryImpl::toDomain).toList(),
                 result.getTotal(), query.page(), query.size());
+    }
+
+    private static String escapeLike(String raw) {
+        return raw.replace("!", "!!").replace("%", "!%").replace("_", "!_");
     }
 
     @Override
