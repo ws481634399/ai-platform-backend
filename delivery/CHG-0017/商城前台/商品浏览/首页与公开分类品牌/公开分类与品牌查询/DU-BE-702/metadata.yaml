@@ -43,6 +43,20 @@ status: pending # pending / developing / testing / completed
 baseline:
   commit: ""
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "b4b5a1f"
+  paths:
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall/MallCategoryController.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall/MallBrandController.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall/dto/MallCatalogDtos.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall/dto/MallCategoryTreeAssembler.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/category/CategoryApplicationService.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/brand/BrandApplicationService.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/persistence/brand/BrandRepositoryImpl.java
+    - mall-gateway/src/main/resources/application.yml
+    - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java
+  symbols:
+    - MallCategoryController::tree
+    - MallBrandController::page
+    - MallCategoryTreeAssembler::toTree
+    - BrandApplicationService::mallPage
+    - CategoryApplicationService::mallTree

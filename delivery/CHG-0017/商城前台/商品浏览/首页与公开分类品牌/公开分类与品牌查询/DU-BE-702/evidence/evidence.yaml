@@ -1,0 +1,21 @@
+evidence:
+  - id: EV-CODE-702-001
+    type: code-change
+    delivery-unit: DU-BE-702
+    symbol: "MallCategoryController, MallBrandController, MallCatalogDtos, MallCategoryTreeAssembler, CategoryApplicationService#mallTree, BrandApplicationService#mallPage, BrandRepositoryImpl#page, GatewaySecurityConfiguration"
+    commits:
+      - b4b5a1f
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-15T23:00:00+08:00"
+  - id: EV-TEST-702-002
+    type: test-run
+    delivery-unit: DU-BE-702
+    scope: 模块级转绿（mall-product 5 例新增 + 既有 70 零回归；mall-gateway 19 零回归）
+    commands:
+      - "mvn -pl mall-services/mall-product clean test（75/75）"
+      - "mvn -pl mall-gateway test（19/19）"
+    result: passed
+    covers: [AC-003, AC-004, AC-005]
+    tc-mapping-ref: evidence/red-green.md
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-15T23:01:00+08:00"
