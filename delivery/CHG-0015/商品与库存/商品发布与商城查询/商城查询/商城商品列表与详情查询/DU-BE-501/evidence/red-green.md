@@ -20,6 +20,16 @@
 | mall-inventory | logs/inventory-green-final.log | 19/19 passed（分页 33 行 total 回归、ID 字符串、凭证 4 例、403 映射） |
 | mall-gateway | logs/gateway-green-final.log | 13/13 passed（新增 CHG0015GatewaySecurityChainTest 7 例：白名单放行、admin 401/200/403、internal 匿名与持 ADMIN Token 均 404 同构体） |
 
+## DEV-4 追加回归：库存流水 ID 回填（DU-FE-501 冒烟暴露）
+
+| 证据日志 | 命令 | 结果 |
+|---|---|---|
+| logs/inventory-logid-red.log | 临时回退 `logToDomain` 修复后仅跑新增用例 | **红**：`$.data.records[0].id expected:<2099557758287388674> but was:<0>` |
+| logs/inventory-logid-green.log | 恢复修复后 `mvn -pl mall-services/mall-inventory test` | **绿**：inventory 模块 20/20（InventoryAdminApiTest 3/3，含新增流水雪花 ID 回填用例） |
+
+联调侧验证（repo-2 DU-FE-501/evidence/logs/smoke/ 与 smoke-api-verify.log）：
+真实流水修复前 id=`"0"`、修复后为真实雪花 `2099558287935709185`/`2099558209569333251`。
+
 ## Regression（全量回归）
 
 | 证据日志 | 命令 | 结果 |

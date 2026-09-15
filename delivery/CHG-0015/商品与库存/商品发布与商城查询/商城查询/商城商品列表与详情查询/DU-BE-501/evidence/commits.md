@@ -9,3 +9,4 @@
 | 8c500f1 | 任务4/5 | feat(product): stringify business IDs, real sku price range and enabled-sku visibility |
 | 78ed07b | 任务4/5 | fix(inventory): paging interceptor, stringified IDs, internal credentials and 403 mapping |
 | e050ec9 | 任务3 | feat(gateway): explicitly enumerate public whitelist and mask internal endpoints as 404 |
+| bd309ec | DEV-4 | fix(inventory): backfill persisted snowflake id when reading stock logs（DU-FE-501 冒烟暴露的流水读取缺陷 + red-green 回归日志） |

@@ -44,6 +44,7 @@ M3 前置五项就绪修复，全部落在 repo-1，按任务组织：
 | 8c500f16 | 4 | feat(product): 字符串 ID + 真实价区 + EXISTS + 内部凭证 |
 | 78ed07be | 5 | fix(inventory): 分页 + 字符串 ID + 凭证 + 403 |
 | e050ec92 | 3 | feat(gateway): 显式白名单 + internal 404 外拒 |
+| bd309ec | DEV-4 | fix(inventory): 流水读取回填雪花 ID（DU-FE-501 冒烟暴露）+ red-green 回归 |
 
 完整短 hash/消息对照见 evidence/commits.md。
 
@@ -79,12 +80,28 @@ M3 前置五项就绪修复，全部落在 repo-1，按任务组织：
   TC-005（库存分页）与内部凭证用例获得正确断言基线。
 - 影响评估: 仅修正错误状态码（400→正常绑定、500→403），不改变任何业务语义；product 模块同模式已在 M2 验证。
 
+### DEV-4 DU-FE-501 端到端冒烟暴露：库存流水读取漏传持久化 ID
+- 原 DU 建议: task-design.md 未涉及流水读取链路；`insertLog` 写入后有 `log.assignId(po.getId())`，
+  但 `logToDomain`（读取映射）从未回填 id。
+- 实际实现: `InventoryRepositoryImpl.logToDomain` 重建 `InventoryLog` 后补
+  `log.assignId(po.getId())`；新增回归用例 `InventoryAdminApiTest.logListReturnsPersistedSnowflakeId`
+  （插入 19 位雪花流水 ID，断言 GET `/api/admin/inventory/logs` 回填完整字符串）。
+- 发现方式: DU-FE-501 五页面真实联调（init 100→adjust +50）后查询流水，记录 id 序列化为 `"0"`。
+  Long 数值时代前端不展示/不比对该字段故潜伏；字符串化后直接可见。
+- 影响评估: 纯读取缺陷修复，不改变库存数量/业务语义；red（was:<0>）→ green（inventory 模块
+  20/20）证据见 evidence/logs/inventory-logid-red.log、inventory-logid-green.log。
+
 ## 自检
 
 - [x] 全量构建：`mvn clean package` → 24 模块 BUILD SUCCESS，13 个测试模块 **197/0/0/0**
       （通过/失败/错误/跳过），日志 evidence/logs/backend-full-package-run1.log。
-- [x] 关键单测：product 70/70、inventory 19/19、gateway 13/13（新增 7）、
+- [x] DEV-4 回归后 inventory 单模块 **20/20**（新增流水 ID 回填用例，red→green 日志齐）。
+- [x] 关键单测：product 70/70、inventory 20/20、gateway 13/13（新增 7）、
       InternalIdentityFilterTest 8 例、StringIdJacksonTest 通过。
+- [x] 端到端冒烟（DU-FE-501 联调，日志在 repo-2 DU-FE-501/evidence/logs/smoke/）：
+      真实雪花商品 `2099557758270611458` / SKU `2099557758287388674` 全链路字符串不丢精度；
+      库存 init 100→adjust +50→150；流水 ID 修复后回填真实雪花；
+      舍入形态 `...611000` 详情 404；网关 `/api/internal/**` 匿名/持 JWT 均 404。
 - [x] 序列化边界：仅业务 ID 出参变字符串；金额（分）、数量、分页/排序字段保持 number；入参 ID 保持 Long。
 - [x] 内部契约：无凭证/错凭证 401，合法 JWT 无内部凭证同样 401；服务间直连经 X-Internal-Token 放行；
       经网关访问 `/api/internal/**` 匿名与持 ADMIN Token 均为 404 同构体。
