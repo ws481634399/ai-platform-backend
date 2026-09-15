@@ -46,18 +46,25 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "b867e89055c48cd23c58d2182015953bb5a1fcd9"
 result:
-  commit: "f1367cb5617cae51a3de1c78256f6992915f5fa6"
-  paths: # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
+  commit: "dbf343d1a6413ca075ccc089b8119159d1a28a34"
+  paths:
+    # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
     - mall-services/mall-identity
     - mall-gateway
-  symbols: # 关键代码符号（<file>::<symbol>）
-    - "mall-identity/application/member/MemberAuthenticationApplicationService.java::signIn"
+  symbols:
+    # 关键代码符号（<file>::<symbol>）
+    - "mall-identity/application/member/MemberAuthenticationApplicationService.\
+      java::signIn"
     - "mall-identity/application/member/MemberRefreshSessionService.java::rotate"
-    - "mall-identity/application/member/MemberTokenPairApplicationService.java::refresh"
-    - "mall-identity/application/member/MemberTokenPairApplicationService.java::signOut"
+    - "mall-identity/application/member/MemberTokenPairApplicationService.java:\
+      :refresh"
+    - "mall-identity/application/member/MemberTokenPairApplicationService.java:\
+      :signOut"
     - "mall-identity/domain/model/member/MemberRefreshSession.java::isActive"
-    - "mall-identity/infrastructure/persistence/member/MyBatisMemberRefreshSessionRepository.java::revokeFamily"
+    - "mall-identity/infrastructure/persistence/member/MyBatisMemberRefreshSess\
+      ionRepository.java::revokeFamily"
     - "mall-identity/interfaces/rest/member/MemberAuthController.java::login"
     - "mall-identity/interfaces/rest/member/MemberAuthController.java::refresh"
     - "mall-identity/interfaces/rest/member/MemberAuthController.java::logout"
-    - "mall-gateway/security/GatewaySecurityConfiguration.java::securityWebFilterChain"
+    - "mall-gateway/security/GatewaySecurityConfiguration.java::securityWebFilt\
+      erChain"

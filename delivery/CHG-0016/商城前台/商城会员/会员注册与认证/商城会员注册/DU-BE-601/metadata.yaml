@@ -47,16 +47,21 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "694fa501ed6c0bbb12dfa7a0ab489cbb3f7fae18"
 result:
-  commit: "2f70309a7834513300387327a7e7048ebbea0ab8"
-  paths: # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
+  commit: "dbf343d1a6413ca075ccc089b8119159d1a28a34"
+  paths:
+    # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
     - mall-services/mall-identity
     - mall-services/mall-member
-  symbols: # 关键代码符号（<file>::<symbol>）
+  symbols:
+    # 关键代码符号（<file>::<symbol>）
     - "mall-identity/application/member/MemberRegistrationService.java::register"
-    - "mall-identity/application/member/MemberProvisionRelay.java::dispatchPending"
+    - "mall-identity/application/member/MemberProvisionRelay.java::dispatchPend\
+      ing"
     - "mall-identity/domain/model/member/MemberAccount.java::register"
     - "mall-identity/infrastructure/client/MemberProvisionClient.java::provision"
     - "mall-identity/interfaces/rest/member/MemberAuthController.java::register"
-    - "mall-identity/interfaces/rest/internal/InternalMemberController.java::profileSeed"
+    - "mall-identity/interfaces/rest/internal/InternalMemberController.java::pr\
+      ofileSeed"
     - "mall-member/application/member/ProfileProvisionService.java::provision"
-    - "mall-member/interfaces/rest/internal/InternalMemberProvisionController.java::provision"
+    - "mall-member/interfaces/rest/internal/InternalMemberProvisionController.j\
+      ava::provision"

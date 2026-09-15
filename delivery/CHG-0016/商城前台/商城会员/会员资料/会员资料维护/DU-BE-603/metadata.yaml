@@ -43,19 +43,26 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "cefbfb78add704880dff8ce9bef0ee138b276635"
 result:
-  commit: "8c5a1e690845b85e03ee839318d4bcdbce88893b"
-  paths: # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
+  commit: "dbf343d1a6413ca075ccc089b8119159d1a28a34"
+  paths:
+    # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
     - mall-bom
     - mall-services/mall-member
-  symbols: # 关键代码符号（<file>::<symbol>）
+  symbols:
+    # 关键代码符号（<file>::<symbol>）
     - "mall-member/application/member/ProfileApplicationService.java::getProfile"
-    - "mall-member/application/member/ProfileApplicationService.java::updateProfile"
-    - "mall-member/application/member/ProfileApplicationService.java::updateAvatar"
+    - "mall-member/application/member/ProfileApplicationService.java::updatePro\
+      file"
+    - "mall-member/application/member/ProfileApplicationService.java::updateAva\
+      tar"
     - "mall-member/domain/model/member/AvatarFormat.java::detect"
     - "mall-member/domain/model/member/MemberProfile.java::updateProfile"
     - "mall-member/infrastructure/storage/MinioAvatarStorage.java::uploadAvatar"
-    - "mall-member/infrastructure/storage/MinioAvatarStorage.java::ensureBucketReady"
-    - "mall-member/infrastructure/client/RestIdentityProfileSeedClient.java::fetchSeed"
+    - "mall-member/infrastructure/storage/MinioAvatarStorage.java::ensureBucket\
+      Ready"
+    - "mall-member/infrastructure/client/RestIdentityProfileSeedClient.java::fe\
+      tchSeed"
     - "mall-member/interfaces/rest/mall/MemberProfileController.java::getMe"
     - "mall-member/interfaces/rest/mall/MemberProfileController.java::updateMe"
-    - "mall-member/interfaces/rest/mall/MemberProfileController.java::uploadAvatar"
+    - "mall-member/interfaces/rest/mall/MemberProfileController.java::uploadAva\
+      tar"

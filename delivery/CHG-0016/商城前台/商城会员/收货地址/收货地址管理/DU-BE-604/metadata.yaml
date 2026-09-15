@@ -46,16 +46,19 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "aef0f830634cfc315b4aaa7bada5a58c6307a0e4"
 result:
-  commit: "e6068a1bf813dacf353fd509ab0535563f868230"
-  paths: # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
+  commit: "dbf343d1a6413ca075ccc089b8119159d1a28a34"
+  paths:
+    # 实现影响路径（repo 相对路径，模块级覆盖；完整文件清单见 DU evidence/changeset.md）
     - mall-services/mall-member
-  symbols: # 关键代码符号（<file>::<symbol>）
+  symbols:
+    # 关键代码符号（<file>::<symbol>）
     - "mall-member/db/migration/V2__create_shipping_address.sql"
     - "mall-member/domain/model/address/ShippingAddress.java::create"
     - "mall-member/domain/model/address/ShippingAddress.java::revise"
     - "mall-member/domain/repository/AddressRepository.java"
     - "mall-member/application/address/AddressApplicationService.java::create"
-    - "mall-member/application/address/AddressApplicationService.java::setDefault"
+    - "mall-member/application/address/AddressApplicationService.java::setDefau\
+      lt"
     - "mall-member/application/address/AddressApplicationService.java::delete"
     - "mall-member/application/address/AddressErrorCode.java"
     - "mall-member/infrastructure/persistence/address/AddressMapper.java"
