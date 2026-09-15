@@ -1,0 +1,119 @@
+﻿02:04:50.368 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest]: InventoryAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+02:04:50.481 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 02:04:50.874 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Starting InventoryAdminApiTest using Java 21.0.12 with PID 14896 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 02:04:50.875 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - The following 1 profile is active: "test"
+2026-09-15 02:04:51.732 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 02:04:51.734 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 02:04:51.760 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2026-09-15 02:04:52.141 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=2e72ba52-05fd-3aae-94d8-70a8407b3ed3
+2026-09-15 02:04:52.674 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-15 02:04:52.808 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 02:04:52.811 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-15 02:04:52.877 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 02:04:52.930 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-15 02:04:52.934 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.026s)
+2026-09-15 02:04:52.943 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-15 02:04:52.987 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-15 02:04:52.997 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - create inventory stock and log"
+2026-09-15 02:04:53.008 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - create inventory reservation"
+2026-09-15 02:04:53.017 [main] INFO  [] o.f.core.internal.command.DbMigrate - Successfully applied 2 migrations to schema "public", now at version v2 (execution time 00:00.006s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 02:04:54.250 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@2a1debfa
+2026-09-15 02:04:54.757 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 02:04:54.757 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 02:04:54.758 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 1 ms
+2026-09-15 02:04:54.792 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Started InventoryAdminApiTest in 4.213 seconds (process running for 5.041)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2479
++ ... pgrep\bin'; mvn -q -pl mall-services/mall-inventory test 2>&1 | Tee-O ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+2026-09-15 02:04:55.504 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.inventory.interfaces.rest.internal.InternalInventorySecurityTest]: InternalInventorySecurityTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 02:04:55.522 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.interfaces.rest.internal.InternalInventorySecurityTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 02:04:55.553 [main] INFO  [] c.a.m.i.i.r.i.InternalInventorySecurityTest - Starting InternalInventorySecurityTest using Java 21.0.12 with PID 14896 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 02:04:55.553 [main] INFO  [] c.a.m.i.i.r.i.InternalInventorySecurityTest - The following 1 profile is active: "test"
+2026-09-15 02:04:55.736 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 02:04:55.736 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 02:04:55.744 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 Redis repository interfaces.
+2026-09-15 02:04:55.778 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=2e72ba52-05fd-3aae-94d8-70a8407b3ed3
+2026-09-15 02:04:56.084 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2026-09-15 02:04:56.085 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 02:04:56.086 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2026-09-15 02:04:56.088 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 02:04:56.098 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.006s)
+2026-09-15 02:04:56.100 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": 2
+2026-09-15 02:04:56.101 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 02:04:56.552 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@4f94b2a8
+2026-09-15 02:04:56.686 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 02:04:56.686 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 02:04:56.686 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 0 ms
+2026-09-15 02:04:56.721 [main] INFO  [] c.a.m.i.i.r.i.InternalInventorySecurityTest - Started InternalInventorySecurityTest in 1.197 seconds (process running for 6.969)
+2026-09-15 02:04:56.969 [main] INFO  [] o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.ai.mall.inventory.MallInventoryApplicationSmokeTest]: MallInventoryApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-09-15 02:04:56.986 [main] INFO  [] o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.MallInventoryApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 02:04:57.025 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Starting MallInventoryApplicationSmokeTest using Java 21.0.12 with PID 14896 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 02:04:57.025 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - The following 1 profile is active: "test"
+2026-09-15 02:04:57.284 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 02:04:57.285 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 02:04:57.293 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2026-09-15 02:04:57.347 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=ab8b6e0c-fc93-3204-addd-65a058b68807
+2026-09-15 02:04:57.395 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2026-09-15 02:04:57.396 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection conn20: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 02:04:57.396 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2026-09-15 02:04:57.397 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 02:04:57.401 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.002s)
+2026-09-15 02:04:57.402 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": 2
+2026-09-15 02:04:57.403 [main] INFO  [] o.f.core.internal.command.DbMigrate - Schema "public" is up to date. No migration necessary.
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 02:04:57.530 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@31782447
+2026-09-15 02:04:57.634 [main] INFO  [] c.a.m.i.MallInventoryApplicationSmokeTest - Started MallInventoryApplicationSmokeTest in 0.645 seconds (process running for 7.883)

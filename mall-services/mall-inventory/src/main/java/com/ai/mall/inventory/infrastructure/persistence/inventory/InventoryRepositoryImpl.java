@@ -147,11 +147,14 @@ public class InventoryRepositoryImpl implements InventoryRepository {
     }
 
     private InventoryLog logToDomain(InventoryLogPo po) {
-        return new InventoryLog(po.getSkuId(),
+        // CHG-0015：读取回填日志雪花 ID（此前漏传导致流水列表 id 恒为 0，字符串化后前端直接可见）
+        InventoryLog log = new InventoryLog(po.getSkuId(),
                 InventoryOperationType.valueOf(po.getOperationType()),
                 po.getQuantity(), po.getBeforeQuantity(), po.getAfterQuantity(),
                 po.getBusinessId(), po.getOperator(), po.getTraceId(),
                 po.getOccurredAt());
+        log.assignId(po.getId() == null ? 0L : po.getId());
+        return log;
     }
 
     private InventoryReservation reservationToDomain(InventoryReservationPo po) {

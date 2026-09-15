@@ -1,0 +1,118 @@
+﻿02:04:21.923 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest]: InventoryAdminApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+02:04:22.043 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.inventory.MallInventoryApplication for test class com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15 02:04:22.429 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Starting InventoryAdminApiTest using Java 21.0.12 with PID 32432 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory)
+2026-09-15 02:04:22.431 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - The following 1 profile is active: "test"
+2026-09-15 02:04:23.278 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-09-15 02:04:23.279 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-09-15 02:04:23.304 [main] INFO  [] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 Redis repository interfaces.
+2026-09-15 02:04:23.621 [main] INFO  [] o.s.cloud.context.scope.GenericScope - BeanFactory id=2e72ba52-05fd-3aae-94d8-70a8407b3ed3
+2026-09-15 02:04:24.172 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-09-15 02:04:24.326 [main] INFO  [] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:mall_inventory_test user=SA
+2026-09-15 02:04:24.328 [main] INFO  [] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-09-15 02:04:24.368 [main] INFO  [] org.flywaydb.core.FlywayExecutor - Database: jdbc:h2:mem:mall_inventory_test (H2 2.3)
+2026-09-15 02:04:24.395 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yet
+2026-09-15 02:04:24.397 [main] INFO  [] o.f.core.internal.command.DbValidate - Successfully validated 2 migrations (execution time 00:00.012s)
+2026-09-15 02:04:24.402 [main] INFO  [] o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...
+2026-09-15 02:04:24.433 [main] INFO  [] o.f.core.internal.command.DbMigrate - Current version of schema "public": << Empty Schema >>
+2026-09-15 02:04:24.441 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "1 - create inventory stock and log"
+2026-09-15 02:04:24.452 [main] INFO  [] o.f.core.internal.command.DbMigrate - Migrating schema "public" to version "2 - create inventory reservation"
+2026-09-15 02:04:24.459 [main] INFO  [] o.f.core.internal.command.DbMigrate - Successfully applied 2 migrations to schema "public", now at version v2 (execution time 00:00.005s)
+ _ _   |_  _ _|_. ___ _ |    _ 
+| | |\/|_)(_| | |_\  |_)||_|_\ 
+     /               |         
+                        3.5.12 
+2026-09-15 02:04:25.619 [main] INFO  [] c.b.m.e.s.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.web.context.support.GenericWebApplicationContext@7551da2a
+2026-09-15 02:04:26.133 [main] INFO  [] o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-09-15 02:04:26.133 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Initializing Servlet ''
+2026-09-15 02:04:26.134 [main] INFO  [] o.s.t.web.servlet.TestDispatcherServlet - Completed initialization in 1 ms
+2026-09-15 02:04:26.164 [main] INFO  [] c.a.m.i.i.r.admin.InventoryAdminApiTest - Started InventoryAdminApiTest in 4.021 seconds (process running for 4.772)
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2479
++ ... pgrep\bin'; mvn -q -pl mall-services/mall-inventory test "-Dtest=Inve ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/admin/inventory/logs
+       Parameters = {skuId=[1]}
+          Headers = [Authorization:"Bearer eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMDAzIiwiYXVkIjoibWFsbC1hZG1pbi1hcGkiLCJzdWJqZWN0X3R5cGUiOiJBRE1JTiIsInBlcm1pc3Npb25zIjpbImludmVudG9yeTpsb2c6bGlzdCJdLCJpc3MiOiJhaS1wbGF0Zm9ybSIsImV4cCI6MTc4OTQwOTY2NiwiaWF0IjoxNzg5NDA5MDYxLCJ1c2VybmFtZSI6ImludmVudG9yeV9hZG1pbiIsImF1dGhfdmVyc2lvbiI6MX0.qo2uLiXPpf71cF7mEMIn6gnLLCLNOJ8yOjtKJLakuInmiKaTcDQFDr_qRPCeA5qpqOzzAbFxtL6IvIKxA8rWltoewLgvjmTTsyCXak033BOos54R91Lcc4ey_fj60i9iNQbTF5ZxZqSEZSZ2c3wiqRsur7mRJLHD_5dSB3IOMSbK3IESyuEBeqmAsnsSdqMTkMxbwEhGtnUAQBwpof_xTTL8mYrbFXLdJIAJ16QoIODrxgtT9knG9NXLYUKmXUjX0cyo0gi3uWpjJeKhictiUgLIHtZToCrxZZf65LA13BBH74KUF1Eat6jrzwEleh8FV7FKIaW-nJHnR5tsNfjM_g"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController
+           Method = com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminController#logs(Long, Integer, Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json", X-Content-Type-Options:"nosniff", X-XSS-Protection:"0", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"DENY", X-Trace-Id:"2559f874d74c45d1990989fe8ae3261f"]
+     Content type = application/json
+             Body = {"success":true,"code":"0","message":"�ɹ�","data":{"records":[{"id":"0","skuId":"1","operationType":"INIT","quantity":100,"beforeQuantity":0,"afterQuantity":100,"businessId":null,"operator":"1003","traceId":"trace-smoke-log","occurredAt":"2026-09-14T18:04:26.563Z"}],"total":1,"page":1,"size":20},"traceId":"2559f874d74c45d1990989fe8ae3261f"}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 5.001 s <<< FAILURE! -- in com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest
+[ERROR] com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.logListReturnsPersistedSnowflakeId -- Time elapsed: 0.637 s <<< FAILURE!
+java.lang.AssertionError: JSON path "$.data.records[0].id" expected:<2099557758287388674> but was:<0>
+	at org.springframework.test.util.AssertionErrors.fail(AssertionErrors.java:61)
+	at org.springframework.test.util.AssertionErrors.assertEquals(AssertionErrors.java:128)
+	at org.springframework.test.util.JsonPathExpectationsHelper.assertValue(JsonPathExpectationsHelper.java:172)
+	at org.springframework.test.web.servlet.result.JsonPathResultMatchers.lambda$value$2(JsonPathResultMatchers.java:112)
+	at org.springframework.test.web.servlet.MockMvc$1.andExpect(MockMvc.java:214)
+	at com.ai.mall.inventory.interfaces.rest.admin.InventoryAdminApiTest.logListReturnsPersistedSnowflakeId(InventoryAdminApiTest.java:91)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+[ERROR] Failures: 
+[ERROR]   InventoryAdminApiTest.logListReturnsPersistedSnowflakeId:91 JSON path "$.data.records[0].id" expected:<2099557758287388674> but was:<0>
+[ERROR] Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project mall-inventory: There are test failures.
+[ERROR] 
+[ERROR] See D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-services\mall-inventory\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

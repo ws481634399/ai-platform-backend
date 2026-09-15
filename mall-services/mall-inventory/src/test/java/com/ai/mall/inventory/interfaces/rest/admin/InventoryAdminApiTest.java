@@ -37,8 +37,12 @@ class InventoryAdminApiTest {
     @Autowired JwtEncoder encoder;
     @Autowired JdbcTemplate jdbc;
 
+    /** 19 位雪花 ID：超过 JS Number.MAX_SAFE_INTEGER，用于回归流水 ID 读取与字符串序列化。 */
+    private static final long SNOWFLAKE_LOG_ID = 2099557758287388674L;
+
     @BeforeEach
     void setup() {
+        jdbc.execute("DELETE FROM inventory_log");
         jdbc.execute("DELETE FROM inventory_stock");
         for (long skuId = 1; skuId <= ROW_COUNT; skuId++) {
             jdbc.update("INSERT INTO inventory_stock(id, sku_id, total_quantity, locked_quantity, "
@@ -69,6 +73,25 @@ class InventoryAdminApiTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.total").value(ROW_COUNT))
                 .andExpect(jsonPath("$.data.records.length()").value(3));
+    }
+
+    @Test
+    @DisplayName("CHG-0015 回归：流水列表回填持久化的雪花日志 ID（修复前读取漏传 id 恒为 \"0\"）")
+    void logListReturnsPersistedSnowflakeId() throws Exception {
+        jdbc.update("INSERT INTO inventory_log(id, sku_id, operation_type, quantity, before_quantity, "
+                        + "after_quantity, business_id, operator, trace_id, occurred_at) "
+                        + "VALUES (?, 1, 'INIT', 100, 0, 100, NULL, 1003, 'trace-smoke-log', NOW())",
+                SNOWFLAKE_LOG_ID);
+
+        mockMvc.perform(get("/api/admin/inventory/logs").param("skuId", "1")
+                        .header("Authorization", "Bearer " + token(List.of("inventory:log:list"))))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.records.length()").value(1))
+                // id 必须回填为完整 19 位字符串，不能是 "0"
+                .andExpect(jsonPath("$.data.records[0].id").value(Long.toString(SNOWFLAKE_LOG_ID)))
+                .andExpect(jsonPath("$.data.records[0].id").isString())
+                .andExpect(jsonPath("$.data.records[0].skuId").value("1"))
+                .andExpect(jsonPath("$.data.records[0].operator").value("1003"));
     }
 
     @Test
