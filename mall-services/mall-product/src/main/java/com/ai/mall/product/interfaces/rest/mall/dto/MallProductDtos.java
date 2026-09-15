@@ -35,10 +35,29 @@ public final class MallProductDtos {
             String description,
             @StringId long categoryId,
             @StringId long brandId,
+            String brandName,
+            List<CategoryPathView> categoryPath,
             String mainImageUrl,
             List<ImageView> images,
             List<AttributeView> attributes,
             List<SkuView> skus,
+            List<String> dimensionsOrder,
+            List<SpecDimensionView> specDimensions,
+            java.util.Map<String, SkuIndexEntryView> skuIndex,
+            String status
+    ) {}
+
+    /** 分类路径：从根到当前分类的链路（≤3 层）。 */
+    public record CategoryPathView(@StringId long id, String name) {}
+
+    /** 规格维度：维度名 + 去重保序的值列表。 */
+    public record SpecDimensionView(String name, List<String> values) {}
+
+    /** SKU 组合索引条目：组合键 → SKU 信息。 */
+    public record SkuIndexEntryView(
+            @StringId long skuId,
+            long priceFen,
+            String imageUrl,
             String status
     ) {}
 
