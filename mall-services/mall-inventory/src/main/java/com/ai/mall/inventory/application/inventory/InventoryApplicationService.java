@@ -65,6 +65,22 @@ public class InventoryApplicationService {
         return inventoryRepository.findBySkuIds(query.skuIds());
     }
 
+    /**
+     * 批量可售数量查询：一次 IN 批量 SQL；无库存记录的 skuId 语义为 available=0。
+     * 返回 skuId → availableQty（total - locked）映射，调用方按需补零与排序。
+     */
+    @Transactional(readOnly = true)
+    public java.util.Map<Long, Long> availabilityMap(java.util.List<Long> skuIds) {
+        if (skuIds == null || skuIds.isEmpty()) {
+            return java.util.Map.of();
+        }
+        java.util.Map<Long, Long> map = new java.util.HashMap<>();
+        for (Inventory inv : inventoryRepository.findBySkuIds(skuIds)) {
+            map.put(inv.getSkuId(), inv.getAvailableQuantity());
+        }
+        return map;
+    }
+
     @Transactional(readOnly = true)
     public InventoryPageResult page(PageQuery query) {
         return inventoryRepository.page(new InventoryPageQuery(query.page(), query.size(), query.skuId()));

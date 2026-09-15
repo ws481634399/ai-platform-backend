@@ -24,4 +24,10 @@ public final class InternalInventoryDtos {
                     reservation.getQuantity(), reservation.getStatus().name());
         }
     }
+
+    /** 批量可售查询请求：skuIds 非空且 ≤100。 */
+    public record AvailabilityRequest(java.util.List<Long> skuIds) {}
+
+    /** 单 SKU 可售视图：精确数量（仅内部可达）。无库存记录时 availableQty=0。 */
+    public record SkuAvailabilityView(@StringId long skuId, long availableQty) {}
 }

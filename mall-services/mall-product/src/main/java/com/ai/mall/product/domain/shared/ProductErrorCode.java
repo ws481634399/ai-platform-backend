@@ -35,7 +35,9 @@ public enum ProductErrorCode implements ErrorCode {
     SKU_CODE_DUPLICATED("B2162", "SKU 编码已存在"),
     SKU_SPEC_DUPLICATED("B2163", "同商品下规格组合已存在"),
     SKU_PRICE_INVALID("B2164", "SKU 售价不能为负"),
-    SKU_SPEC_EMPTY("B2165", "SKU 规格不能为空");
+    SKU_SPEC_EMPTY("B2165", "SKU 规格不能为空"),
+
+    AVAILABILITY_BATCH_INVALID("B2181", "SKU 可售批量查询参数非法");
 
     private final String code;
     private final String message;

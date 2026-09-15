@@ -13,7 +13,8 @@ public enum InventoryErrorCode implements ErrorCode {
     INVENTORY_INSUFFICIENT("B2204", "可用库存不足"),
     SKU_NOT_FOUND("B2205", "SKU 不存在"),
     RESERVATION_NOT_FOUND("B2206", "预留记录不存在"),
-    RESERVATION_INVALID_STATE("B2207", "预留状态非法");
+    RESERVATION_INVALID_STATE("B2207", "预留状态非法"),
+    AVAILABILITY_BATCH_INVALID("B2208", "可售批量查询参数非法");
 
     private final String code;
     private final String message;

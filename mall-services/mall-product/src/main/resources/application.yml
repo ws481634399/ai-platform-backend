@@ -33,6 +33,9 @@ server:
   port: 8103
 
 mall:
+  # CHG-0017 DU-BE-705：product 调用 inventory 内部 availability 接口
+  product:
+    inventory-service-uri: ${MALL_PRODUCT_INVENTORY_URI:http://localhost:8106}
   security:
     jwt:
       issuer: ${JWT_ISSUER:ai-platform}
