@@ -1,0 +1,196 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-gateway >----------------------
+[INFO] Building mall-gateway 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-gateway ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-gateway ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-gateway ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-gateway ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-gateway ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.gateway.GatewayProductRouteContractTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.027 s -- in com.ai.mall.gateway.GatewayProductRouteContractTest
+[INFO] Running com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+10:53:01.766 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ai.mall.gateway.MallGatewayApplicationSmokeTest]: MallGatewayApplicationSmokeTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:53:01.851 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ai.mall.gateway.MallGatewayApplication for test class com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.15)
+
+2026-09-15T10:53:02.367+08:00  INFO 45472 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : Starting MallGatewayApplicationSmokeTest using Java 21.0.12 with PID 45472 (started by 2025 in D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-gateway)
+2026-09-15T10:53:02.369+08:00  INFO 45472 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : The following 1 profile is active: "test"
+2026-09-15T10:53:03.278+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=47852db9-9378-3fc4-b3ca-5ea065de2403
+2026-09-15T10:53:03.601+08:00  WARN 45472 --- [mall-gateway] [           main] GatewayClassPathWarningAutoConfiguration : 
+
+**********************************************************
+
+The artifact spring-cloud-gateway-server is deprecated. It will be removed in the next major release. Please add spring-cloud-gateway-server-webflux dependency.
+
+**********************************************************
+
+
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2026-09-15T10:53:03.940+08:00  INFO 45472 --- [mall-gateway] [           main] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2026-09-15T10:53:04.172+08:00  WARN 45472 --- [mall-gateway] [           main] s.w.s.StarterDeprecatedAutoConfiguration : 
+
+**********************************************************
+
+spring-cloud-starter-gateway is deprecated. It will be removed in the next major release. Please use spring-cloud-starter-gateway-server-webflux instead.
+
+**********************************************************
+
+
+2026-09-15T10:53:04.331+08:00  INFO 45472 --- [mall-gateway] [           main] c.a.m.g.MallGatewayApplicationSmokeTest  : Started MallGatewayApplicationSmokeTest in 2.31 seconds (process running for 3.105)
+2026-09-15T10:53:04.340+08:00  WARN 45472 --- [mall-gateway] [           main] ServerWebfluxPropertiesMigrationListener : 
+The use of configuration keys that have been renamed was found in the environment:
+
+Property source 'Config resource 'class path resource [application.yml]' via location 'optional:classpath:/'':
+	Key: spring.cloud.gateway.routes[0].id
+		Line: 15
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].id
+	Key: spring.cloud.gateway.routes[0].uri
+		Line: 16
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].uri
+	Key: spring.cloud.gateway.routes[0].predicates[0]
+		Line: 18
+		Replacement: spring.cloud.gateway.server.webflux.routes[0].predicates[0]
+	Key: spring.cloud.gateway.routes[1].id
+		Line: 21
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].id
+	Key: spring.cloud.gateway.routes[1].uri
+		Line: 22
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].uri
+	Key: spring.cloud.gateway.routes[1].predicates[0]
+		Line: 24
+		Replacement: spring.cloud.gateway.server.webflux.routes[1].predicates[0]
+	Key: spring.cloud.gateway.routes[2].id
+		Line: 26
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].id
+	Key: spring.cloud.gateway.routes[2].uri
+		Line: 27
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].uri
+	Key: spring.cloud.gateway.routes[2].predicates[0]
+		Line: 29
+		Replacement: spring.cloud.gateway.server.webflux.routes[2].predicates[0]
+	Key: spring.cloud.gateway.routes[3].id
+		Line: 31
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].id
+	Key: spring.cloud.gateway.routes[3].uri
+		Line: 32
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].uri
+	Key: spring.cloud.gateway.routes[3].predicates[0]
+		Line: 34
+		Replacement: spring.cloud.gateway.server.webflux.routes[3].predicates[0]
+	Key: spring.cloud.gateway.routes[4].id
+		Line: 36
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].id
+	Key: spring.cloud.gateway.routes[4].uri
+		Line: 37
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].uri
+	Key: spring.cloud.gateway.routes[4].predicates[0]
+		Line: 39
+		Replacement: spring.cloud.gateway.server.webflux.routes[4].predicates[0]
+	Key: spring.cloud.gateway.routes[5].id
+		Line: 41
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].id
+	Key: spring.cloud.gateway.routes[5].uri
+		Line: 42
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].uri
+	Key: spring.cloud.gateway.routes[5].predicates[0]
+		Line: 44
+		Replacement: spring.cloud.gateway.server.webflux.routes[5].predicates[0]
+	Key: spring.cloud.gateway.routes[6].id
+		Line: 45
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].id
+	Key: spring.cloud.gateway.routes[6].uri
+		Line: 46
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].uri
+	Key: spring.cloud.gateway.routes[6].predicates[0]
+		Line: 48
+		Replacement: spring.cloud.gateway.server.webflux.routes[6].predicates[0]
+	Key: spring.cloud.gateway.routes[7].id
+		Line: 50
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].id
+	Key: spring.cloud.gateway.routes[7].uri
+		Line: 51
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].uri
+	Key: spring.cloud.gateway.routes[7].predicates[0]
+		Line: 53
+		Replacement: spring.cloud.gateway.server.webflux.routes[7].predicates[0]
+
+
+Each configuration key has been temporarily mapped to its replacement for your convenience. To silence this warning, please update your configuration to use the new keys.
+
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2622
++ ... 录与会话/DU-BE-602/evidence/logs"; mvn -pl mall-gateway test 2>&1 | Tee-O ...
++                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.295 s -- in com.ai.mall.gateway.MallGatewayApplicationSmokeTest
+[INFO] Running com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.980 s -- in com.ai.mall.gateway.security.CHG0015GatewaySecurityChainTest
+[INFO] Running com.ai.mall.gateway.security.CHG0016GatewaySecurityChainTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.290 s -- in com.ai.mall.gateway.security.CHG0016GatewaySecurityChainTest
+[INFO] Running com.ai.mall.gateway.security.IdentityPropagationFilterTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s -- in com.ai.mall.gateway.security.IdentityPropagationFilterTest
+[INFO] Running com.ai.mall.gateway.security.M1GatewayTokenValidationTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 s -- in com.ai.mall.gateway.security.M1GatewayTokenValidationTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.075 s
+[INFO] Finished at: 2026-09-15T10:53:06+08:00
+[INFO] ------------------------------------------------------------------------

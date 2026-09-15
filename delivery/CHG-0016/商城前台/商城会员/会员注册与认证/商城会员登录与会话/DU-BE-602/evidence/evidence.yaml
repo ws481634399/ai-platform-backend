@@ -1,0 +1,35 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-602
+    symbol: "MemberAuthenticationApplicationService, MemberRefreshSessionService, MemberTokenPairApplicationService, MemberRefreshSession, MemberRefreshSessionRepository, MyBatisMemberRefreshSessionRepository, MemberAuthController#login/refresh/logout, UseCaseException.Kind.FORBIDDEN, JwtConfiguration, GatewaySecurityConfiguration, CHG0016GatewaySecurityChainTest"
+    commits:
+      - f1367cb5617cae51a3de1c78256f6992915f5fa6
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-15T11:10:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-602
+    scope: 模块级转绿（mall-identity 会员会话新增 12 例；mall-gateway MEMBER 矩阵新增 5 例）
+    commands:
+      - "mvn -pl mall-services/mall-identity test（79/79）"
+      - "mvn -pl mall-gateway test（19/19）"
+    result: passed
+    covers: [AC-008, AC-009, AC-010, AC-011, AC-012, AC-013]
+    tc-mapping-ref: evidence/red-green.md
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-15T11:05:00+08:00"
+  - id: EV-INDEPENDENT-TEST-003
+    type: test-run
+    delivery-unit: DU-BE-602
+    command: "mvn clean package（24 模块全量回归）"
+    result: passed
+    summary:
+      total: 242
+      passed: 242
+      failed: 0
+      errors: 0
+      skipped: 0
+    covers: [AC-008, AC-009, AC-010, AC-011, AC-012, AC-013]
+    evidence-ref: evidence/logs/backend-full-package.log
+    created-at: "2026-09-15T11:08:00+08:00"
