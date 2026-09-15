@@ -41,7 +41,7 @@ implementation-guidance:
   complexity-trigger: []
 status: pending # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "806b3fb24fae5f2f2cc0c283ee89b20a5ad4d6ef"
 result:
   commit: "b4b5a1f"
   paths:
