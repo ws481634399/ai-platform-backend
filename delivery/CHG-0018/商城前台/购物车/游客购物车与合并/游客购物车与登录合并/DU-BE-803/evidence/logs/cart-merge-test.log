@@ -1,0 +1,7 @@
+[INFO] mall-cart 合并功能测试执行
+[INFO] 命令: mvn -pl mall-services/mall-cart test (TESTCONTAINERS_RYUK_DISABLED=true)
+[INFO] RedisCartRepositoryLuaTest: 7 tests passed (tokenMissing/tokenMismatch/mergeAccumulates/mergeTruncatesOver999/mergeDropsOver100/mergeTokenConsumedOnce/mergeExpire90Days)
+[INFO] CartApiTest: 5 tests passed (issueMergeToken/mergeAccumulates/mergeDropsUnsalableSkus/replayTokenReturns400/forgedTokenReturns400AndMismatch401)
+[INFO] Tests run: 53, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+[INFO] mall-product: 95/95 passed (公开 /api/mall/skus/items 端点零破坏)
