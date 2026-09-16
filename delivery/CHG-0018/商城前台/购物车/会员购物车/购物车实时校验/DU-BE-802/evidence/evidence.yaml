@@ -1,0 +1,20 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-802
+    symbol: "CartReadModel.CartLine/ItemStatus/StockStatus, CartViewAssembler::assemble, CartQueryService::getView, InventoryAvailabilityClient::findAvailability, RestInventoryAvailabilityClient::findAvailability, CartController::getCart, CartDtos.CartLineView/CartReadView, CartConstants.IN_STOCK_THRESHOLD"
+    commits:
+      - 34a0eb2c59b93a6f38db65f4c9ba172c0cd3b97d
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-16T10:10:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-802
+    scope: 模块级转绿（mall-cart 读模型新增 18 例：装配器 10 + 读模型 API 6 + 边界审计 2；全模块 41/41）
+    commands:
+      - "mvn -pl mall-services/mall-cart test（41/41，含 Testcontainers Redis）"
+    result: passed
+    covers: [AC-008, AC-009, AC-010, AC-011, AC-012, AC-013, AC-021]
+    tc-mapping-ref: evidence/red-green.md
+    evidence-ref: evidence/logs/be-cart-read-test.log
+    created-at: "2026-09-16T10:05:00+08:00"
