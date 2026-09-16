@@ -40,7 +40,7 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: testing # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
   commit: ""
 result:
