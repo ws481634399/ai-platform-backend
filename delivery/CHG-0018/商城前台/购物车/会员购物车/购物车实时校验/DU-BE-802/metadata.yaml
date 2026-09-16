@@ -47,8 +47,9 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "2ae0dabc6a90d0d87b594fd581cf78c8411cc8d2"
 result:
-  commit: "34a0eb2c59b93a6f38db65f4c9ba172c0cd3b97d"
-  paths: # 实现影响路径（repo 相对路径）
+  commit: "973c252ccbfc0a1700083a78b8d91100fd939674"
+  paths:
+    # 实现影响路径（repo 相对路径）
     - mall-services/mall-cart/src/main/java/com/ai/mall/cart/application/cart/CartReadModel.java
     - mall-services/mall-cart/src/main/java/com/ai/mall/cart/application/cart/CartViewAssembler.java
     - mall-services/mall-cart/src/main/java/com/ai/mall/cart/application/cart/CartQueryService.java
