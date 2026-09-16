@@ -43,7 +43,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "806b3fb24fae5f2f2cc0c283ee89b20a5ad4d6ef"
 result:
-  commit: "868ee022d857d5f9f7e935ecf10264c17dabf83b"
+  commit: "b37c485e4b5c0124a16d723fe29175ff9232a853"
   paths:
     - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/mall/MallHomeController.java
     - mall-services/mall-product/src/main/java/com/ai/mall/product/application/home/HomeApplicationService.java
