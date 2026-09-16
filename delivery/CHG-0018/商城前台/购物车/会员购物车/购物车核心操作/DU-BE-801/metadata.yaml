@@ -44,10 +44,34 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "b37c485e4b5c0124a16d723fe29175ff9232a853"
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "ebfbeb2568f6fd0d743c503ec133120657010754"
+  paths: # 实现影响路径（repo 相对路径）
+    - mall-services/mall-cart/src/main/java/com/ai/mall/cart/domain/cart/
+    - mall-services/mall-cart/src/main/java/com/ai/mall/cart/application/cart/
+    - mall-services/mall-cart/src/main/java/com/ai/mall/cart/infrastructure/
+    - mall-services/mall-cart/src/main/java/com/ai/mall/cart/interfaces/
+    - mall-services/mall-cart/src/main/resources/scripts/
+    - mall-services/mall-cart/src/main/resources/application.yml
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/sku/SkuBatchApplicationService.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/internal/InternalProductController.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/internal/dto/SkuBatchDtos.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/domain/product/ProductRepository.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/persistence/product/ProductRepositoryImpl.java
+    - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java
+    - mall-gateway/src/main/resources/application.yml
+  symbols:
+    - RedisCartRepository::add
+    - RedisCartRepository::updateQuantity
+    - RedisCartRepository::removeBatch
+    - RedisCartRepository::selectOne
+    - CartApplicationService::add
+    - RestProductSkuClient::findSnapshots
+    - CartController::addItem
+    - InternalCartController::selectedItems
+    - SkuBatchApplicationService::batch
+    - ProductRepositoryImpl::findBySkuIds
+    - InternalProductController::skuBatch
