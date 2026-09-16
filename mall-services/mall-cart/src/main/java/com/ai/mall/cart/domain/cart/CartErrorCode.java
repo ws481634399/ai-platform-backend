@@ -22,6 +22,12 @@ public enum CartErrorCode implements ErrorCode {
     /** 更新/勾选的购物车条目不存在：404。 */
     CART_ITEM_NOT_FOUND("B0304", "购物车中没有该商品"),
 
+    /** 合并 token 不存在/已过期/已被消费：400（前端可重新取 token 重提）。 */
+    MERGE_TOKEN_EXPIRED("B0305", "合并凭证已过期，请重新获取"),
+
+    /** 合并 token 与当前会员不匹配（伪造/串号）：401。 */
+    MERGE_TOKEN_INVALID("B0306", "合并凭证无效，请重新登录"),
+
     /** mall-product 内部契约调用故障（连接拒绝/5xx/非法响应）：503，区别于业务不可售。 */
     DEPENDENCY_UNAVAILABLE("S0301", "依赖服务暂不可用，请稍后重试"),
 

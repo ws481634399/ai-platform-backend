@@ -73,4 +73,43 @@ public final class CartDtos {
     /** M4 内部选中项响应。 */
     public record SelectedItemsResponse(List<SelectedItemView> items) {
     }
+
+    /** 游客车合并条目（CHG-0018 DU-BE-803）。 */
+    public record GuestCartItemDto(
+            @NotBlank(message = "skuId 不能为空") String skuId,
+            @NotNull(message = "quantity 不能为空")
+            @Min(value = 1, message = "数量必须大于0")
+            @Max(value = 999, message = "单品数量不能超过999件") Integer quantity,
+            Boolean selected) {
+        public boolean selectedOrDefault() {
+            return selected == null || selected;
+        }
+    }
+
+    /** 合并请求：一次性 token + 游客车条目（≤100）。 */
+    public record MergeCartRequest(
+            @NotBlank(message = "mergeToken 不能为空") String mergeToken,
+            @NotEmpty(message = "items 不能为空")
+            @Size(max = 100, message = "单次最多合并100个条目") List<GuestCartItemDto> items) {
+    }
+
+    /** 合并 token 响应。 */
+    public record MergeTokenResponse(String mergeToken, long expiresIn) {
+    }
+
+    /** 合并结果响应：merged 成功并入；truncated 超 999 截断；dropped 失效/超 100 丢弃。 */
+    public record MergeCartResponse(
+            List<MergedSkuView> merged,
+            List<TruncatedSkuView> truncated,
+            List<DroppedSkuView> dropped) {
+    }
+
+    public record MergedSkuView(String skuId, int quantity) {
+    }
+
+    public record TruncatedSkuView(String skuId, int finalQuantity) {
+    }
+
+    public record DroppedSkuView(String skuId, String reason) {
+    }
 }

@@ -3,7 +3,7 @@ package com.ai.mall.cart.domain.cart;
 import java.util.List;
 
 /**
- * 购物车仓储端口（CHG-0018 DU-BE-801）：Redis Hash 写模型。
+ * 购物车仓储端口（CHG-0018 DU-BE-801/803）：Redis Hash 写模型。
  *
  * <p>所有写操作必须在同一段 Lua 内完成数据变更与 EXPIRE 滑动续期；
  * 脚本返回码语义见 {@link CartScriptCode}。key 按 memberId 物理隔离，
@@ -36,4 +36,38 @@ public interface CartRepository {
 
     /** 读取全部原始条目（field 顺序不保证）；空车返回空列表。 */
     List<CartItem> findItems(long memberId);
+
+    /**
+     * 游客车合并（CHG-0018 DU-BE-803）：单 Lua 原子完成 token 校验+消费+合并+TTL。
+     *
+     * @param memberId  当前会员 ID
+     * @param token     合并凭证（一次性）
+     * @param items     经应用层可售校验后的有效游客条目
+     * @return 合并结果（merged/truncated/dropped）
+     */
+    MergeResult merge(long memberId, String token, List<MergeItem> items);
+
+    /**
+     * 签发合并 token（CHG-0018 DU-BE-803）：SET EX 300，值为 memberId。
+     *
+     * @return 一次性合并凭证字符串
+     */
+    String issueMergeToken(long memberId);
+
+    /** 合并入参条目：仅含可售 SKU（失效项由应用层在调用前剔除）。 */
+    record MergeItem(long skuId, int quantity, boolean selected, long priceFenAtAdded) {
+    }
+
+    /** 合并结果：merged 成功并入；truncated 超 999 截断；dropped 超 100 条目被丢弃。 */
+    record MergeResult(List<MergedSku> merged, List<TruncatedSku> truncated, List<DroppedSku> dropped) {
+    }
+
+    record MergedSku(long skuId, int quantity) {
+    }
+
+    record TruncatedSku(long skuId, int finalQuantity) {
+    }
+
+    record DroppedSku(long skuId, String reason) {
+    }
 }

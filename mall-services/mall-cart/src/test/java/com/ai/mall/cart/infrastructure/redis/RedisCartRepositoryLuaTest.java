@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.ai.mall.cart.domain.cart.CartConstants;
 import com.ai.mall.cart.domain.cart.CartItem;
+import com.ai.mall.cart.domain.cart.CartRepository.MergeItem;
+import com.ai.mall.cart.domain.cart.CartRepository.MergeResult;
 import com.ai.mall.cart.domain.cart.CartScriptCode;
 import com.ai.mall.cart.support.AbstractRedisIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -173,5 +175,115 @@ class RedisCartRepositoryLuaTest extends AbstractRedisIntegrationTest {
 
         assertThat(repository.findItems(MEMBER)).extracting(CartItem::skuId).containsExactly(1001L);
         assertThat(repository.findItems(other)).extracting(CartItem::skuId).containsExactly(2002L);
+    }
+
+    // ---------- CHG-0018 DU-BE-803 合并 Lua ----------
+
+    @Test
+    @DisplayName("AC-018 合并 token 不存在 → TOKEN_MISSING")
+    void mergeTokenMissing() {
+        MergeResult result = repository.merge(MEMBER, "nonexistent", List.of());
+        assertThat(result.dropped()).hasSize(1);
+        assertThat(result.dropped().get(0).reason()).isEqualTo("TOKEN_MISSING");
+    }
+
+    @Test
+    @DisplayName("AC-018 合并 token 值≠memberId → TOKEN_MISMATCH")
+    void mergeTokenMismatch() {
+        String token = repository.issueMergeToken(MEMBER);
+        // 用另一个 memberId 消费
+        MergeResult result = repository.merge(MEMBER + 1, token, List.of());
+        assertThat(result.dropped()).hasSize(1);
+        assertThat(result.dropped().get(0).reason()).isEqualTo("TOKEN_MISMATCH");
+    }
+
+    @Test
+    @DisplayName("AC-016 同 SKU 数量相加；异 SKU 并入")
+    void mergeSameSkuAccumulatesAndDifferentSkuAdded() {
+        repository.add(MEMBER, 1001L, 1, 100L);
+        String token = repository.issueMergeToken(MEMBER);
+
+        MergeResult result = repository.merge(MEMBER, token, List.of(
+                new MergeItem(1001L, 2, true, 100L),
+                new MergeItem(1002L, 3, false, 200L)));
+
+        assertThat(result.merged()).hasSize(2);
+        assertThat(result.truncated()).isEmpty();
+        assertThat(result.dropped()).isEmpty();
+
+        List<CartItem> items = repository.findItems(MEMBER);
+        assertThat(items).hasSize(2);
+        CartItem same = items.stream().filter(i -> i.skuId() == 1001L).findFirst().orElseThrow();
+        assertThat(same.quantity()).isEqualTo(3);
+        assertThat(same.selected()).isTrue();
+        CartItem diff = items.stream().filter(i -> i.skuId() == 1002L).findFirst().orElseThrow();
+        assertThat(diff.quantity()).isEqualTo(3);
+        assertThat(diff.selected()).isFalse();
+    }
+
+    @Test
+    @DisplayName("AC-017 合并后超 999 截断并返回 truncated.finalQuantity")
+    void mergeTruncatesOver999() {
+        repository.add(MEMBER, 1001L, 998, 100L);
+        String token = repository.issueMergeToken(MEMBER);
+
+        MergeResult result = repository.merge(MEMBER, token, List.of(new MergeItem(1001L, 5, true, 100L)));
+
+        assertThat(result.truncated()).hasSize(1);
+        assertThat(result.truncated().get(0).skuId()).isEqualTo(1001L);
+        assertThat(result.truncated().get(0).finalQuantity()).isEqualTo(999);
+        assertThat(repository.findItems(MEMBER).get(0).quantity()).isEqualTo(999);
+    }
+
+    @Test
+    @DisplayName("AC-017 超 100 条目新 SKU dropped（CART_ITEMS_LIMIT），会员条目保留")
+    void mergeDropsOver100Items() {
+        for (long sku = 1; sku <= CartConstants.MAX_ITEMS; sku++) {
+            repository.add(MEMBER, sku, 1, 100L);
+        }
+        String token = repository.issueMergeToken(MEMBER);
+
+        MergeResult result = repository.merge(MEMBER, token, List.of(new MergeItem(9999L, 1, true, 100L)));
+
+        assertThat(result.dropped()).hasSize(1);
+        assertThat(result.dropped().get(0).skuId()).isEqualTo(9999L);
+        assertThat(result.dropped().get(0).reason()).isEqualTo("CART_ITEMS_LIMIT");
+        assertThat(redisTemplate.opsForHash().size(KEY)).isEqualTo(CartConstants.MAX_ITEMS);
+    }
+
+    @Test
+    @DisplayName("AC-018 同 token 二次调用不累加（幂等：第二次 TOKEN_MISSING）")
+    void mergeIsIdempotent() {
+        repository.add(MEMBER, 1001L, 1, 100L);
+        String token = repository.issueMergeToken(MEMBER);
+
+        MergeResult first = repository.merge(MEMBER, token, List.of(new MergeItem(1001L, 2, true, 100L)));
+        assertThat(first.merged()).hasSize(1);
+        assertThat(repository.findItems(MEMBER).get(0).quantity()).isEqualTo(3);
+
+        // 重放同一 token
+        MergeResult second = repository.merge(MEMBER, token, List.of(new MergeItem(1001L, 2, true, 100L)));
+        assertThat(second.dropped()).hasSize(1);
+        assertThat(second.dropped().get(0).reason()).isEqualTo("TOKEN_MISSING");
+        // 数量不变，未二次累加
+        assertThat(repository.findItems(MEMBER).get(0).quantity()).isEqualTo(3);
+    }
+
+    @Test
+    @DisplayName("AC-018 合并后续期 90 天 TTL；token TTL≈300 秒")
+    void mergeRenewsCartTtlAndTokenTtl() throws InterruptedException {
+        repository.add(MEMBER, 1001L, 1, 100L);
+        redisTemplate.expire(KEY, java.time.Duration.ofSeconds(60));
+        Thread.sleep(1100);
+
+        String token = repository.issueMergeToken(MEMBER);
+        Long tokenTtl = redisTemplate.getExpire(CartConstants.mergeTokenKey(token));
+        assertThat(tokenTtl).isNotNull().isBetween(290L, 300L);
+
+        repository.merge(MEMBER, token, List.of(new MergeItem(1002L, 1, true, 200L)));
+        Long cartTtl = redisTemplate.getExpire(KEY);
+        assertThat(cartTtl).isGreaterThan(CartConstants.TTL_SECONDS - 60);
+        // token 已被消费删除
+        assertThat(redisTemplate.hasKey(CartConstants.mergeTokenKey(token))).isFalse();
     }
 }

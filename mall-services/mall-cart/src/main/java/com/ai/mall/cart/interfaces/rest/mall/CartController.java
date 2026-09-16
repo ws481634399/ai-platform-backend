@@ -1,6 +1,7 @@
 package com.ai.mall.cart.interfaces.rest.mall;
 
 import com.ai.mall.cart.application.cart.CartApplicationService;
+import com.ai.mall.cart.application.cart.CartMergeService;
 import com.ai.mall.cart.application.cart.CartQueryService;
 import com.ai.mall.cart.application.cart.CartReadModel.CartLine;
 import com.ai.mall.cart.domain.cart.CartItem;
@@ -10,6 +11,12 @@ import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartItemView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartLineView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartReadView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartView;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.DroppedSkuView;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergeCartRequest;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergeCartResponse;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergedSkuView;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergeTokenResponse;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.TruncatedSkuView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.UpdateQuantityRequest;
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.core.result.UnifyResult;
@@ -45,10 +52,13 @@ public class CartController {
 
     private final CartApplicationService carts;
     private final CartQueryService cartQuery;
+    private final CartMergeService cartMerge;
 
-    public CartController(CartApplicationService carts, CartQueryService cartQuery) {
+    public CartController(CartApplicationService carts, CartQueryService cartQuery,
+                          CartMergeService cartMerge) {
         this.carts = carts;
         this.cartQuery = cartQuery;
+        this.cartMerge = cartMerge;
     }
 
     /** DU-BE-802：读模型实时聚合（商品双状态/最新价/库存三态/降级/选中合计），只读不改 Redis。 */
@@ -105,6 +115,24 @@ public class CartController {
         return UnifyResult.ok(toView(carts.selectAll(currentMemberId(), false)));
     }
 
+    /** DU-BE-803：签发一次性合并 token（300s），登录后前端调用。 */
+    @PostMapping("/merge-token")
+    public UnifyResult<MergeTokenResponse> mergeToken() {
+        var view = cartMerge.issueToken(currentMemberId());
+        return UnifyResult.ok(new MergeTokenResponse(view.mergeToken(), view.expiresIn()));
+    }
+
+    /** DU-BE-803：游客车合并到会员车（单 Lua 原子，幂等）。 */
+    @PostMapping("/merge")
+    public UnifyResult<MergeCartResponse> merge(@Valid @RequestBody MergeCartRequest request) {
+        var items = request.items().stream()
+                .map(dto -> new CartMergeService.GuestCartItem(parseSkuId(dto.skuId()),
+                        dto.quantity(), dto.selectedOrDefault()))
+                .toList();
+        var result = cartMerge.merge(currentMemberId(), request.mergeToken(), items);
+        return UnifyResult.ok(toMergeResponse(result));
+    }
+
     /** 当前会话会员 ID：仅取自安全上下文（sub=Long.toString(memberId)），无入参来源。 */
     private static long currentMemberId() {
         AuthenticatedSubject subject = SecurityContextFacade.currentSubject()
@@ -148,5 +176,19 @@ public class CartController {
                 line.priceFen(), line.priceFenAtAdded(),
                 line.itemStatus().name(), line.stockStatus().name(),
                 line.createdAt(), line.updatedAt());
+    }
+
+    /** 合并结果 → 线框响应：雪花 ID 字符串化。 */
+    private static MergeCartResponse toMergeResponse(CartMergeService.MergeResultView result) {
+        List<MergedSkuView> merged = result.merged().stream()
+                .map(m -> new MergedSkuView(Long.toString(m.skuId()), m.quantity()))
+                .toList();
+        List<TruncatedSkuView> truncated = result.truncated().stream()
+                .map(t -> new TruncatedSkuView(Long.toString(t.skuId()), t.finalQuantity()))
+                .toList();
+        List<DroppedSkuView> dropped = result.dropped().stream()
+                .map(d -> new DroppedSkuView(Long.toString(d.skuId()), d.reason()))
+                .toList();
+        return new MergeCartResponse(merged, truncated, dropped);
     }
 }

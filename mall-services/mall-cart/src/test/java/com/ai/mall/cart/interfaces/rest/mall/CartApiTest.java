@@ -66,17 +66,19 @@ class CartApiTest extends AbstractRedisIntegrationTest {
     void cleanCarts() {
         redisTemplate.delete(redisTemplate.keys("cart:member:*"));
         lenient().when(productSkuClient.findSnapshots(anyList())).thenAnswer(invocation -> {
-            Long skuId = invocation.<List<Long>>getArgument(0).get(0);
-            // 7003：product 依赖故障 → 503；7002：业务不可售 → 400
-            if (skuId == 7003L) {
-                throw new BusinessException(CartErrorCode.DEPENDENCY_UNAVAILABLE, HttpStatus.SERVICE_UNAVAILABLE);
-            }
-            boolean salable = skuId != 7002L;
-            return List.of(new SkuSnapshot(salable ? 9001L : null, salable ? "演示手机" : null,
-                    salable ? "ON_SALE" : "OFF_SHELF", skuId, "SKU-" + skuId,
-                    salable ? "ENABLED" : "DISABLED", salable ? 39900L : null,
-                    salable ? "https://cdn.example.com/sku.png" : null,
-                    Map.of("颜色", "黑"), salable));
+            List<Long> skuIds = invocation.getArgument(0);
+            return skuIds.stream().map(skuId -> {
+                // 7003：product 依赖故障 → 503
+                if (skuId == 7003L) {
+                    throw new BusinessException(CartErrorCode.DEPENDENCY_UNAVAILABLE, HttpStatus.SERVICE_UNAVAILABLE);
+                }
+                boolean salable = skuId != 7002L;
+                return new SkuSnapshot(salable ? 9001L : null, salable ? "演示手机" : null,
+                        salable ? "ON_SALE" : "OFF_SHELF", skuId, "SKU-" + skuId,
+                        salable ? "ENABLED" : "DISABLED", salable ? 39900L : null,
+                        salable ? "https://cdn.example.com/sku.png" : null,
+                        Map.of("颜色", "黑"), salable);
+            }).toList();
         });
         // DU-BE-802：GET 读模型需要库存聚合，测试统一给充足库存（本类不验证库存语义）
         lenient().when(inventoryAvailabilityClient.findAvailability(anyList())).thenAnswer(invocation ->
@@ -287,6 +289,104 @@ class CartApiTest extends AbstractRedisIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"skuId\":\"" + skuId + "\",\"quantity\":" + quantity + "}"))
                 .andExpect(status().isOk());
+    }
+
+    // ---------- CHG-0018 DU-BE-803 游客车合并 ----------
+
+    @Test
+    @DisplayName("AC-018 merge-token：签发成功，expiresIn=300")
+    void mergeTokenIssued() throws Exception {
+        mockMvc.perform(post("/api/mall/cart/merge-token").header("Authorization", "Bearer " + memberToken(MEMBER_A)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.mergeToken").isString())
+                .andExpect(jsonPath("$.data.expiresIn").value(300));
+    }
+
+    @Test
+    @DisplayName("AC-016 合并：同 SKU 相加、异 SKU 并入，返回 merged")
+    void mergeAccumulates() throws Exception {
+        add(MEMBER_A, 1001, 1);
+        String token = issueToken(MEMBER_A);
+
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"%s","items":[{"skuId":"1001","quantity":2,"selected":true},{"skuId":"1002","quantity":3,"selected":false}]}"""
+                                .formatted(token)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.merged.length()").value(2))
+                .andExpect(jsonPath("$.data.truncated.length()").value(0))
+                .andExpect(jsonPath("$.data.dropped.length()").value(0));
+
+        mockMvc.perform(get("/api/mall/cart").header("Authorization", "Bearer " + memberToken(MEMBER_A)))
+                .andExpect(jsonPath("$.data.items.length()").value(2));
+    }
+
+    @Test
+    @DisplayName("AC-017 失效游客条目 dropped(SKU_NOT_SALABLE)，其余正常合并")
+    void mergeDropsUnsalable() throws Exception {
+        String token = issueToken(MEMBER_A);
+        // 7002 在 mock 中为不可售
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"%s","items":[{"skuId":"1001","quantity":1,"selected":true},{"skuId":"7002","quantity":1,"selected":true}]}"""
+                                .formatted(token)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.merged.length()").value(1))
+                .andExpect(jsonPath("$.data.dropped.length()").value(1))
+                .andExpect(jsonPath("$.data.dropped[0].reason").value("SKU_NOT_SALABLE"));
+    }
+
+    @Test
+    @DisplayName("AC-018 重放同一 token → 400 MERGE_TOKEN_EXPIRED，不累加")
+    void mergeReplayFails() throws Exception {
+        add(MEMBER_A, 1001, 1);
+        String token = issueToken(MEMBER_A);
+
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"%s","items":[{"skuId":"1001","quantity":2,"selected":true}]}"""
+                                .formatted(token)))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"%s","items":[{"skuId":"1001","quantity":2,"selected":true}]}"""
+                                .formatted(token)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(CartErrorCode.MERGE_TOKEN_EXPIRED.getCode()));
+
+        mockMvc.perform(get("/api/mall/cart").header("Authorization", "Bearer " + memberToken(MEMBER_A)))
+                .andExpect(jsonPath("$.data.items[0].quantity").value(3));
+    }
+
+    @Test
+    @DisplayName("AC-018 伪造/不存在 token → 400 MERGE_TOKEN_EXPIRED；跨会员 token → 401 MERGE_TOKEN_INVALID")
+    void mergeForgedOrMismatchTokenFails() throws Exception {
+        // 不存在的 token → 400
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"forged-token","items":[{"skuId":"1001","quantity":1,"selected":true}]}"""))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value(CartErrorCode.MERGE_TOKEN_EXPIRED.getCode()));
+
+        // A 的 token 被 B 使用 → 401 TOKEN_MISMATCH
+        String tokenA = issueToken(MEMBER_A);
+        mockMvc.perform(post("/api/mall/cart/merge").header("Authorization", "Bearer " + memberToken(MEMBER_B))
+                        .contentType(MediaType.APPLICATION_JSON).content("""
+                                {"mergeToken":"%s","items":[{"skuId":"1001","quantity":1,"selected":true}]}"""
+                                .formatted(tokenA)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value(CartErrorCode.MERGE_TOKEN_INVALID.getCode()));
+    }
+
+    private String issueToken(String memberId) throws Exception {
+        return mockMvc.perform(post("/api/mall/cart/merge-token")
+                        .header("Authorization", "Bearer " + memberToken(memberId)))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString()
+                .replaceAll(".*\"mergeToken\":\"([^\"]+)\".*", "$1");
     }
 
     private String memberToken(String memberId) {

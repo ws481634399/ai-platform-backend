@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -37,6 +38,7 @@ public class RedisCartRepository implements CartRepository {
     private final DefaultRedisScript<Long> updateScript = loadScript("scripts/cart_update.lua");
     private final DefaultRedisScript<Long> removeScript = loadScript("scripts/cart_remove.lua");
     private final DefaultRedisScript<Long> selectScript = loadScript("scripts/cart_select.lua");
+    private final DefaultRedisScript<String> mergeScript = loadScript("scripts/cart_merge.lua", String.class);
 
     public RedisCartRepository(StringRedisTemplate redisTemplate, ObjectMapper objectMapper) {
         this.redisTemplate = redisTemplate;
@@ -91,6 +93,80 @@ public class RedisCartRepository implements CartRepository {
                 Instant.now().toString(), Long.toString(CartConstants.TTL_SECONDS));
     }
 
+    /**
+     * 签发合并 token（CHG-0018 DU-BE-803）：SET NX EX 300，值为 memberId。
+     * 同一时刻同一会员只持有一个有效 token（重复签发覆盖旧值，旧 token 自然失效）。
+     */
+    public String issueMergeToken(long memberId) {
+        String token = UUID.randomUUID().toString().replace("-", "");
+        redisTemplate.opsForValue().set(CartConstants.mergeTokenKey(token), Long.toString(memberId),
+                java.time.Duration.ofSeconds(CartConstants.MERGE_TOKEN_TTL_SECONDS));
+        return token;
+    }
+
+    @Override
+    public MergeResult merge(long memberId, String token, List<MergeItem> items) {
+        List<String> args = new ArrayList<>(5 + items.size() * 4);
+        args.add(Long.toString(memberId));
+        args.add(Instant.now().toString());
+        args.add(Long.toString(CartConstants.TTL_SECONDS));
+        args.add(Integer.toString(CartConstants.MAX_QUANTITY));
+        args.add(Integer.toString(CartConstants.MAX_ITEMS));
+        for (MergeItem item : items) {
+            args.add(Long.toString(item.skuId()));
+            args.add(Integer.toString(item.quantity()));
+            args.add(Boolean.toString(item.selected()));
+            args.add(Long.toString(item.priceFenAtAdded()));
+        }
+        String raw = redisTemplate.execute(mergeScript,
+                List.of(CartConstants.memberKey(memberId), CartConstants.mergeTokenKey(token)),
+                args.toArray());
+        return parseMergeResult(raw);
+    }
+
+    /** 解析 cart_merge.lua 返回：特殊字符串或 JSON 对象。 */
+    private MergeResult parseMergeResult(String raw) {
+        if (raw == null) {
+            throw new IllegalStateException("合并脚本返回空");
+        }
+        if ("TOKEN_MISSING".equals(raw) || "TOKEN_MISMATCH".equals(raw)) {
+            // 由调用方根据此标记决定 400/401
+            return new MergeResult(List.of(), List.of(),
+                    List.of(new DroppedSku(0L, raw)));
+        }
+        try {
+            Map<String, Object> result = objectMapper.readValue(raw, new TypeReference<>() {
+            });
+            List<MergedSku> merged = toList(result.get("merged"),
+                    m -> new MergedSku(parseLong(((Map<?, ?>) m).get("skuId")),
+                            ((Number) ((Map<?, ?>) m).get("quantity")).intValue()));
+            List<TruncatedSku> truncated = toList(result.get("truncated"),
+                    m -> new TruncatedSku(parseLong(((Map<?, ?>) m).get("skuId")),
+                            ((Number) ((Map<?, ?>) m).get("finalQuantity")).intValue()));
+            List<DroppedSku> dropped = toList(result.get("dropped"),
+                    m -> new DroppedSku(parseLong(((Map<?, ?>) m).get("skuId")),
+                            (String) ((Map<?, ?>) m).get("reason")));
+            return new MergeResult(merged, truncated, dropped);
+        } catch (Exception ex) {
+            throw new IllegalStateException("合并脚本返回解析失败: " + raw, ex);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> List<T> toList(Object raw, java.util.function.Function<Object, T> mapper) {
+        if (raw == null) {
+            return List.of();
+        }
+        return ((List<Object>) raw).stream().map(mapper).toList();
+    }
+
+    private static long parseLong(Object value) {
+        if (value instanceof Number n) {
+            return n.longValue();
+        }
+        return Long.parseLong(value.toString());
+    }
+
     @Override
     public List<CartItem> findItems(long memberId) {
         Map<Object, Object> raw = redisTemplate.opsForHash()
@@ -114,11 +190,14 @@ public class RedisCartRepository implements CartRepository {
     }
 
     private static DefaultRedisScript<Long> loadScript(String classpath) {
+        return loadScript(classpath, Long.class);
+    }
+
+    private static <T> DefaultRedisScript<T> loadScript(String classpath, Class<T> resultType) {
         try {
             String content = StreamUtils.copyToString(new ClassPathResource(classpath).getInputStream(),
                     java.nio.charset.StandardCharsets.UTF_8);
-            DefaultRedisScript<Long> script = new DefaultRedisScript<>(content, Long.class);
-            return script;
+            return new DefaultRedisScript<>(content, resultType);
         } catch (Exception ex) {
             throw new IllegalStateException("加载购物车 Lua 脚本失败: " + classpath, ex);
         }
