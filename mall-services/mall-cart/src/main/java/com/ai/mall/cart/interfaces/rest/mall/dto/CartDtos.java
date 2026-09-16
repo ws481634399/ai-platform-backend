@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 会员购物车接口契约（CHG-0018 DU-BE-801）。
+ * 会员购物车接口契约（CHG-0018 DU-BE-801/802）。
  * 路径 SSOT：story-design §2 —— {@code /api/mall/cart}。
  * 雪花 ID 一律以 string 收发；金额为整数分。
  */
@@ -39,13 +40,30 @@ public final class CartDtos {
             @Size(max = 100, message = "单次最多删除100个条目") List<String> skuIds) {
     }
 
-    /** 购物车原始条目视图（DU-BE-802 将由商品/价/库存聚合视图替换）。 */
+    /** 购物车写操作回显的原始条目视图（车条目存储字段，不含实时聚合）。 */
     public record CartItemView(String skuId, int quantity, boolean selected,
                                long priceFenAtAdded, String createdAt, String updatedAt) {
     }
 
-    /** 购物车视图。 */
+    /** 写操作响应：原始车视图。 */
     public record CartView(List<CartItemView> items) {
+    }
+
+    /**
+     * 读模型行（DU-BE-802）：商品/最新价/库存均为读车实时聚合。
+     * productId/priceFen 在 NOT_FOUND/UNKNOWN 等降级场景可 null；
+     * specs 为规格名值对（与 product sku/batch 同形）；skuName 承载 product skuCode。
+     */
+    public record CartLineView(String skuId, int quantity, boolean selected,
+                               String productId, String productName, String skuName,
+                               Map<String, String> specs, String imageUrl,
+                               Long priceFen, long priceFenAtAdded,
+                               String itemStatus, String stockStatus,
+                               String createdAt, String updatedAt) {
+    }
+
+    /** 读模型整车视图：恒 200（含降级条目）；金额仅展示，结算价 M4 重算。 */
+    public record CartReadView(List<CartLineView> items, long selectedTotalFen, int selectedCount) {
     }
 
     /** M4 内部选中项条目。 */

@@ -29,8 +29,10 @@ mall:
     internal:
       shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
   cart:
-    # 加购可售校验直连 mall-product（8103）；购物车不依赖 inventory
+    # 加购可售校验直连 mall-product（8103）
     product-uri: ${PRODUCT_SERVICE_URI:http://localhost:8103}
+    # DU-BE-802 读车库存三态直连 mall-inventory availability（8106，只读不锁）
+    inventory-uri: ${INVENTORY_SERVICE_URI:http://localhost:8106}
 
 logging:
   pattern:

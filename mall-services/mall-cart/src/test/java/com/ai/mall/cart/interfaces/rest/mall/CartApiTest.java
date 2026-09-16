@@ -59,6 +59,9 @@ class CartApiTest extends AbstractRedisIntegrationTest {
     @MockitoBean
     private ProductSkuClient productSkuClient;
 
+    @MockitoBean
+    private com.ai.mall.cart.application.cart.InventoryAvailabilityClient inventoryAvailabilityClient;
+
     @BeforeEach
     void cleanCarts() {
         redisTemplate.delete(redisTemplate.keys("cart:member:*"));
@@ -75,6 +78,12 @@ class CartApiTest extends AbstractRedisIntegrationTest {
                     salable ? "https://cdn.example.com/sku.png" : null,
                     Map.of("颜色", "黑"), salable));
         });
+        // DU-BE-802：GET 读模型需要库存聚合，测试统一给充足库存（本类不验证库存语义）
+        lenient().when(inventoryAvailabilityClient.findAvailability(anyList())).thenAnswer(invocation ->
+                invocation.<List<Long>>getArgument(0).stream()
+                        .map(id -> new com.ai.mall.cart.application.cart.InventoryAvailabilityClient
+                                .SkuAvailability(id, 50L))
+                        .toList());
     }
 
     // ---------- AC-007 鉴权 ----------

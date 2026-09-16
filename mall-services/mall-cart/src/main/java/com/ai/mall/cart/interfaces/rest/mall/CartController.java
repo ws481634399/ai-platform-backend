@@ -1,10 +1,14 @@
 package com.ai.mall.cart.interfaces.rest.mall;
 
 import com.ai.mall.cart.application.cart.CartApplicationService;
+import com.ai.mall.cart.application.cart.CartQueryService;
+import com.ai.mall.cart.application.cart.CartReadModel.CartLine;
 import com.ai.mall.cart.domain.cart.CartItem;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.AddItemRequest;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.BatchDeleteRequest;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartItemView;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartLineView;
+import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartReadView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.CartView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.UpdateQuantityRequest;
 import com.ai.mall.common.core.result.CommonErrorCode;
@@ -40,15 +44,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartController {
 
     private final CartApplicationService carts;
+    private final CartQueryService cartQuery;
 
-    public CartController(CartApplicationService carts) {
+    public CartController(CartApplicationService carts, CartQueryService cartQuery) {
         this.carts = carts;
+        this.cartQuery = cartQuery;
     }
 
-    /** 本 Story 返回原始条目视图；DU-BE-802 在此替换为商品/价/库存实时聚合。 */
+    /** DU-BE-802：读模型实时聚合（商品双状态/最新价/库存三态/降级/选中合计），只读不改 Redis。 */
     @GetMapping
-    public UnifyResult<CartView> getCart() {
-        return UnifyResult.ok(toView(carts.list(currentMemberId())));
+    public UnifyResult<CartReadView> getCart() {
+        com.ai.mall.cart.application.cart.CartReadModel.CartView model =
+                cartQuery.getView(currentMemberId());
+        List<CartLineView> lines = model.items().stream().map(CartController::toLineView).toList();
+        return UnifyResult.ok(new CartReadView(lines, model.selectedTotalFen(), model.selectedCount()));
     }
 
     @PostMapping("/items")
@@ -128,5 +137,16 @@ public class CartController {
                         item.priceFenAtAdded(), item.createdAt(), item.updatedAt()))
                 .toList();
         return new CartView(views);
+    }
+
+    /** 读模型行 → 线框视图：雪花 ID 字符串化；可空 productId/priceFen 透传 null。 */
+    private static CartLineView toLineView(CartLine line) {
+        return new CartLineView(
+                Long.toString(line.skuId()), line.quantity(), line.selected(),
+                line.productId() == null ? null : Long.toString(line.productId()),
+                line.productName(), line.skuName(), line.specs(), line.imageUrl(),
+                line.priceFen(), line.priceFenAtAdded(),
+                line.itemStatus().name(), line.stockStatus().name(),
+                line.createdAt(), line.updatedAt());
     }
 }

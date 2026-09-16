@@ -23,6 +23,13 @@ public final class CartConstants {
     /** 会员车 key 前缀。 */
     public static final String MEMBER_KEY_PREFIX = "cart:member:";
 
+    /**
+     * 库存三态阈值（DU-BE-802 读模型）：精确数量 0=缺货、1..（本值-1）=低库存、≥本值=充足。
+     * 与 CHG-0017 mall-web StockBadge 三态口径保持同一 SSOT（常量 10）；
+     * inventory 内部端点给精确数，由 cart 本地映射，不向会员浏览器暴露精确库存。
+     */
+    public static final long IN_STOCK_THRESHOLD = 10L;
+
     public static String memberKey(long memberId) {
         return MEMBER_KEY_PREFIX + memberId;
     }
