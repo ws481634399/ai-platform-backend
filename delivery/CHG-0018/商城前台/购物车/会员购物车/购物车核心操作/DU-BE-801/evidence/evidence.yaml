@@ -1,0 +1,31 @@
+evidence:
+  - id: EV-CODE-001
+    type: code-change
+    delivery-unit: DU-BE-801
+    symbol: "CartConstants/CartItem/CartErrorCode/CartScriptCode/CartRepository, cart_add.lua/cart_update.lua/cart_remove.lua/cart_select.lua, RedisCartRepository::add/updateQuantity/remove/removeBatch/selectOne/selectAll/findItems, RestProductSkuClient::findSnapshots, CartApplicationService::add/updateQuantity/remove/removeBatch/select/selectAll/list/selectedItems, CartController, InternalCartController::selectedItems, CartSecurityConfiguration, SkuBatchApplicationService::batch, ProductRepositoryImpl::findBySkuIds, InternalProductController::skuBatch, GatewaySecurityConfiguration, gateway application.yml mall-cart route"
+    commits:
+      - ebfbeb2568f6fd0d743c503ec133120657010754
+    evidence-ref: evidence/changeset.md
+    created-at: "2026-09-16T10:00:00+08:00"
+  - id: EV-TEST-002
+    type: test-run
+    delivery-unit: DU-BE-801
+    scope: 模块级转绿（mall-cart 新增 23 例：Lua Testcontainers 9 + MockMvc 全链路 13 + Smoke 1）
+    commands:
+      - "mvn -pl mall-services/mall-cart test（23/23）"
+    result: passed
+    covers: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006, AC-007, AC-014]
+    tc-mapping-ref: evidence/red-green.md
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-16T09:50:00+08:00"
+  - id: EV-TEST-003
+    type: test-run
+    delivery-unit: DU-BE-801
+    scope: 跨模块回归（mall-product 95/95 基线 93+新增 batch 2；mall-gateway 19/19；三模块 package 成功）
+    commands:
+      - "mvn -pl mall-services/mall-cart,mall-services/mall-product,mall-gateway -am test"
+      - "mvn -pl mall-services/mall-cart,mall-services/mall-product,mall-gateway package -DskipTests"
+    result: passed
+    covers: [AC-001, AC-002, AC-003, AC-004, AC-005, AC-006, AC-007, AC-014]
+    evidence-ref: evidence/red-green.md
+    created-at: "2026-09-16T09:55:00+08:00"
