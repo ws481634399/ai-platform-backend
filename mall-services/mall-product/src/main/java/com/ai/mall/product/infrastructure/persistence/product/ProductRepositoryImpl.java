@@ -14,10 +14,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -45,6 +47,49 @@ public class ProductRepositoryImpl implements ProductRepository {
             return Optional.empty();
         }
         return Optional.of(toDomain(po, loadImages(id), loadAttributes(id), loadSkus(id)));
+    }
+
+    @Override
+    public List<Product> findBySkuIds(Collection<Long> skuIds) {
+        if (skuIds == null || skuIds.isEmpty()) {
+            return List.of();
+        }
+        // 1) 一次 IN 查询命中 SKU（显式过滤软删）
+        List<SkuPo> hitSkus = skuMapper.selectList(new LambdaQueryWrapper<SkuPo>()
+                .in(SkuPo::getId, skuIds).eq(SkuPo::getDeleted, 0));
+        if (hitSkus.isEmpty()) {
+            return List.of();
+        }
+        List<Long> productIds = hitSkus.stream().map(SkuPo::getProductId).distinct().toList();
+        // 2) 一次 IN 查询命中商品（显式过滤软删）
+        List<ProductPo> products = productMapper.selectList(new LambdaQueryWrapper<ProductPo>()
+                .in(ProductPo::getId, productIds).eq(ProductPo::getDeleted, 0));
+        if (products.isEmpty()) {
+            return List.of();
+        }
+        List<Long> liveProductIds = products.stream().map(ProductPo::getId).toList();
+        // 3) 图片/属性/SKU 各一次批量装载，按 productId 分组（禁止 N+1），分组时即转领域模型
+        Map<Long, List<ProductImage>> imageMap = imageMapper.selectList(new LambdaQueryWrapper<ProductImagePo>()
+                        .in(ProductImagePo::getProductId, liveProductIds)
+                        .orderByAsc(ProductImagePo::getSortOrder))
+                .stream().collect(Collectors.groupingBy(ProductImagePo::getProductId,
+                        Collectors.mapping(this::imageToDomain, Collectors.toList())));
+        Map<Long, List<ProductAttribute>> attrMap = attributeMapper.selectList(new LambdaQueryWrapper<ProductAttributePo>()
+                        .in(ProductAttributePo::getProductId, liveProductIds)
+                        .orderByAsc(ProductAttributePo::getSortOrder))
+                .stream().collect(Collectors.groupingBy(ProductAttributePo::getProductId,
+                        Collectors.mapping(this::attributeToDomain, Collectors.toList())));
+        Map<Long, List<Sku>> skuMap = skuMapper.selectList(new LambdaQueryWrapper<SkuPo>()
+                        .in(SkuPo::getProductId, liveProductIds).eq(SkuPo::getDeleted, 0)
+                        .orderByAsc(SkuPo::getId))
+                .stream().collect(Collectors.groupingBy(SkuPo::getProductId,
+                        Collectors.mapping(this::skuToDomain, Collectors.toList())));
+        return products.stream()
+                .map(po -> toDomain(po,
+                        imageMap.getOrDefault(po.getId(), List.of()),
+                        attrMap.getOrDefault(po.getId(), List.of()),
+                        skuMap.getOrDefault(po.getId(), List.of())))
+                .toList();
     }
 
     @Override

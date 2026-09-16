@@ -2,15 +2,13 @@ spring:
   application:
     name: mall-cart
 
-  datasource:
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_CART:mall_cart}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-    username: ${MYSQL_USER:root}
-    password: ${MYSQL_PASSWORD:}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  flyway:
-    enabled: ${FLYWAY_ENABLED:false}
-    locations: classpath:db/migration
+  # CHG-0018 DU-BE-801：购物车写模型基于 Redis（Lua 原子写 + 滑动 TTL），服务无 RDBMS 数据源
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2s
 
   cloud:
     nacos:
@@ -18,12 +16,21 @@ spring:
       discovery:
         enabled: ${NACOS_ENABLED:false}
 
-mybatis-plus:
-  configuration:
-    map-underscore-to-camel-case: true
-
 server:
   port: 8104
+
+mall:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+    # 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+  cart:
+    # 加购可售校验直连 mall-product（8103）；购物车不依赖 inventory
+    product-uri: ${PRODUCT_SERVICE_URI:http://localhost:8103}
 
 logging:
   pattern:

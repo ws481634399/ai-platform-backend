@@ -1,6 +1,7 @@
 package com.ai.mall.product.domain.product;
 
 import com.ai.mall.product.domain.product.ProductRepository.ProductPageResult;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,6 +12,12 @@ import java.util.Optional;
 public interface ProductRepository {
 
     Optional<Product> findById(long id);
+
+    /**
+     * CHG-0018 DU-BE-801：按一批 SKU id 反查所属商品（聚合根完整 hydrated）。
+     * 一次 IN 查询 + 每聚合根批量装载，禁止 N+1；只返回未删除且含命中 SKU 的商品。
+     */
+    List<Product> findBySkuIds(Collection<Long> skuIds);
 
     boolean existsByCode(String code, Long excludeId);
 

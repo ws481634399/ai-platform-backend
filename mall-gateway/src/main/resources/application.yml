@@ -42,6 +42,12 @@ spring:
           uri: ${MALL_GATEWAY_MEMBER_URI:http://localhost:8102}
           predicates:
             - Path=/api/mall/members/**,/api/mall/shipping-addresses/**
+        # CHG-0018 DU-BE-801：会员购物车路由（mall-cart:8104，仅 /api/mall/cart/**；
+        # /api/internal/carts/** 不经网关，安全链对 /api/internal/** 统一 denyAll→404）
+        - id: mall-cart
+          uri: ${MALL_GATEWAY_CART_URI:http://localhost:8104}
+          predicates:
+            - Path=/api/mall/cart/**
         - id: mall-product-internal
           uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
           predicates:

@@ -50,7 +50,9 @@ public class GatewaySecurityConfiguration {
                         // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
                         .pathMatchers("/api/internal/**").denyAll()
                         // CHG-0016：会员域仅 MEMBER（与 /api/admin/** 互不重叠，双向 403）
-                        .pathMatchers("/api/mall/members/**", "/api/mall/shipping-addresses/**").hasRole("MEMBER")
+                        // CHG-0018 DU-BE-801：会员购物车同属 MEMBER（游客车与合并在 Story3 另议）
+                        .pathMatchers("/api/mall/members/**", "/api/mall/shipping-addresses/**",
+                                "/api/mall/cart/**").hasRole("MEMBER")
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .exceptionHandling(errors -> errors

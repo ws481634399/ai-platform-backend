@@ -13,7 +13,7 @@
   <artifactId>mall-cart</artifactId>
 
   <name>mall-cart</name>
-  <description>购物车服务：加购、数量调整、结算项（业务代码留待后续里程碑）</description>
+  <description>购物车服务：会员购物车 Redis 写模型、实时校验与游客合并</description>
 
   <dependencies>
     <!-- WebMVC + 统一响应/异常/TraceId/OpenAPI（经 mall-common-web 传递，版本经 mall-bom） -->
@@ -28,34 +28,43 @@
       <artifactId>mall-common-log</artifactId>
       <version>${project.version}</version>
     </dependency>
-    <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
+    <!-- CHG-0018 安全：JWT 资源服务器 + JwtSubjectConverter/InternalIdentityFilter -->
     <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-security</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-core</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
     </dependency>
+    <!-- CHG-0018：购物车写模型基于 Redis（Lua 原子写 + 滑动 TTL），服务无 RDBMS 数据源 -->
     <dependency>
-      <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-mysql</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
-      <scope>runtime</scope>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-redis</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <!-- Nacos 服务发现预留：默认关闭（NACOS_ENABLED:false），禁启动断言（design.md §2.6） -->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
-    <!-- 测试依赖聚合器：test scope 引用，传递 JUnit5/AssertJ/Mockito/H2（design.md §2.8） -->
+    <!-- 测试依赖聚合器：test scope 引用，传递 JUnit5/AssertJ/Mockito（design.md §2.8） -->
     <dependency>
       <groupId>com.ai-mall</groupId>
       <artifactId>mall-common-test</artifactId>
       <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- CHG-0018：Lua 脚本真实 Redis 集成测试（Testcontainers，版本由 Boot BOM 托管） -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>testcontainers</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -66,6 +75,16 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <!-- 本地离线环境无 testcontainers/ryuk 镜像：容器清理由 JVM shutdown hook 兜底 -->
+          <environmentVariables>
+            <TESTCONTAINERS_RYUK_DISABLED>true</TESTCONTAINERS_RYUK_DISABLED>
+          </environmentVariables>
+        </configuration>
       </plugin>
     </plugins>
   </build>

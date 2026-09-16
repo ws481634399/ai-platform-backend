@@ -122,6 +122,61 @@ class InternalProductApiTest {
                 .andExpect(status().isNotFound());
     }
 
+    // ---------- CHG-0018 DU-BE-801：POST /skus/batch ----------
+
+    @Test
+    @DisplayName("批量快照：双状态/价格/规格/图字段完整，ID 为字符串，缺失 SKU 占位不可售")
+    void skuBatchSalableAndMissing() throws Exception {
+        long productId = createProductWithSkuAndImage("I-BATCH");
+        long skuId = jdbc.queryForObject("SELECT id FROM product_sku WHERE sku_code='I-BATCH-SKU'", Long.class);
+
+        // DRAFT 商品：sku ENABLED 但 product 非 ON_SALE → 不可售
+        mockMvc.perform(post("/api/internal/products/skus/batch")
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"skuIds\":[" + skuId + ",999999999999]}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.length()").value(2))
+                .andExpect(jsonPath("$.data[0].skuId").value(String.valueOf(skuId)))
+                .andExpect(jsonPath("$.data[0].productStatus").value("DRAFT"))
+                .andExpect(jsonPath("$.data[0].skuStatus").value("ENABLED"))
+                .andExpect(jsonPath("$.data[0].salable").value(false))
+                .andExpect(jsonPath("$.data[1].skuId").value("999999999999"))
+                .andExpect(jsonPath("$.data[1].salable").value(false));
+
+        // 上架后：双状态满足 → 可售，价格/规格/图齐备
+        mockMvc.perform(post("/api/admin/products/" + productId + "/publish")
+                        .header("Authorization", "Bearer " + token(List.of("product:product:publish"))))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/api/internal/products/skus/batch")
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"skuIds\":[" + skuId + "]}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].productId").value(String.valueOf(productId)))
+                .andExpect(jsonPath("$.data[0].productName").value("I-BATCH-name"))
+                .andExpect(jsonPath("$.data[0].productStatus").value("ON_SALE"))
+                .andExpect(jsonPath("$.data[0].skuStatus").value("ENABLED"))
+                .andExpect(jsonPath("$.data[0].salePriceInCents").value(9900))
+                .andExpect(jsonPath("$.data[0].mainImageUrl").exists())
+                .andExpect(jsonPath("$.data[0].specifications.颜色").value("黑"))
+                .andExpect(jsonPath("$.data[0].salable").value(true));
+    }
+
+    @Test
+    @DisplayName("批量快照：错误凭证 401；空列表 400")
+    void skuBatchAuthAndValidation() throws Exception {
+        mockMvc.perform(post("/api/internal/products/skus/batch")
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, "wrong")
+                        .contentType(MediaType.APPLICATION_JSON).content("{\"skuIds\":[1]}"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("INTERNAL_UNAUTHORIZED"));
+        mockMvc.perform(post("/api/internal/products/skus/batch")
+                        .header(InternalIdentityFilter.INTERNAL_TOKEN_HEADER, sharedSecret)
+                        .contentType(MediaType.APPLICATION_JSON).content("{\"skuIds\":[]}"))
+                .andExpect(status().isBadRequest());
+    }
+
     // ---------- helpers ----------
 
     private long createProductWithSkuAndImage(String code) throws Exception {
