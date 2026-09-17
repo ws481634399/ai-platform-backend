@@ -9,6 +9,7 @@ import com.ai.mall.inventory.application.inventory.InventoryCommands.LockCommand
 import com.ai.mall.inventory.application.inventory.InventoryCommands.PageQuery;
 import com.ai.mall.inventory.application.inventory.InventoryCommands.ReleaseCommand;
 import com.ai.mall.inventory.domain.inventory.Inventory;
+import com.ai.mall.inventory.domain.inventory.InventoryErrorCode;
 import com.ai.mall.inventory.domain.inventory.InventoryException;
 import com.ai.mall.inventory.domain.inventory.InventoryLog;
 import com.ai.mall.inventory.domain.inventory.InventoryOperationType;
@@ -123,6 +124,13 @@ public class InventoryApplicationService {
         return reservation;
     }
 
+    /**
+     * CHG-0019 释放预留（CAS 加固，契约不变）。
+     *
+     * <p>同事务两步条件更新：① 预留记录 LOCKED→RELEASED 状态 CAS 先行，串行化同一预留的
+     * 并发 release/confirm（落败方不会触碰库存数量）；② inventory_stock 的 locked 条件扣减
+     * （{@code locked >= qty}），账实不一致时抛错回滚整事务。终态 RELEASED 重复调用幂等返回。
+     */
     @Transactional
     public InventoryReservation release(ReleaseCommand command) {
         InventoryReservation reservation = inventoryRepository
@@ -131,20 +139,43 @@ public class InventoryApplicationService {
         if (reservation.getStatus() == ReservationStatus.RELEASED) {
             return reservation;
         }
+        if (reservation.getStatus() != ReservationStatus.LOCKED) {
+            throw InventoryException.reservationInvalidState(command.reservationId(), reservation.getStatus());
+        }
+        int stateRows = inventoryRepository.casReservationStatus(
+                reservation.getId(), ReservationStatus.LOCKED, ReservationStatus.RELEASED);
+        if (stateRows == 0) {
+            // 并发竞争：重读仲裁，重复释放幂等，其余冲突报错
+            InventoryReservation reloaded = inventoryRepository
+                    .findReservationByReservationId(command.reservationId())
+                    .orElseThrow(() -> InventoryException.reservationNotFound(command.reservationId()));
+            if (reloaded.getStatus() == ReservationStatus.RELEASED) {
+                return reloaded;
+            }
+            throw InventoryException.reservationInvalidState(command.reservationId(), reloaded.getStatus());
+        }
+        int stockRows = inventoryRepository.releaseStock(reservation.getSkuId(), reservation.getQuantity());
+        if (stockRows == 0) {
+            // locked 账面不足预留量（账实异常）：回滚预留状态迁移，交补偿/人工处理
+            throw new InventoryException(InventoryErrorCode.RESERVATION_INVALID_STATE,
+                    org.springframework.http.HttpStatus.CONFLICT,
+                    "库存锁定量与预留不一致: reservationId=" + command.reservationId());
+        }
         Inventory inventory = inventoryRepository.findBySkuId(reservation.getSkuId())
                 .orElseThrow(() -> InventoryException.notFound(reservation.getSkuId()));
-        long before = inventory.getLockedQuantity();
-        inventory.release(reservation.getQuantity());
-        inventoryRepository.update(inventory);
-        reservation.release();
-        inventoryRepository.saveReservation(reservation);
         inventoryRepository.insertLog(new InventoryLog(
                 reservation.getSkuId(), InventoryOperationType.RELEASE, reservation.getQuantity(),
-                before, inventory.getLockedQuantity(),
+                inventory.getLockedQuantity() + reservation.getQuantity(), inventory.getLockedQuantity(),
                 command.reservationId(), null, traceId(), Instant.now()));
+        // 库内状态已由 CAS 更新；内存对象同步为终态用于响应
+        reservation.release();
         return reservation;
     }
 
+    /**
+     * CHG-0019 确认扣减（CAS 加固，契约不变）：预留 LOCKED→DEDUCTED 状态 CAS 先行，
+     * 随后 total/locked 条件同减；终态 DEDUCTED 重复调用幂等返回。
+     */
     @Transactional
     public InventoryReservation confirmDeduction(ConfirmCommand command) {
         InventoryReservation reservation = inventoryRepository
@@ -153,18 +184,33 @@ public class InventoryApplicationService {
         if (reservation.getStatus() == ReservationStatus.DEDUCTED) {
             return reservation;
         }
+        if (reservation.getStatus() != ReservationStatus.LOCKED) {
+            throw InventoryException.reservationInvalidState(command.reservationId(), reservation.getStatus());
+        }
+        int stateRows = inventoryRepository.casReservationStatus(
+                reservation.getId(), ReservationStatus.LOCKED, ReservationStatus.DEDUCTED);
+        if (stateRows == 0) {
+            InventoryReservation reloaded = inventoryRepository
+                    .findReservationByReservationId(command.reservationId())
+                    .orElseThrow(() -> InventoryException.reservationNotFound(command.reservationId()));
+            if (reloaded.getStatus() == ReservationStatus.DEDUCTED) {
+                return reloaded;
+            }
+            throw InventoryException.reservationInvalidState(command.reservationId(), reloaded.getStatus());
+        }
+        int stockRows = inventoryRepository.deductStock(reservation.getSkuId(), reservation.getQuantity());
+        if (stockRows == 0) {
+            throw new InventoryException(InventoryErrorCode.RESERVATION_INVALID_STATE,
+                    org.springframework.http.HttpStatus.CONFLICT,
+                    "库存锁定量与预留不一致: reservationId=" + command.reservationId());
+        }
         Inventory inventory = inventoryRepository.findBySkuId(reservation.getSkuId())
                 .orElseThrow(() -> InventoryException.notFound(reservation.getSkuId()));
-        long beforeTotal = inventory.getTotalQuantity();
-        long beforeLocked = inventory.getLockedQuantity();
-        inventory.confirmDeduction(reservation.getQuantity());
-        inventoryRepository.update(inventory);
-        reservation.confirmDeduction();
-        inventoryRepository.saveReservation(reservation);
         inventoryRepository.insertLog(new InventoryLog(
                 reservation.getSkuId(), InventoryOperationType.DEDUCT, reservation.getQuantity(),
-                beforeTotal, inventory.getTotalQuantity(),
+                inventory.getTotalQuantity() + reservation.getQuantity(), inventory.getTotalQuantity(),
                 command.reservationId(), null, traceId(), Instant.now()));
+        reservation.confirmDeduction();
         return reservation;
     }
 

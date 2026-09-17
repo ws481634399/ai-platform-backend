@@ -1,4 +1,4 @@
-﻿package com.ai.mall.cart.interfaces.rest.mall;
+package com.ai.mall.cart.interfaces.rest.mall;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;

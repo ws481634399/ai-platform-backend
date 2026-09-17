@@ -9,8 +9,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   flyway:
-    enabled: ${FLYWAY_ENABLED:false}
+    # CHG-0019：订单库表随服务启动迁移（本地默认开启，可用 FLYWAY_ENABLED=false 关闭）
+    enabled: ${FLYWAY_ENABLED:true}
     locations: classpath:db/migration
+
+  # CHG-0019：submitToken 一次性令牌存储
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2s
 
   cloud:
     nacos:
@@ -24,6 +33,24 @@ mybatis-plus:
 
 server:
   port: 8105
+
+mall:
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+    # 服务间内部接口共享凭证：仅本地开发使用默认值，生产经环境变量注入
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+  order:
+    # 下游服务直连地址（M4 同步交易链路，RestClient + X-Internal-Token）
+    product-uri: ${PRODUCT_SERVICE_URI:http://localhost:8103}
+    inventory-uri: ${INVENTORY_SERVICE_URI:http://localhost:8106}
+    member-uri: ${MEMBER_SERVICE_URI:http://localhost:8102}
+    cart-uri: ${CART_SERVICE_URI:http://localhost:8104}
+    # submitToken 有效期（秒）
+    submit-token-ttl-seconds: ${ORDER_SUBMIT_TOKEN_TTL:600}
 
 logging:
   pattern:

@@ -57,6 +57,17 @@ spring:
           uri: ${MALL_GATEWAY_INVENTORY_URI:http://localhost:8106}
           predicates:
             - Path=/api/admin/inventory/**,/api/internal/inventory/**
+        # CHG-0019：会员订单交易路由（预览/下单/支付/取消/收货/查询，mall-order:8105；
+        # /api/internal/** 不经网关）
+        - id: mall-order-mall
+          uri: ${MALL_GATEWAY_ORDER_URI:http://localhost:8105}
+          predicates:
+            - Path=/api/mall/orders/**
+        # CHG-0019：管理端订单管理与交易补偿台路由（细粒度权限码在 mall-order 方法层收口）
+        - id: mall-order-admin
+          uri: ${MALL_GATEWAY_ORDER_URI:http://localhost:8105}
+          predicates:
+            - Path=/api/admin/orders/**,/api/admin/compensations/**
   security:
     oauth2:
       resourceserver:

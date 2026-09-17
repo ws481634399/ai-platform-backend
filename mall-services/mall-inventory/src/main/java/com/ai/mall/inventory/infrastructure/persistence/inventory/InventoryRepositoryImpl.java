@@ -123,6 +123,22 @@ public class InventoryRepositoryImpl implements InventoryRepository {
         return inventoryMapper.lockStock(skuId, quantity);
     }
 
+    @Override
+    public int releaseStock(long skuId, long quantity) {
+        return inventoryMapper.releaseStock(skuId, quantity);
+    }
+
+    @Override
+    public int deductStock(long skuId, long quantity) {
+        return inventoryMapper.deductStock(skuId, quantity);
+    }
+
+    @Override
+    public int casReservationStatus(long reservationPrimaryId, ReservationStatus fromStatus,
+                                    ReservationStatus toStatus) {
+        return reservationMapper.casStatus(reservationPrimaryId, fromStatus.name(), toStatus.name(), Instant.now());
+    }
+
     private Inventory toDomain(InventoryPo po) {
         Instant created = po.getCreatedAt() == null ? Instant.EPOCH : po.getCreatedAt();
         Instant updated = po.getUpdatedAt() == null ? created : po.getUpdatedAt();
@@ -171,8 +187,10 @@ public class InventoryRepositoryImpl implements InventoryRepository {
         po.setSkuId(reservation.getSkuId());
         po.setQuantity(reservation.getQuantity());
         po.setStatus(reservation.getStatus().name());
-        po.setCreatedAt(reservation.getCreatedAt());
-        po.setUpdatedAt(reservation.getUpdatedAt());
+        // 新建预留领域对象时间戳为空，落库时补当前时间（DATETIME NOT NULL，MySQL/H2 一致）
+        Instant reservationNow = Instant.now();
+        po.setCreatedAt(reservation.getCreatedAt() != null ? reservation.getCreatedAt() : reservationNow);
+        po.setUpdatedAt(reservation.getUpdatedAt() != null ? reservation.getUpdatedAt() : reservationNow);
         return po;
     }
 }
