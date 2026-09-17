@@ -1,0 +1,52 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-905
+repository: "repo-1"
+parent:
+  change: "CHG-0019"
+feature-path:
+  level-1:
+    id: FEAT-004
+    name: 订单交易
+  level-2:
+    id: FEAT-004-03
+    name: 订单查询与履约
+  level-3:
+    id: FEAT-004-03-01
+    name: 会员订单查询与确认收货
+  story:
+    id: STORY-004-03-01-02
+    name: 确认收货
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0019/requirement.md
+  spec: delivery/changes/CHG-0019/requirement-spec.md
+  design: delivery/changes/CHG-0019/requirement-design.md
+  story-design: delivery/changes/CHG-0019/订单交易/订单查询与履约/会员订单查询与确认收货/确认收货/story-design.md
+  test-design: delivery/changes/CHG-0019/订单交易/订单查询与履约/会员订单查询与确认收货/确认收货/test-design.md
+scope: []
+acceptance:
+  - AC-001
+dependencies:
+  - DU-BE-903
+  - DU-BE-904
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: completed # pending / developing / testing / completed
+baseline:
+  commit: "dc0d8e372c91ce3a1bfab3a769d689e69d1f2673"
+result:
+  commit: "a06ed4ccfd8215777984351f1fdcc81069e8dd59"
+  paths:
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/order/ReceiptService.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/interfaces/rest/mall/MemberOrderController.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/domain/order/OrderStatus.java
+  symbols:
+    - ReceiptService::confirmReceipt

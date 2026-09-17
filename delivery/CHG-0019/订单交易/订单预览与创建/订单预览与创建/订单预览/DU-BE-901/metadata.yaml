@@ -1,0 +1,61 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-901
+repository: "repo-1"
+parent:
+  change: "CHG-0019"
+feature-path:
+  level-1:
+    id: FEAT-004
+    name: 订单交易
+  level-2:
+    id: FEAT-004-01
+    name: 订单预览与创建
+  level-3:
+    id: FEAT-004-01-01
+    name: 订单预览与创建
+  story:
+    id: STORY-004-01-01-01
+    name: 订单预览
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0019/requirement.md
+  spec: delivery/changes/CHG-0019/requirement-spec.md
+  design: delivery/changes/CHG-0019/requirement-design.md
+  story-design: delivery/changes/CHG-0019/订单交易/订单预览与创建/订单预览与创建/订单预览/story-design.md
+  test-design: delivery/changes/CHG-0019/订单交易/订单预览与创建/订单预览与创建/订单预览/test-design.md
+scope: []
+acceptance:
+  - AC-001
+dependencies: []
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: completed # pending / developing / testing / completed
+baseline:
+  commit: "dc0d8e372c91ce3a1bfab3a769d689e69d1f2673"
+result:
+  commit: "a06ed4ccfd8215777984351f1fdcc81069e8dd59"
+  paths:
+    - mall-services/mall-order/pom.xml
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/MallOrderApplication.java
+    - mall-services/mall-order/src/main/resources/application.yml
+    - mall-services/mall-order/src/main/resources/db/migration/V1__order_init.sql
+    - mall-services/mall-order/src/main/resources/db/migration/V2__compensation_init.sql
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/order/CheckoutPreviewService.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/redis/RedisSubmitTokenStore.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/client/RestProductSkuPort.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/client/RestInventoryPort.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/client/RestCartSelectionPort.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/client/RestMemberAddressPort.java
+    - mall-services/mall-member/src/main/java/com/ai/mall/member/interfaces/rest/internal/InternalMemberAddressController.java
+  symbols:
+    - CheckoutPreviewService::preview
+    - RedisSubmitTokenStore::issue
+    - RestInventoryPort::fetchAvailability
