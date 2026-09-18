@@ -4,46 +4,50 @@
 # 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
 # Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
 
-id: DU-BE-803
+id: DU-BE-502
 repository: "repo-1"
 parent:
-  change: "CHG-0018"
+  change: "CHG-0020"
 feature-path:
   level-1:
-    id: FEAT-003
-    name: 商城前台
+    id: FEAT-005
+    name: 商品搜索
   level-2:
-    id: FEAT-003-03
-    name: 购物车
+    id: FEAT-005-01
+    name: 商品搜索查询
   level-3:
-    id: FEAT-003-03-02
-    name: 游客购物车与合并
+    id: FEAT-005-01-02
+    name: 关键词搜索与筛选
   story:
-    id: STORY-003-03-02-01
-    name: 游客购物车与登录合并
+    id: STORY-005-01-02-01
+    name: 商品关键词搜索
   candidate: false
 workspace-source:
-  requirement: delivery/changes/CHG-0018/requirement.md
-  spec: delivery/changes/CHG-0018/requirement-spec.md
-  design: delivery/changes/CHG-0018/requirement-design.md
-  story-design: delivery/changes/CHG-0018/商城前台/购物车/游客购物车与合并/游客购物车与登录合并/story-design.md
-  test-design: delivery/changes/CHG-0018/商城前台/购物车/游客购物车与合并/游客购物车与登录合并/test-design.md
+  requirement: delivery/changes/CHG-0020/requirement.md
+  spec: delivery/changes/CHG-0020/requirement-spec.md
+  design: delivery/changes/CHG-0020/requirement-design.md
+  story-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/关键词搜索与筛选/商品关键词搜索/story-design.md
+  test-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/关键词搜索与筛选/商品关键词搜索/test-design.md
 scope: []
 acceptance:
-  - AC-015
-  - AC-016
-  - AC-017
-  - AC-018
+  - AC-001
+  - AC-002
+  - AC-003
+  - AC-004
+  - AC-005
+  - AC-006
+  - AC-007
+  - AC-008
 dependencies: []
 implementation-guidance:
   # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: completed # pending / developing / testing / completed
+status: pending # pending / developing / testing / completed
 baseline:
-  commit: "973c252ccbfc0a1700083a78b8d91100fd939674"
+  commit: "82ccf6e7a5b13202045ca6542b5560a0ccf2b1f9"
 result:
-  commit: "dc0d8e372c91ce3a1bfab3a769d689e69d1f2673"
+  commit: ""
   paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
   symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
