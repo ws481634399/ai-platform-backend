@@ -146,14 +146,14 @@ class ProductSearchApiTest extends AbstractElasticsearchTest {
         mockMvc.perform(get("/api/mall/search/products").param("keyword", "keyboard"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.total").value(2))
-                .andExpect(jsonPath("$.data.items[0].productId").value(1))
-                .andExpect(jsonPath("$.data.items[1].productId").value(2));
+                .andExpect(jsonPath("$.data.items[0].productId").value("1"))
+                .andExpect(jsonPath("$.data.items[1].productId").value("2"));
 
         // 中文词命中且下架同名商品被剔除
         mockMvc.perform(get("/api/mall/search/products").param("keyword", "机械"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.total").value(1))
-                .andExpect(jsonPath("$.data.items[0].productId").value(3));
+                .andExpect(jsonPath("$.data.items[0].productId").value("3"));
     }
 
     @Test
@@ -196,7 +196,7 @@ class ProductSearchApiTest extends AbstractElasticsearchTest {
         mockMvc.perform(get("/api/mall/search/products")
                         .param("categoryId", "10").param("brandId", "100"))
                 .andExpect(jsonPath("$.data.total").value(2))
-                .andExpect(jsonPath("$.data.items[?(@.productId==5)]").doesNotExist());
+                .andExpect(jsonPath("$.data.items[?(@.productId=='5')]").doesNotExist());
     }
 
     @Test
@@ -205,15 +205,15 @@ class ProductSearchApiTest extends AbstractElasticsearchTest {
         mockMvc.perform(get("/api/mall/search/products")
                         .param("minPriceFen", "10000").param("maxPriceFen", "30000"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.items[?(@.productId==1)]").exists())
-                .andExpect(jsonPath("$.data.items[?(@.productId==3)]").exists())
-                .andExpect(jsonPath("$.data.items[?(@.productId==2)]").doesNotExist());
+                .andExpect(jsonPath("$.data.items[?(@.productId=='1')]").exists())
+                .andExpect(jsonPath("$.data.items[?(@.productId=='3')]").exists())
+                .andExpect(jsonPath("$.data.items[?(@.productId=='2')]").doesNotExist());
 
         mockMvc.perform(get("/api/mall/search/products").param("maxPriceFen", "5000"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.items[?(@.productId==1)]").doesNotExist())
-                .andExpect(jsonPath("$.data.items[?(@.productId==2)]").exists())
-                .andExpect(jsonPath("$.data.items[?(@.productId==6)]").exists());
+                .andExpect(jsonPath("$.data.items[?(@.productId=='1')]").doesNotExist())
+                .andExpect(jsonPath("$.data.items[?(@.productId=='2')]").exists())
+                .andExpect(jsonPath("$.data.items[?(@.productId=='6')]").exists());
     }
 
     @Test
@@ -221,21 +221,21 @@ class ProductSearchApiTest extends AbstractElasticsearchTest {
     void sorts() throws Exception {
         mockMvc.perform(get("/api/mall/search/products")
                         .param("categoryId", "10").param("sort", "price_asc"))
-                .andExpect(jsonPath("$.data.items[0].productId").value(2))
-                .andExpect(jsonPath("$.data.items[1].productId").value(6))
-                .andExpect(jsonPath("$.data.items[2].productId").value(1))
-                .andExpect(jsonPath("$.data.items[3].productId").value(3));
+                .andExpect(jsonPath("$.data.items[0].productId").value("2"))
+                .andExpect(jsonPath("$.data.items[1].productId").value("6"))
+                .andExpect(jsonPath("$.data.items[2].productId").value("1"))
+                .andExpect(jsonPath("$.data.items[3].productId").value("3"));
 
         mockMvc.perform(get("/api/mall/search/products")
                         .param("categoryId", "10").param("sort", "price_desc"))
-                .andExpect(jsonPath("$.data.items[0].productId").value(3))
-                .andExpect(jsonPath("$.data.items[3].productId").value(2));
+                .andExpect(jsonPath("$.data.items[0].productId").value("3"))
+                .andExpect(jsonPath("$.data.items[3].productId").value("2"));
 
         mockMvc.perform(get("/api/mall/search/products")
                         .param("categoryId", "10").param("sort", "newest"))
-                .andExpect(jsonPath("$.data.items[0].productId").value(1))
-                .andExpect(jsonPath("$.data.items[1].productId").value(2))
-                .andExpect(jsonPath("$.data.items[3].productId").value(6));
+                .andExpect(jsonPath("$.data.items[0].productId").value("1"))
+                .andExpect(jsonPath("$.data.items[1].productId").value("2"))
+                .andExpect(jsonPath("$.data.items[3].productId").value("6"));
     }
 
     @Test

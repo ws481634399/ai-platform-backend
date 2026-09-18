@@ -111,7 +111,7 @@ class IndexSyncIntegrationTest extends AbstractElasticsearchTest {
         mockMvc.perform(get("/api/mall/search/products").param("keyword", "同步手机Alpha"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.total").value(1))
-                .andExpect(jsonPath("$.data.items[0].productId").value(7001))
+                .andExpect(jsonPath("$.data.items[0].productId").value("7001"))
                 .andExpect(jsonPath("$.data.items[0].brandName").value("索隐品牌"));
     }
 
