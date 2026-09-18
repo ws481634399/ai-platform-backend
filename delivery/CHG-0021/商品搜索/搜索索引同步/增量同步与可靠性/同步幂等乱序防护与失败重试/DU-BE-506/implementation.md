@@ -43,6 +43,7 @@
 | Commit | 仓库 | 说明 |
 | --- | --- | --- |
 | 82ccf6e | repo-1 ai-platform-backend | `feat(search,system): M5 商品搜索+索引同步+系统配置（CHG-0020/0021/0022 后端）`（版本化写入、失败表服务、调度重试与管理端查询均在其中） |
+| 1de0d9c | repo-1 ai-platform-backend | review major 闭环：补 requirement-design §2.4 声明的内部只读端点 `GET /api/internal/search/sync-failures`（InternalSearchFailureController + InternalSearchFailureApiTest 2 例） |
 
 ## Deviations
 
@@ -81,6 +82,13 @@
 - 实际实现: 版本号直接使用投影 `updatedAt` epoch millis（ProductSearchProjection 透传），upsert 与 delete 均经 external_gte 仲裁，409 统一映射 `STALE_VERSION`。
 - 原因: updatedAt 单调推进且两端已有该字段，无需新增版本列；毫秒精度对人工/后台编辑频度足够。
 - 影响评估: 同一毫秒内的两次变更理论上版本相等——external_gte 允许相等版本写入，最终态以最后一次投递内容为准，配合 AFTER_COMMIT 重查当前态，结果仍收敛。
+
+### DEV-5（sdd-review 闭环，提交 1de0d9c）
+
+- 原 DU 建议: requirement-design §2.4 与 story-spec [S4] 声明 `GET /api/internal/search/sync-failures?status=`（SERVICE 角色）内部只读排查端点。
+- 实际实现: 初版仅交付了管理端 `/api/admin/search/index/sync-failures`，内部端点漏实现且未登记偏差；review 四查判定 major 后补齐 `InternalSearchFailureController`（路径 `/api/internal/search/sync-failures`，复用 SearchSyncFailureService.page/countByStatus，返回 {total,page,size,items} 与管理端同构，size 夹 1..100），安全链经既有 `/api/internal/**` hasRole SERVICE + InternalIdentityFilter 自动覆盖；新增 InternalSearchFailureApiTest 2 例（令牌分页 + FAILED_DEAD 筛选、无令牌 4xx）。
+- 原因: 初版误判该端点无消费方可裁剪，但设计契约与 story-spec 明确声明，未登记即偏离；按 review resolution 选「补实现」而非改设计。
+- 影响评估: 新增只读端点不改变既有同步/管理链路；mall-search 定向回归 26 例全绿。
 
 ## 自检
 

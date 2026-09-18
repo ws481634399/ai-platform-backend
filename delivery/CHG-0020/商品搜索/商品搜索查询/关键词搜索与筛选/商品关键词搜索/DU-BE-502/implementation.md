@@ -41,6 +41,7 @@
 | Commit | DU | 说明 |
 | --- | --- | --- |
 | 82ccf6e | DU-BE-502 | repo-1（M5 三 Change 合并提交）：mall-search 关键词 multi_match 查询/ON_SALE 硬过滤/白名单摘要/分页 + mall-gateway /api/mall/search/** 匿名路由 |
+| d7dc2b0 | DU-BE-502 | review major 闭环：ProductSearchItem.productId 加 @StringId（业务 ID 字符串化），ProductSearchApiTest/IndexSyncIntegrationTest 断言同步 |
 
 ## Deviations
 
@@ -75,6 +76,12 @@
 - 实际实现: `ProductSearchService.search` 首行含 `featureGate.ensureEnabled("search.enabled")`（mall-common-config FeatureGate，代码注释标 CHG-0022）；同合并提交带入 SearchFeatureGateTest（search.enabled 显式 false → 403 B0606）。
 - 原因: M5 三 Change（CHG-0020/21/22）合并于同一提交 82ccf6e，开关切点落在本 DU 的服务方法上。
 - 影响评估: FeatureGate 语义为 fail-open（缺键/读取失败默认放行，仅显式 false 拒绝），不改变 CHG-0020 无开关时的行为；本 DU 的 AC 与测试不依赖开关状态。
+
+### DEV-5（sdd-review 闭环，提交 d7dc2b0）
+- 原 DU 建议: 摘要 DTO productId 以 Long JSON number 直出（初版按「白名单 7 字段」实现，未考虑 ID 序列化形态）。
+- 实际实现: ProductSearchItem.productId 标注 `@StringId`（com.ai.mall.common.web.annotation），出参序列化为 JSON 字符串；ProductSearchApiTest 9 例断言（含 JsonPath 过滤表达式）与 IndexSyncIntegrationTest 1 处断言同步改字符串；前端 repo-2 5ab0979 联动改 string。
+- 原因: review 四查对照 api-design-standard §5.3（CHG-0015 业务 ID 字符串化强制规则）：雪花 ID 19 位超出 JS Number.MAX_SAFE_INTEGER，number 直出会导致 mall-web 详情跳转精度丢失；mall-product 全部对外 DTO 已遵循同一规则。
+- 影响评估: 仅出参序列化形态变化，入参绑定（Long 同时接受 "123"/123）与 ES 读写不受影响；mall-search 定向回归 26 例全绿。
 
 ## 自检
 
