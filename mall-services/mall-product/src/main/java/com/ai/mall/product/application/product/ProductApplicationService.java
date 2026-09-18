@@ -24,11 +24,13 @@ import com.ai.mall.product.domain.product.ProductStatus;
 import com.ai.mall.product.domain.product.Sku;
 import com.ai.mall.product.domain.product.SkuStatus;
 import com.ai.mall.product.domain.product.Specification;
+import com.ai.mall.product.application.search.ProductSearchChangedEvent;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,13 +51,17 @@ public class ProductApplicationService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final BrandRepository brandRepository;
+    // CHG-0021：写操作事务提交后触发搜索同步（监听器 AFTER_COMMIT 全兜底）
+    private final ApplicationEventPublisher eventPublisher;
 
     public ProductApplicationService(ProductRepository productRepository,
                                      CategoryRepository categoryRepository,
-                                     BrandRepository brandRepository) {
+                                     BrandRepository brandRepository,
+                                     ApplicationEventPublisher eventPublisher) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
         this.brandRepository = brandRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional(readOnly = true)
@@ -181,6 +187,8 @@ public class ProductApplicationService {
         } catch (DuplicateKeyException ex) {
             throw ProductException.codeDuplicated(product.getCode());
         }
+        // CHG-0021：创建后同步搜索（新建为草稿时 search 侧投影查无即删除，幂等）
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(product.getId(), "CREATE"));
         return product.getId();
     }
 
@@ -194,6 +202,7 @@ public class ProductApplicationService {
         product.replaceImages(toImages(command.images()));
         product.replaceAttributes(toAttributes(command.attributes()));
         productRepository.update(product);
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(id, "UPDATE"));
     }
 
     @Transactional
@@ -205,6 +214,8 @@ public class ProductApplicationService {
             product.enable();
         }
         productRepository.update(product);
+        // CHG-0021：停用/下架口径走 DELETE，恢复启用后若在架则重新 upsert（监听器重查当前投影）
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(id, "CHANGE_STATUS"));
     }
 
     @Transactional
@@ -221,6 +232,7 @@ public class ProductApplicationService {
         } catch (DuplicateKeyException ex) {
             throw ProductException.skuCodeDuplicated(command.skuCode());
         }
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(productId, "ADD_SKU"));
         return sku.getId();
     }
 
@@ -229,6 +241,7 @@ public class ProductApplicationService {
         Product product = productRepository.findById(productId).orElseThrow(() -> ProductException.notFound(productId));
         product.updateSku(skuId, command.salePriceInCents(), command.mainImageUrl());
         productRepository.update(product);
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(productId, "UPDATE_SKU"));
     }
 
     @Transactional
@@ -240,6 +253,8 @@ public class ProductApplicationService {
             product.disableSku(skuId);
         }
         productRepository.update(product);
+        // CHG-0021：启用 SKU 可能使商品首次可售（upsert）；禁用最后 SKU 则投影查无（delete），监听器统一判定
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(productId, "CHANGE_SKU_STATUS"));
     }
 
     @Transactional
@@ -249,6 +264,7 @@ public class ProductApplicationService {
         ensureBrandEnabled(product.getBrandId());
         product.publish();
         productRepository.update(product);
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(id, "PUBLISH"));
     }
 
     @Transactional
@@ -256,6 +272,7 @@ public class ProductApplicationService {
         Product product = productRepository.findById(id).orElseThrow(() -> ProductException.notFound(id));
         product.unpublish();
         productRepository.update(product);
+        eventPublisher.publishEvent(ProductSearchChangedEvent.of(id, "UNPUBLISH"));
     }
 
     private void ensureCategoryEnabled(long categoryId) {

@@ -26,6 +26,8 @@
     <springdoc.version>2.8.9</springdoc.version>
     <!-- CHG-0016 STORY-003-01-02-01：头像对象存储（MinIO Java SDK 8.x） -->
     <minio.version>8.5.17</minio.version>
+    <!-- CHG-0020：ES Client JSON-P 映射运行时（jakarta.json-api 2.1.x 由 Boot BOM 管理） -->
+    <parsson.version>1.1.7</parsson.version>
   </properties>
 
   <dependencyManagement>
@@ -86,6 +88,13 @@
         <groupId>io.minio</groupId>
         <artifactId>minio</artifactId>
         <version>${minio.version}</version>
+      </dependency>
+
+      <!-- Eclipse Parsson JSON-P 运行时（CHG-0020 elasticsearch-java 序列化） -->
+      <dependency>
+        <groupId>org.eclipse.parsson</groupId>
+        <artifactId>parsson</artifactId>
+        <version>${parsson.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

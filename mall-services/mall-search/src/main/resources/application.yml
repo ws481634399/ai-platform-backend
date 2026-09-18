@@ -18,9 +18,51 @@ spring:
       discovery:
         enabled: ${NACOS_ENABLED:false}
 
+  # CHG-0021：授权快照只读 Redis（与 mall-product 同范式取 identity 权限码）
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+
+# CHG-0020 DU-BE-501：Elasticsearch 接入（URI/超时均可经环境变量覆盖；Client 懒连接，离线可启动）
+mall:
+  elasticsearch:
+    uris: ${MALL_ES_URIS:http://localhost:9200}
+    connect-timeout: 2s
+    socket-timeout: 5s
+  search:
+    index-alias: mall_products
+    # CHG-0021：启动保障物理索引、失败重试扫描间隔
+    physical-index: mall_products_v1
+    sync-retry-delay-ms: ${MALL_SEARCH_SYNC_RETRY_DELAY_MS:30000}
+  # CHG-0021：全量重建/重试用 product 投影端点（直连 8103 + X-Internal-Token）
+  sync:
+    product-uri: ${MALL_GATEWAY_PRODUCT_URI:http://localhost:8103}
+  security:
+    jwt:
+      issuer: ${JWT_ISSUER:ai-platform}
+      audience: ${JWT_AUDIENCE:mall-admin-api}
+      public-key-location: ${JWT_PUBLIC_KEY_LOCATION}
+    internal:
+      shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    elasticsearch:
+      enabled: false
 
 server:
   port: 8107

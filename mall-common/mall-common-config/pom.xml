@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.ai-mall</groupId>
+    <artifactId>mall-common</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>mall-common-config</artifactId>
+
+  <name>mall-common-config</name>
+  <description>系统配置统一访问边界（CHG-0022）：FeatureGate/SystemParameterProvider 三级读（本地→Redis→HTTP），无业务模型</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- RestClient/ControllerAdvice（spring-web/webmvc 经 common-web 传递） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-web</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-redis</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-test</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

@@ -18,6 +18,7 @@ import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergedSkuView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.MergeTokenResponse;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.TruncatedSkuView;
 import com.ai.mall.cart.interfaces.rest.mall.dto.CartDtos.UpdateQuantityRequest;
+import com.ai.mall.common.config.FeatureGate;
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.core.result.UnifyResult;
 import com.ai.mall.common.security.AuthenticatedSubject;
@@ -53,12 +54,17 @@ public class CartController {
     private final CartApplicationService carts;
     private final CartQueryService cartQuery;
     private final CartMergeService cartMerge;
+    private final FeatureGate featureGate;
+
+    /** CHG-0022：游客购物车开关。游客车在 M4 架构下为前端暂存，服务端唯一游客数据入口是合并链路。 */
+    private static final String GUEST_CART_FEATURE = "mall.guest-cart.enabled";
 
     public CartController(CartApplicationService carts, CartQueryService cartQuery,
-                          CartMergeService cartMerge) {
+                          CartMergeService cartMerge, FeatureGate featureGate) {
         this.carts = carts;
         this.cartQuery = cartQuery;
         this.cartMerge = cartMerge;
+        this.featureGate = featureGate;
     }
 
     /** DU-BE-802：读模型实时聚合（商品双状态/最新价/库存三态/降级/选中合计），只读不改 Redis。 */
@@ -115,16 +121,18 @@ public class CartController {
         return UnifyResult.ok(toView(carts.selectAll(currentMemberId(), false)));
     }
 
-    /** DU-BE-803：签发一次性合并 token（300s），登录后前端调用。 */
+    /** DU-BE-803：签发一次性合并 token（300s），登录后前端调用。CHG-0022：游客车关闭时拒绝。 */
     @PostMapping("/merge-token")
     public UnifyResult<MergeTokenResponse> mergeToken() {
+        featureGate.ensureEnabled(GUEST_CART_FEATURE, true);
         var view = cartMerge.issueToken(currentMemberId());
         return UnifyResult.ok(new MergeTokenResponse(view.mergeToken(), view.expiresIn()));
     }
 
-    /** DU-BE-803：游客车合并到会员车（单 Lua 原子，幂等）。 */
+    /** DU-BE-803：游客车合并到会员车（单 Lua 原子，幂等）。CHG-0022：游客车关闭时拒绝（缺键/故障默认放行）。 */
     @PostMapping("/merge")
     public UnifyResult<MergeCartResponse> merge(@Valid @RequestBody MergeCartRequest request) {
+        featureGate.ensureEnabled(GUEST_CART_FEATURE, true);
         var items = request.items().stream()
                 .map(dto -> new CartMergeService.GuestCartItem(parseSkuId(dto.skuId()),
                         dto.quantity(), dto.selectedOrDefault()))

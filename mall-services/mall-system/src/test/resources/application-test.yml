@@ -1,4 +1,4 @@
-# test profile：H2 内存库（MySQL 兼容模式）承载冒烟测试，验证数据源/Flyway 配置工程正确性
+# test profile：H2 内存库（MySQL 兼容模式）承载集成测试
 spring:
   datasource:
     url: jdbc:h2:mem:mall_system_test;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1

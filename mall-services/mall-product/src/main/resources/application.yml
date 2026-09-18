@@ -36,6 +36,8 @@ mall:
   # CHG-0017 DU-BE-705：product 调用 inventory 内部 availability 接口
   product:
     inventory-service-uri: ${MALL_PRODUCT_INVENTORY_URI:http://localhost:8106}
+    # CHG-0021：AFTER_COMMIT 同步 mall-search（connect 1s/read 3s 快速失败，监听器全兜底）
+    search-service-uri: ${MALL_PRODUCT_SEARCH_URI:http://localhost:8107}
   security:
     jwt:
       issuer: ${JWT_ISSUER:ai-platform}

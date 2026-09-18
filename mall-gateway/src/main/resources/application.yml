@@ -68,6 +68,26 @@ spring:
           uri: ${MALL_GATEWAY_ORDER_URI:http://localhost:8105}
           predicates:
             - Path=/api/admin/orders/**,/api/admin/compensations/**
+        # CHG-0020：商城商品搜索路由（mall-search:8107，匿名可访问；/api/internal/** 不经网关）
+        - id: mall-search-mall
+          uri: ${MALL_GATEWAY_SEARCH_URI:http://localhost:8107}
+          predicates:
+            - Path=/api/mall/search/**
+        # CHG-0021：搜索索引管理端路由（重建/一致性/失败重试，search:index:* 方法层收口）
+        - id: mall-search-admin
+          uri: ${MALL_GATEWAY_SEARCH_URI:http://localhost:8107}
+          predicates:
+            - Path=/api/admin/search/**
+        # CHG-0022：系统配置管理端路由（功能开关/系统参数/变更历史，system:* 方法层收口）
+        - id: mall-system-admin
+          uri: ${MALL_GATEWAY_SYSTEM_URI:http://localhost:8108}
+          predicates:
+            - Path=/api/admin/feature-configs/**,/api/admin/system-parameters/**,/api/admin/config-history/**
+        # CHG-0022：公开功能开关（匿名白名单，mall-system:8108；/api/internal/** 不经网关）
+        - id: mall-system-mall
+          uri: ${MALL_GATEWAY_SYSTEM_URI:http://localhost:8108}
+          predicates:
+            - Path=/api/mall/public-features/**
   security:
     oauth2:
       resourceserver:

@@ -22,6 +22,9 @@ public interface InventoryRepository {
 
     List<InventoryLog> findLogs(InventoryLogQuery query);
 
+    /** 流水分页总数（与 findLogs 同条件），供管理端分页展示真实 total。 */
+    long countLogs(InventoryLogQuery query);
+
     Optional<InventoryReservation> findReservationByReservationId(String reservationId);
 
     void saveReservation(InventoryReservation reservation);

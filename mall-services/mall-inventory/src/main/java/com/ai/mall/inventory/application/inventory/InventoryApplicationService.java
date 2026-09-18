@@ -219,6 +219,23 @@ public class InventoryApplicationService {
         return inventoryRepository.findLogs(new InventoryLogQuery(query.page(), query.size(), query.skuId()));
     }
 
+    /** 流水分页（含真实总数；此前 total 取当前页行数导致分页组件失真）。 */
+    @Transactional(readOnly = true)
+    public LogsPageResult logsPage(PageQuery query) {
+        InventoryLogQuery logQuery = new InventoryLogQuery(query.page(), query.size(), query.skuId());
+        List<InventoryLog> records = inventoryRepository.findLogs(logQuery);
+        long total = inventoryRepository.countLogs(logQuery);
+        return new LogsPageResult(records, total);
+    }
+
+    /** 批量拉取 SKU 展示信息（商品名/编码/规格/主图），供管理端列表富化；失败降级为空映射。 */
+    @Transactional(readOnly = true)
+    public java.util.Map<Long, SkuClient.SkuInfo> skuInfoMap(java.util.List<Long> skuIds) {
+        return skuClient.batchInfo(skuIds);
+    }
+
+    public record LogsPageResult(List<InventoryLog> records, long total) {}
+
     private Long currentOperator() {
         return null;
     }

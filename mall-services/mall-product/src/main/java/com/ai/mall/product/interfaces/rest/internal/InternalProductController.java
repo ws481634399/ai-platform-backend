@@ -2,6 +2,9 @@ package com.ai.mall.product.interfaces.rest.internal;
 
 import com.ai.mall.common.core.result.UnifyResult;
 import com.ai.mall.product.application.product.ProductApplicationService;
+import com.ai.mall.product.application.search.ProductSearchProjectionService;
+import com.ai.mall.product.application.search.SearchProjectionPage;
+import com.ai.mall.product.application.search.SearchProjectionView;
 import com.ai.mall.product.application.sku.SkuBatchApplicationService;
 import com.ai.mall.product.application.sku.SkuBatchApplicationService.SkuBatchItem;
 import com.ai.mall.product.domain.product.Product;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,10 +36,14 @@ public class InternalProductController {
 
     private final ProductApplicationService service;
     private final SkuBatchApplicationService skuBatchService;
+    private final ProductSearchProjectionService searchProjectionService;
 
-    public InternalProductController(ProductApplicationService service, SkuBatchApplicationService skuBatchService) {
+    public InternalProductController(ProductApplicationService service,
+                                     SkuBatchApplicationService skuBatchService,
+                                     ProductSearchProjectionService searchProjectionService) {
         this.service = service;
         this.skuBatchService = skuBatchService;
+        this.searchProjectionService = searchProjectionService;
     }
 
     @GetMapping("/{productId}/skus/{skuId}")
@@ -78,5 +86,29 @@ public class InternalProductController {
                         item.mainImageUrl(), item.specifications(), item.salable()))
                 .toList();
         return UnifyResult.ok(views);
+    }
+
+    /**
+     * CHG-0021：搜索全量重建投影分页（仅在架且存在启用 SKU，total 与 items 同口径）。
+     * 供 mall-search 500/批拉取。
+     */
+    @GetMapping("/search-projection")
+    public UnifyResult<SearchProjectionPage> searchProjection(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "500") int size) {
+        return UnifyResult.ok(searchProjectionService.page(page, size));
+    }
+
+    /**
+     * CHG-0021：单商品当前投影；不存在/非在架/无启用 SKU 一律 404
+     * （search 侧据此删除文档，不暴露商品存在性）。
+     */
+    @GetMapping("/{productId}/search-projection")
+    public UnifyResult<SearchProjectionView> searchProjectionOne(@PathVariable("productId") long productId) {
+        SearchProjectionView view = searchProjectionService.findById(productId);
+        if (view == null) {
+            throw com.ai.mall.product.domain.product.ProductException.notFound(productId);
+        }
+        return UnifyResult.ok(view);
     }
 }

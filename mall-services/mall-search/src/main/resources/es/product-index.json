@@ -1,0 +1,23 @@
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "properties": {
+      "productId": { "type": "long" },
+      "productName": { "type": "text", "analyzer": "ik_max_word", "search_analyzer": "ik_smart" },
+      "keywords": { "type": "text", "analyzer": "ik_max_word", "search_analyzer": "ik_smart" },
+      "categoryId": { "type": "long" },
+      "categoryName": { "type": "text", "analyzer": "ik_max_word", "search_analyzer": "ik_smart" },
+      "brandId": { "type": "long" },
+      "brandName": { "type": "text", "analyzer": "ik_max_word", "search_analyzer": "ik_smart" },
+      "mainImage": { "type": "keyword", "index": false },
+      "status": { "type": "keyword" },
+      "minPrice": { "type": "long" },
+      "maxPrice": { "type": "long" },
+      "publishedAt": { "type": "date", "format": "epoch_millis||strict_date_optional_time" },
+      "updatedAt": { "type": "date", "format": "epoch_millis||strict_date_optional_time" }
+    }
+  }
+}

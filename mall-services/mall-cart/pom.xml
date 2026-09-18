@@ -44,6 +44,12 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- CHG-0022：功能开关统一访问（FeatureGate，mall.guest-cart.enabled 切点） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-config</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- Nacos 服务发现预留：默认关闭（NACOS_ENABLED:false），禁启动断言（design.md §2.6） -->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>

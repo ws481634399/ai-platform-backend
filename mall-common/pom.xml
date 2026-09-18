@@ -21,6 +21,8 @@
     <module>mall-common-web</module>
     <module>mall-common-security</module>
     <module>mall-common-redis</module>
+    <!-- CHG-0022：系统配置统一访问客户端（FeatureGate/参数读取，本地+Redis+HTTP 三级） -->
+    <module>mall-common-config</module>
     <module>mall-common-mq</module>
     <module>mall-common-openfeign</module>
     <module>mall-common-log</module>

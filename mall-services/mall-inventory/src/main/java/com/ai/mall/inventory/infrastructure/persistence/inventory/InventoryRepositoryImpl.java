@@ -98,6 +98,13 @@ public class InventoryRepositoryImpl implements InventoryRepository {
     }
 
     @Override
+    public long countLogs(InventoryLogQuery query) {
+        LambdaQueryWrapper<InventoryLogPo> wrapper = new LambdaQueryWrapper<InventoryLogPo>()
+                .eq(query.skuId() != null, InventoryLogPo::getSkuId, query.skuId());
+        return logMapper.selectCount(wrapper);
+    }
+
+    @Override
     public Optional<InventoryReservation> findReservationByReservationId(String reservationId) {
         InventoryReservationPo po = reservationMapper.selectOne(new LambdaQueryWrapper<InventoryReservationPo>()
                 .eq(InventoryReservationPo::getReservationId, reservationId));

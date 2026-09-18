@@ -46,6 +46,10 @@ public class GatewaySecurityConfiguration {
                                 "/api/auth/member/refresh",
                                 "/api/mall/products/**", "/api/mall/categories/**",
                                 "/api/mall/brands/**", "/api/mall/home", "/api/mall/skus/**",
+                                // CHG-0020：商品搜索匿名可访问
+                                "/api/mall/search/**",
+                                // CHG-0022：公开功能开关匿名可访问
+                                "/api/mall/public-features/**",
                                 "/actuator/health").permitAll()
                         // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
                         .pathMatchers("/api/internal/**").denyAll()

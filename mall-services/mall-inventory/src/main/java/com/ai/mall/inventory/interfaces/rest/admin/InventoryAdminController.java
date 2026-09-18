@@ -7,7 +7,9 @@ import com.ai.mall.inventory.application.inventory.InventoryCommands.BatchQuery;
 import com.ai.mall.inventory.application.inventory.InventoryCommands.InitCommand;
 import com.ai.mall.inventory.application.inventory.InventoryCommands.PageQuery;
 import com.ai.mall.inventory.domain.inventory.Inventory;
+import com.ai.mall.inventory.domain.inventory.InventoryLog;
 import com.ai.mall.inventory.domain.inventory.InventoryRepository.InventoryPageResult;
+import com.ai.mall.inventory.infrastructure.client.SkuClient;
 import com.ai.mall.inventory.interfaces.rest.admin.dto.InventoryDtos;
 import com.ai.mall.inventory.interfaces.rest.admin.dto.InventoryDtos.AdjustRequest;
 import com.ai.mall.inventory.interfaces.rest.admin.dto.InventoryDtos.InitRequest;
@@ -44,7 +46,11 @@ public class InventoryAdminController {
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "size", required = false) Integer size) {
         InventoryPageResult result = service.page(new PageQuery(page, size, skuId));
-        List<InventoryView> records = result.records().stream().map(InventoryView::from).toList();
+        java.util.Map<Long, SkuClient.SkuInfo> infoMap = service
+                .skuInfoMap(result.records().stream().map(Inventory::getSkuId).toList());
+        List<InventoryView> records = result.records().stream()
+                .map(item -> InventoryView.from(item, toBrief(infoMap.get(item.getSkuId()))))
+                .toList();
         return UnifyResult.ok(new PageView<>(records, result.total(), result.page(), result.size()));
     }
 
@@ -84,8 +90,21 @@ public class InventoryAdminController {
             @RequestParam(name = "skuId", required = false) Long skuId,
             @RequestParam(name = "page", required = false) Integer page,
             @RequestParam(name = "size", required = false) Integer size) {
-        var logs = service.logs(new PageQuery(page, size, skuId));
-        List<LogView> records = logs.stream().map(LogView::from).toList();
-        return UnifyResult.ok(new PageView<>(records, records.size(), page == null ? 1 : page, size == null ? 20 : size));
+        var result = service.logsPage(new PageQuery(page, size, skuId));
+        java.util.Map<Long, SkuClient.SkuInfo> infoMap = service
+                .skuInfoMap(result.records().stream().map(InventoryLog::getSkuId).distinct().toList());
+        List<LogView> records = result.records().stream()
+                .map(log -> LogView.from(log, toBrief(infoMap.get(log.getSkuId()))))
+                .toList();
+        return UnifyResult.ok(new PageView<>(records, result.total(), page == null ? 1 : page, size == null ? 20 : size));
+    }
+
+    /** 富化信息载体转换：skuId 未命中时返回 null（列表展示为“—”）。 */
+    private static InventoryDtos.SkuBrief toBrief(SkuClient.SkuInfo info) {
+        if (info == null) {
+            return null;
+        }
+        return new InventoryDtos.SkuBrief(info.productName(), info.skuCode(),
+                info.specifications(), info.mainImageUrl());
     }
 }
