@@ -1,0 +1,57 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-703
+repository: "repo-1"
+parent:
+  change: "CHG-0023"
+feature-path:
+  level-1:
+    id: FEAT-007
+    name: 平台验收补强
+  level-2:
+    id: FEAT-007-01
+    name: M5 验收缺口补强
+  level-3:
+    id: FEAT-007-01-01
+    name: 管理台与素材
+  story:
+    id: STORY-007-01-01-02
+    name: 品牌与商品图片文件上传
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0023/requirement.md
+  spec: delivery/changes/CHG-0023/requirement-spec.md
+  design: delivery/changes/CHG-0023/requirement-design.md
+  story-design: delivery/changes/CHG-0023/平台验收补强/M5 验收缺口补强/管理台与素材/品牌与商品图片文件上传/story-design.md
+  test-design: delivery/changes/CHG-0023/平台验收补强/M5 验收缺口补强/管理台与素材/品牌与商品图片文件上传/test-design.md
+scope: []
+acceptance:
+  - AC-006
+  - AC-007
+  - AC-009
+dependencies: []
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: completed # pending / developing / testing / completed
+baseline:
+  commit: 098793b
+result:
+  commit: d6d5126
+  paths:
+    - mall-common/mall-common-core/src/main/java/com/ai/mall/common/core/image/ImageFormat.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/image/ImageScene.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/image/ImageUploadApplicationService.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/port/ProductImageStorage.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/storage/MinioProductImageStorage.java
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/interfaces/rest/admin/ProductImageAdminController.java
+  symbols:
+    - mall-common/mall-common-core/src/main/java/com/ai/mall/common/core/image/ImageFormat.java::detect
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/application/image/ImageUploadApplicationService.java::upload
+    - mall-services/mall-product/src/main/java/com/ai/mall/product/infrastructure/storage/MinioProductImageStorage.java::upload
