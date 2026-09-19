@@ -22,7 +22,7 @@ import com.ai.mall.member.application.member.MemberProfileErrorCode;
 import com.ai.mall.member.application.port.AvatarStorage;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient.ProfileSeed;
-import com.ai.mall.member.domain.model.member.AvatarFormat;
+import com.ai.mall.common.core.image.ImageFormat;
 import com.ai.mall.member.support.ApiTestSecurityConfig;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
@@ -184,7 +184,7 @@ class MemberProfileApiTest {
         provisionProfile();
         byte[] png = new byte[]{(byte) 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 1, 2, 3};
         String expectedUrl = "http://localhost:9000/mall-avatar/member-avatar/72001111/u.png";
-        when(avatarStorage.uploadAvatar(eq(MEMBER_ID), any(), eq(AvatarFormat.PNG))).thenReturn(expectedUrl);
+        when(avatarStorage.uploadAvatar(eq(MEMBER_ID), any(), eq(ImageFormat.PNG))).thenReturn(expectedUrl);
 
         mockMvc.perform(multipart("/api/mall/members/me/avatar")
                         .file(new MockMultipartFile("file", "x.png", "image/png", png))
@@ -195,7 +195,7 @@ class MemberProfileApiTest {
         assertThat(jdbc.queryForObject(
                 "SELECT avatar_url FROM member_profile WHERE member_id = 72001111", String.class))
                 .isEqualTo(expectedUrl);
-        verify(avatarStorage).uploadAvatar(eq(MEMBER_ID), any(), eq(AvatarFormat.PNG));
+        verify(avatarStorage).uploadAvatar(eq(MEMBER_ID), any(), eq(ImageFormat.PNG));
     }
 
     // ---------- TC-005 ----------

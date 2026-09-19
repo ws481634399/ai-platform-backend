@@ -1,9 +1,10 @@
-package com.ai.mall.member.infrastructure.storage;
+package com.ai.mall.product.infrastructure.storage;
 
-import com.ai.mall.common.web.exception.BusinessException;
-import com.ai.mall.member.application.member.MemberProfileErrorCode;
 import com.ai.mall.common.core.image.ImageFormat;
-import com.ai.mall.member.application.port.AvatarStorage;
+import com.ai.mall.common.web.exception.BusinessException;
+import com.ai.mall.product.application.image.ImageScene;
+import com.ai.mall.product.application.port.ProductImageStorage;
+import com.ai.mall.product.domain.shared.ProductErrorCode;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
@@ -16,18 +17,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 /**
- * MinIO 头像存储实现（CHG-0016 STORY-003-01-02-01）。
+ * MinIO 商品图片存储实现（CHG-0023 STORY-007-01-01-02）。
  *
- * <p>对象 key：{@code member-avatar/{memberId}/{uuid}.{ext}}——服务端按魔数判定结果重算扩展名，
+ * <p>对象 key：{@code <brand|product>/{uuid}.{ext}}——服务端按魔数判定结果重算扩展名，
  * 不采信客户端文件名。桶首次使用时懒创建并下发公开读 policy（s3:GetObject）。
- * MinIO 任何故障（含桶就绪失败/上传失败）统一转译 503 STORAGE_UNAVAILABLE，
- * 调用方保证先传对象成功再写库，不产生半成品 URL。
+ * MinIO 任何故障（含桶就绪失败/上传失败）统一转译 503 S2101，
+ * 调用方先传对象成功再写库，不产生半成品 URL。结构与 mall-member MinioAvatarStorage 同构。
  */
-public class MinioAvatarStorage implements AvatarStorage {
+public class MinioProductImageStorage implements ProductImageStorage {
 
-    private static final Logger log = LoggerFactory.getLogger(MinioAvatarStorage.class);
+    private static final Logger log = LoggerFactory.getLogger(MinioProductImageStorage.class);
 
-    private static final String KEY_PREFIX = "member-avatar/";
     private static final String BUCKET_POLICY_TEMPLATE = """
             {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":"*",\
             "Action":["s3:GetObject"],"Resource":["arn:aws:s3:::%s/*"]}]}""";
@@ -38,15 +38,15 @@ public class MinioAvatarStorage implements AvatarStorage {
     /** 桶懒就绪标志：首次上传时 ensure，就绪后短路；失败不置位以便下次请求重试。 */
     private volatile boolean bucketReady;
 
-    public MinioAvatarStorage(MinioClient minioClient, MinioStorageProperties properties) {
+    public MinioProductImageStorage(MinioClient minioClient, MinioStorageProperties properties) {
         this.minioClient = minioClient;
         this.properties = properties;
     }
 
     @Override
-    public String uploadAvatar(long memberId, byte[] content, ImageFormat format) {
+    public String upload(ImageScene scene, byte[] content, ImageFormat format) {
         ensureBucketReady();
-        String objectKey = KEY_PREFIX + memberId + "/" + UUID.randomUUID() + "." + format.extension();
+        String objectKey = scene.keyPrefix() + UUID.randomUUID() + "." + format.extension();
         try {
             minioClient.putObject(PutObjectArgs.builder()
                     .bucket(properties.bucket())
@@ -55,14 +55,14 @@ public class MinioAvatarStorage implements AvatarStorage {
                     .stream(new ByteArrayInputStream(content), content.length, -1)
                     .build());
         } catch (Exception ex) {
-            log.warn("MinIO 头像上传失败 memberId={} objectKey={}", memberId, objectKey, ex);
-            throw new BusinessException(MemberProfileErrorCode.STORAGE_UNAVAILABLE,
+            log.warn("MinIO 商品图片上传失败 scene={} objectKey={}", scene, objectKey, ex);
+            throw new BusinessException(ProductErrorCode.STORAGE_UNAVAILABLE,
                     HttpStatus.SERVICE_UNAVAILABLE);
         }
         return publicUrl(objectKey);
     }
 
-    /** 桶幂等就绪：不存在则创建并授予匿名公开读；任何故障 → 503（不影响注册登录主链）。 */
+    /** 桶幂等就绪：不存在则创建并授予匿名公开读；任何故障 → 503。 */
     private synchronized void ensureBucketReady() {
         if (bucketReady) {
             return;
@@ -88,8 +88,8 @@ public class MinioAvatarStorage implements AvatarStorage {
             }
             bucketReady = true;
         } catch (Exception ex) {
-            log.warn("MinIO 头像桶就绪失败 bucket={}", bucket, ex);
-            throw new BusinessException(MemberProfileErrorCode.STORAGE_UNAVAILABLE,
+            log.warn("MinIO 商品图片桶就绪失败 bucket={}", bucket, ex);
+            throw new BusinessException(ProductErrorCode.STORAGE_UNAVAILABLE,
                     HttpStatus.SERVICE_UNAVAILABLE);
         }
     }

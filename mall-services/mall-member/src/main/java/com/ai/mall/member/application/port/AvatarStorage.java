@@ -1,6 +1,6 @@
 package com.ai.mall.member.application.port;
 
-import com.ai.mall.member.domain.model.member.AvatarFormat;
+import com.ai.mall.common.core.image.ImageFormat;
 
 /**
  * 头像对象存储出站端口（CHG-0016 STORY-003-01-02-01）。
@@ -19,5 +19,5 @@ public interface AvatarStorage {
      * @param format   服务端按魔数判定的格式
      * @return 可直接访问的公开读 URL
      */
-    String uploadAvatar(long memberId, byte[] content, AvatarFormat format);
+    String uploadAvatar(long memberId, byte[] content, ImageFormat format);
 }

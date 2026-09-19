@@ -37,7 +37,20 @@ public enum ProductErrorCode implements ErrorCode {
     SKU_PRICE_INVALID("B2164", "SKU 售价不能为负"),
     SKU_SPEC_EMPTY("B2165", "SKU 规格不能为空"),
 
-    AVAILABILITY_BATCH_INVALID("B2181", "SKU 可售批量查询参数非法");
+    AVAILABILITY_BATCH_INVALID("B2181", "SKU 可售批量查询参数非法"),
+
+    // ── CHG-0023 STORY-007-01-01-02：图片上传（A 段参数类 / S 段系统类）──────────
+    /** 上传文件非白名单图片（魔数判定，含伪装 gif）或空文件：400。 */
+    IMAGE_TYPE_INVALID("A2101", "仅支持 jpeg/png/webp 格式的图片"),
+
+    /** 上传图片超过大小上限（默认 2MB）：400。 */
+    IMAGE_TOO_LARGE("A2102", "图片大小不能超过2MB"),
+
+    /** scene 参数缺失或非法：400。 */
+    IMAGE_SCENE_INVALID("A2103", "图片场景参数非法"),
+
+    /** 对象存储故障：503，不返回任何内部细节。 */
+    STORAGE_UNAVAILABLE("S2101", "图片存储暂不可用，请稍后重试");
 
     private final String code;
     private final String message;

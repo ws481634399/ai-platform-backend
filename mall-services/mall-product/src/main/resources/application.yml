@@ -2,6 +2,12 @@ spring:
   application:
     name: mall-product
 
+  # CHG-0023 STORY-007-01-01-02：图片上传 2MB 上限（应用内对字节再做一次显式校验，MockMvc/绕过容器场景同样生效）
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB_PRODUCT:mall_product}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
     username: ${MYSQL_USER:root}
@@ -38,6 +44,18 @@ mall:
     inventory-service-uri: ${MALL_PRODUCT_INVENTORY_URI:http://localhost:8106}
     # CHG-0021：AFTER_COMMIT 同步 mall-search（connect 1s/read 3s 快速失败，监听器全兜底）
     search-service-uri: ${MALL_PRODUCT_SEARCH_URI:http://localhost:8107}
+  # CHG-0023 STORY-007-01-01-02：商品图片上传大小上限（应用内字节校验默认值）
+  upload:
+    image:
+      max-bytes: ${MALL_UPLOAD_IMAGE_MAX_BYTES:2097152}
+  # CHG-0023 STORY-007-01-01-02：商品图片对象存储（与 mall-member 同前缀；MinIO 离线不阻断商品主链）
+  storage:
+    minio:
+      endpoint: ${MINIO_ENDPOINT:http://localhost:9000}
+      access-key: ${MINIO_ACCESS_KEY:minioadmin}
+      secret-key: ${MINIO_SECRET_KEY:minioadmin}
+      bucket: ${MINIO_PRODUCT_BUCKET:mall-product}
+      public-base-url: ${MALL_MINIO_PUBLIC_BASE_URL:http://localhost:9000}
   security:
     jwt:
       issuer: ${JWT_ISSUER:ai-platform}

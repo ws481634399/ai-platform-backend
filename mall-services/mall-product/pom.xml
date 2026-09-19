@@ -67,6 +67,11 @@
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
     </dependency>
+    <!-- CHG-0023 STORY-007-01-01-02：商品图片对象存储 MinIO SDK（版本由 mall-bom 管理） -->
+    <dependency>
+      <groupId>io.minio</groupId>
+      <artifactId>minio</artifactId>
+    </dependency>
     <!-- 测试依赖聚合器：test scope 引用，传递 JUnit5/AssertJ/Mockito/H2（design.md §2.8） -->
     <dependency>
       <groupId>com.ai-mall</groupId>

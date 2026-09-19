@@ -14,7 +14,7 @@ import com.ai.mall.member.application.member.ProfileProvisionService.ProvisionCo
 import com.ai.mall.member.application.port.AvatarStorage;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient.ProfileSeed;
-import com.ai.mall.member.domain.model.member.AvatarFormat;
+import com.ai.mall.common.core.image.ImageFormat;
 import com.ai.mall.member.domain.model.member.Gender;
 import com.ai.mall.member.domain.model.member.MemberProfile;
 import com.ai.mall.member.domain.repository.MemberProfileRepository;
@@ -199,14 +199,14 @@ class ProfileApplicationServiceTest {
         MemberProfile profile = existingProfile();
         when(profiles.findByMemberId(MEMBER_ID)).thenReturn(Optional.of(profile));
         byte[] jpeg = new byte[]{(byte) 0xFF, (byte) 0xD8, (byte) 0xFF, (byte) 0xE0, 0, 0};
-        when(avatarStorage.uploadAvatar(MEMBER_ID, jpeg, AvatarFormat.JPEG))
+        when(avatarStorage.uploadAvatar(MEMBER_ID, jpeg, ImageFormat.JPEG))
                 .thenReturn("http://localhost:9000/mall-avatar/member-avatar/72000001/x.jpg");
 
         String url = service.updateAvatar(MEMBER_ID, jpeg);
 
         assertThat(url).isEqualTo("http://localhost:9000/mall-avatar/member-avatar/72000001/x.jpg");
         assertThat(profile.avatarUrl()).isEqualTo(url);
-        verify(avatarStorage, times(1)).uploadAvatar(MEMBER_ID, jpeg, AvatarFormat.JPEG);
+        verify(avatarStorage, times(1)).uploadAvatar(MEMBER_ID, jpeg, ImageFormat.JPEG);
         verify(profiles).update(profile);
     }
 

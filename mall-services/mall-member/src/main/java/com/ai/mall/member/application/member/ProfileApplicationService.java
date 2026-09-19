@@ -1,12 +1,12 @@
 package com.ai.mall.member.application.member;
 
+import com.ai.mall.common.core.image.ImageFormat;
 import com.ai.mall.common.core.result.CommonErrorCode;
 import com.ai.mall.common.web.exception.BusinessException;
 import com.ai.mall.member.application.member.ProfileProvisionService.ProvisionCommand;
 import com.ai.mall.member.application.port.AvatarStorage;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient;
 import com.ai.mall.member.application.port.IdentityProfileSeedClient.ProfileSeed;
-import com.ai.mall.member.domain.model.member.AvatarFormat;
 import com.ai.mall.member.domain.model.member.Gender;
 import com.ai.mall.member.domain.model.member.MemberProfile;
 import com.ai.mall.member.domain.repository.MemberProfileRepository;
@@ -88,9 +88,9 @@ public class ProfileApplicationService {
         if (content.length > MAX_AVATAR_BYTES) {
             throw new BusinessException(MemberProfileErrorCode.FILE_TOO_LARGE, HttpStatus.BAD_REQUEST);
         }
-        final AvatarFormat format;
+        final ImageFormat format;
         try {
-            format = AvatarFormat.detect(content);
+            format = ImageFormat.detect(content);
         } catch (IllegalArgumentException ex) {
             // 伪装图片/非白名单格式：拒绝，不接触对象存储
             throw new BusinessException(MemberProfileErrorCode.FILE_TYPE_INVALID, HttpStatus.BAD_REQUEST);
