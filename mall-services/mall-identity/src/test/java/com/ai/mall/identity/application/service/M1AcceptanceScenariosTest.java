@@ -57,7 +57,7 @@ class M1AcceptanceScenariosTest {
         when(admins.add(any())).thenAnswer(invocation -> AdminUser.reconstitute(
                 7, "operations-admin", "bcrypt-hash", "ENABLED", 1, 1, List.of(), NOW, NOW));
         when(query.count()).thenReturn(1L);
-        when(query.page(0, 20)).thenReturn(List.of(new AdminUserQuery.Summary(7, "operations-admin", "ENABLED", 1, 1)));
+        when(query.page(0, 20)).thenReturn(List.of(new AdminUserQuery.Summary(7, "operations-admin", "ENABLED", 1, 1, List.of())));
         var service = new AdminUserApplicationService(admins, query, passwords, audit, CLOCK);
 
         var created = service.create(1, "operations-admin", "StrongPassword1");

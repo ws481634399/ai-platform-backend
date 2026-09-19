@@ -33,7 +33,19 @@ class IdentityRepositoryIntegrationTest {
         var loaded = admins.findById(saved.id()).orElseThrow();
         assertThat(loaded.status()).isEqualTo(AdminUserStatus.DISABLED);
         assertThat(loaded.roleIds()).containsExactly(roleId);
-        assertThat(adminQuery.page(0, 20)).anyMatch(row -> row.id() == saved.id());
+        var page = adminQuery.page(0, 20);
+        assertThat(page).anyMatch(row -> row.id() == saved.id());
+        // CHG-0023 A1：分页视图携带角色 id 供管理台回显
+        var row = page.stream().filter(r -> r.id() == saved.id()).findFirst().orElseThrow();
+        assertThat(row.roleIds()).containsExactly(roleId);
+    }
+
+    @Test
+    @org.junit.jupiter.api.DisplayName("CHG-0023 A1：无角色管理员分页行 roleIds 为空列表而非 null")
+    void adminWithoutRolesHasEmptyRoleIdsInPage() {
+        var saved = admins.add(AdminUser.create("no_role_admin", "bcrypt-hash", Instant.now()));
+        var row = adminQuery.page(0, 50).stream().filter(r -> r.id() == saved.id()).findFirst().orElseThrow();
+        assertThat(row.roleIds()).isNotNull().isEmpty();
     }
 
     @Test void mapsRolePersistenceRowsBackToCompleteAggregate() {

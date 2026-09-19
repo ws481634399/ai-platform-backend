@@ -22,6 +22,10 @@ public interface AdminUserMapper {
     @Select("SELECT COUNT(*) FROM admin_user") long count();
     @Select("SELECT id,username,status,auth_version AS authVersion,permission_version AS permissionVersion FROM admin_user ORDER BY id LIMIT #{size} OFFSET #{offset}")
     List<SummaryPo> page(@Param("offset") long offset, @Param("size") int size);
+    /** CHG-0023：分页列表批量加载管理员-角色关联（页内一次 IN 查询，避免 N+1）。 */
+    @Select("<script>SELECT admin_id AS adminId,role_id AS roleId FROM admin_user_role WHERE admin_id IN <foreach collection='adminIds' item='id' open='(' separator=',' close=')'>#{id}</foreach> ORDER BY role_id</script>")
+    List<AdminRoleRef> findRoleRefs(@Param("adminIds") Collection<Long> adminIds);
+    record AdminRoleRef(long adminId, long roleId) {}
     @Select("SELECT COUNT(*) FROM admin_user_role ur JOIN auth_role r ON r.id=ur.role_id WHERE ur.admin_id=#{id} AND r.code='SUPER_ADMIN' AND r.status='ENABLED'")
     long isSuperAdmin(long id);
     @Select("SELECT COUNT(*) FROM admin_user a JOIN admin_user_role ur ON ur.admin_id=a.id JOIN auth_role r ON r.id=ur.role_id WHERE a.status='ENABLED' AND r.code='SUPER_ADMIN' AND r.status='ENABLED'")
