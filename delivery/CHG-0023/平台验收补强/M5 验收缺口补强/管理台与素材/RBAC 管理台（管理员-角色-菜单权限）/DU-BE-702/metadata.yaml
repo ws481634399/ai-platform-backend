@@ -39,10 +39,17 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: af16e36
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: 8b374f1
+  paths:
+    - mall-services/mall-identity/src/main/resources/db/migration/V11__rbac_admin_menus.sql
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/port/AdminUserQuery.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/application/service/RbacAdministrationApplicationService.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/admin/AdminUserMapper.java
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/admin/MyBatisAdminUserQuery.java
+  symbols:
+    - mall-services/mall-identity/src/main/resources/db/migration/V11__rbac_admin_menus.sql::V11
+    - mall-services/mall-identity/src/main/java/com/ai/mall/identity/infrastructure/persistence/admin/MyBatisAdminUserQuery.java::page

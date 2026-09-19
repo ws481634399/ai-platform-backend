@@ -11,9 +11,9 @@
 
 ## 任务清单
 
-- [ ] 任务 1 — 新增 mall-identity V11__rbac_admin_menus.sql：建"权限管理"目录（/security, DIRECTORY）与三个子菜单（管理员管理 /security/admins→admin:read；角色管理 /security/roles→role:read；菜单权限 /security/menus→menu:read；component_key 与 mall-admin component-registry 注册键严格一致），全部 NOT EXISTS 幂等（verifies: TC-701-11）
-- [ ] 任务 2 — V11 内将四个菜单（目录+三子菜单）以 INSERT IGNORE ... SELECT role code='SUPER_ADMIN' 方式授予超管角色（对齐 V3/V9 既有写法）（verifies: TC-701-11）
-- [ ] 任务 3 — 迁移测试/既有 identity 测试回归：H2 迁移成功、重复执行幂等、bootstrap 超管菜单含四项；不新增权限码（verifies: TC-701-11, TC-701-12）
+- [ ] 任务 1 — 新增 mall-identity V11__rbac_admin_menus.sql：建"权限管理"目录（/security, DIRECTORY）与三个子菜单（管理员管理 /security/admins→admin:read；角色管理 /security/roles→role:read；菜单权限 /security/menus→menu:read；component_key 与 mall-admin component-registry 注册键严格一致），全部 NOT EXISTS 幂等（verifies: TC-011）
+- [ ] 任务 2 — V11 内将四个菜单（目录+三子菜单）以 INSERT IGNORE ... SELECT role code='SUPER_ADMIN' 方式授予超管角色（对齐 V3/V9 既有写法）（verifies: TC-011）
+- [ ] 任务 3 — 迁移测试/既有 identity 测试回归：H2 迁移成功、重复执行幂等、bootstrap 超管菜单含四项；不新增权限码（verifies: TC-011, TC-012）
 
 ## Acceptance Criteria
 
