@@ -41,7 +41,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: ""
 result:
-  commit: "" # 由 commit 后回填（du sync-status 之外的手工回填见 lessons learned）
+  commit: "eab992d" # 本地提交（未推送）
   paths:
     - mall-gateway/src/main/resources/application.yml
     - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java
