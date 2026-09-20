@@ -1,0 +1,15 @@
+# DU Evidence — DU-BE-001
+
+> EV 编号三位递增不复用（本 DU 内）。构建/启动日志入 evidence/logs/（.gitignore 已豁免 delivery/archive 的该目录）。
+
+| EV    | 类型         | 关联验收        | 说明 |
+| ----- | ------------ | --------------- | ---- |
+| EV-001 | 单元/切片测试 | AC-012 | `mvn -pl mall-gateway test`：34 tests, 0 failures, 0 errors（含 CHG0024GatewayAiSecurityChainTest 6 用例 + CHG0024GatewayAiRouteContractTest 1 用例） |
+
+## EV-001 输出摘要
+
+- 命令：`mvn -B -pl mall-gateway test`（工作目录：implementation/ai-platform-backend）
+- 结果：mall-gateway surefire 汇总 `Tests run: 34, Failures: 0, Errors: 0, Skipped: 0`
+- 新增测试：
+  - `com.ai.mall.gateway.security.CHG0024GatewayAiSecurityChainTest`（6/6 通过）——AI 开放端点匿名放行、AI 会员端点 401/MEMBER 200/ADMIN 403、AI 管理端点 MEMBER 403/ADMIN 200、既有矩阵回归
+  - `com.ai.mall.gateway.CHG0024GatewayAiRouteContractTest`（1/1 通过）——`/api/ai/**` 路由与默认直连 URI 契约

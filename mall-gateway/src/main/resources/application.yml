@@ -88,6 +88,12 @@ spring:
           uri: ${MALL_GATEWAY_SYSTEM_URI:http://localhost:8108}
           predicates:
             - Path=/api/mall/public-features/**
+        # CHG-0024：AI 智能应用路由（ai-service:8120，直连模式随既有路由；stripPrefix=false，
+        # ai-service 按完整路径 /api/ai/** 收口；角色矩阵见 GatewaySecurityConfiguration）
+        - id: ai-service
+          uri: ${MALL_GATEWAY_AI_URI:http://localhost:8120}
+          predicates:
+            - Path=/api/ai/**
   security:
     oauth2:
       resourceserver:

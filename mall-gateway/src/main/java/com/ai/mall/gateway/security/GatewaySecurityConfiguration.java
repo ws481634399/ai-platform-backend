@@ -50,6 +50,8 @@ public class GatewaySecurityConfiguration {
                                 "/api/mall/search/**",
                                 // CHG-0022：公开功能开关匿名可访问
                                 "/api/mall/public-features/**",
+                                // CHG-0024：AI 开放端点匿名放行（GUEST 可用，功能开关在 ai-service 内 fail-closed）
+                                "/api/ai/shopping/**", "/api/ai/compare/**", "/api/ai/support/**",
                                 "/actuator/health").permitAll()
                         // CHG-0015：内部端点经网关全部拒绝（匿名 → 404、持任意身份 → 404，见异常处理）
                         .pathMatchers("/api/internal/**").denyAll()
@@ -57,6 +59,9 @@ public class GatewaySecurityConfiguration {
                         // CHG-0018 DU-BE-801：会员购物车同属 MEMBER（游客车与合并在 Story3 另议）
                         .pathMatchers("/api/mall/members/**", "/api/mall/shipping-addresses/**",
                                 "/api/mall/cart/**", "/api/mall/orders/**").hasRole("MEMBER")
+                        // CHG-0024：AI 会员端点仅 MEMBER（订单助手等），管理端点仅 ADMIN（知识库管理）
+                        .pathMatchers("/api/ai/members/**").hasRole("MEMBER")
+                        .pathMatchers("/api/ai/admin/**").hasRole("ADMIN")
                         .pathMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyExchange().authenticated())
                 .exceptionHandling(errors -> errors
