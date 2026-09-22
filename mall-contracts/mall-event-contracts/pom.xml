@@ -13,5 +13,25 @@
   <artifactId>mall-event-contracts</artifactId>
 
   <name>mall-event-contracts</name>
-  <description>集成事件契约：跨服务领域事件定义（零第三方依赖，纯数据定义）</description>
+  <description>集成事件契约：Envelope/Topic/Tag/消费者组/版本矩阵与 Payload DTO（纯数据定义，仅依赖 Jackson）</description>
+
+  <dependencies>
+    <!-- Envelope.payload 使用 JsonNode 保持 schema 自由（版本由 Boot BOM 管理） -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <!-- 契约快照测试（CHG-0025 TC-002/TC-003） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 </project>
