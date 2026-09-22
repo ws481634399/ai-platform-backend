@@ -13,12 +13,60 @@
   <artifactId>mall-common-mq</artifactId>
 
   <name>mall-common-mq</name>
-  <description>消息队列通用能力：RocketMQ 生产消费基础组件（坐标选型见 design §2.4，版本由 SCA BOM 统一管理）</description>
+  <description>消息队列通用能力：RocketMQ 集成事件生产/消费基础组件（CHG-0025，版本由 mall-bom 统一管理）</description>
 
   <dependencies>
+    <!-- 事件契约：Envelope/Topic/Tag/消费者组常量（纯 POJO） -->
     <dependency>
-      <groupId>com.alibaba.cloud</groupId>
-      <artifactId>spring-cloud-starter-stream-rocketmq</artifactId>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-event-contracts</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- RocketMQ 客户端（版本权威在 mall-bom） -->
+    <dependency>
+      <groupId>org.apache.rocketmq</groupId>
+      <artifactId>rocketmq-spring-boot-starter</artifactId>
+    </dependency>
+
+    <!-- 开关装配与配置属性绑定 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+    </dependency>
+
+    <!-- 幂等占位 ConsumedEventRepository 的 JDBC 实现 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+    </dependency>
+
+    <!-- 上下文切片测试（TC-007 开关装配语义） -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Instant 序列化测试（Envelope occurredAt 字段，主代码用宿主服务 Boot 自动装配的 mapper） -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- 幂等 SQL 集成测试（MySQL 兼容模式验证 INSERT IGNORE 占位语义） -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- 真实收发集成测试（TC-003~TC-006，apache/rocketmq 容器；版本由 Boot BOM 管理） -->
+    <dependency>
+      <groupId>org.testcontainers</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>
