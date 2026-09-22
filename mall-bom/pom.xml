@@ -28,6 +28,8 @@
     <minio.version>8.5.17</minio.version>
     <!-- CHG-0020：ES Client JSON-P 映射运行时（jakarta.json-api 2.1.x 由 Boot BOM 管理） -->
     <parsson.version>1.1.7</parsson.version>
+    <!-- CHG-0025 STORY-009-01-01：RocketMQ 客户端（与 apache/rocketmq:5.3.4 服务端兼容矩阵冒烟） -->
+    <rocketmq-spring-boot-starter.version>2.3.6</rocketmq-spring-boot-starter.version>
   </properties>
 
   <dependencyManagement>
@@ -95,6 +97,13 @@
         <groupId>org.eclipse.parsson</groupId>
         <artifactId>parsson</artifactId>
         <version>${parsson.version}</version>
+      </dependency>
+
+      <!-- RocketMQ 客户端（CHG-0025 M7 事件基础设施；业务服务 pom 仅声明坐标不带版本） -->
+      <dependency>
+        <groupId>org.apache.rocketmq</groupId>
+        <artifactId>rocketmq-spring-boot-starter</artifactId>
+        <version>${rocketmq-spring-boot-starter.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
