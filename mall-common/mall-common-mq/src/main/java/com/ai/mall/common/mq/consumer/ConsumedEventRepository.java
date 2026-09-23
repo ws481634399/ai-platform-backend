@@ -1,5 +1,6 @@
 package com.ai.mall.common.mq.consumer;
 
+import java.util.regex.Pattern;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -9,10 +10,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class ConsumedEventRepository implements IdempotentConsumer {
 
+    /**
+     * 合法 SQL 标识符白名单：表名只能来自配置（JDBC 表名无法参数化），
+     * 构造时即拒绝非标识符字符，防止表名拼接引入注入。
+     */
+    private static final Pattern IDENTIFIER = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]{0,63}$");
+
     private final JdbcTemplate jdbcTemplate;
     private final String tableName;
 
     public ConsumedEventRepository(JdbcTemplate jdbcTemplate, String tableName) {
+        if (tableName == null || !IDENTIFIER.matcher(tableName).matches()) {
+            throw new IllegalArgumentException(
+                    "非法幂等表名（仅允许字母/下划线开头的 1~64 位标识符）: " + tableName);
+        }
         this.jdbcTemplate = jdbcTemplate;
         this.tableName = tableName;
     }

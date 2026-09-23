@@ -48,7 +48,7 @@ public abstract class AbstractIntegrationHandler<P> implements InternalHandlerAd
         idempotentConsumer.markResult(eventId, consumerGroup, IdempotentConsumer.Result.SKIPPED);
     }
 
-    /** 反序列化负载失败等不可恢复错误：不删占位？不——统一走异常路径删占位重试 */
+    /** 单条消息处理入口：解析失败时尚未建立幂等占位，直接返回重试；其余路径在 finally 统一收尾 */
     final ConsumeConcurrentlyStatus processMessage(MessageExt messageExt) {
         long start = System.currentTimeMillis();
         Envelope envelope;

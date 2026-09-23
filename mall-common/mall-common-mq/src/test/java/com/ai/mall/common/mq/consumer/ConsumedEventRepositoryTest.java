@@ -1,6 +1,7 @@
 package com.ai.mall.common.mq.consumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,5 +71,16 @@ class ConsumedEventRepositoryTest {
 
         assertThat(repository.tryConsume("evt-3", "group-a", "PAYMENT_SUCCEEDED", "50003", "t3"))
                 .isEqualTo(IdempotentConsumer.TryResult.FIRST_PROCESSED);
+    }
+
+    @Test
+    @DisplayName("构造器：非法表名（含分号/空格/数字开头）拒绝装配，防止表名拼接注入")
+    void invalidTableName_rejected() {
+        assertThatThrownBy(() ->
+                new ConsumedEventRepository(jdbcTemplate, "consumed_event; DROP TABLE users"))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("非法幂等表名");
+        assertThatThrownBy(() -> new ConsumedEventRepository(jdbcTemplate, "1bad"))
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }

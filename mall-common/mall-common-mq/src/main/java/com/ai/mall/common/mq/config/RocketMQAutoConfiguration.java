@@ -19,14 +19,13 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.SmartLifecycle;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -66,62 +65,87 @@ public class RocketMQAutoConfiguration {
     }
 
     /**
-     * 消费者容器注册器：扫描 @IntegrationEventListener handler Bean，
-     * 每个声明创建一个 DefaultMQPushConsumer（生命周期随容器 start/stop）。
+     * 消费者容器注册器：以 Spring 管理的 {@link SmartLifecycle} Bean 承载——
+     * start 阶段扫描 @IntegrationEventListener handler Bean 并为每个声明创建/启动一个 DefaultMQPushConsumer；
+     * stop 阶段（容器关闭，含上下文重建/测试）统一 shutdown。禁止用 JVM shutdown hook 绕过框架生命周期。
      */
     @Bean
-    public SmartInitializingSingleton integrationListenerRegistrar(ApplicationContext applicationContext,
-                                                                   RocketMQProperties properties) {
-        return () -> {
-            Map<String, Object> handlers = applicationContext.getBeansWithAnnotation(IntegrationEventListener.class);
-            List<DefaultMQPushConsumer> consumers = new ArrayList<>();
-            handlers.values().stream()
-                    .filter(Objects::nonNull)
-                    .forEach(handlerBean -> {
-                        Class<?> handlerClass = handlerBean.getClass();
-                        IntegrationEventListener listener = handlerClass.getAnnotation(IntegrationEventListener.class);
-                        if (listener == null) {
-                            // CGLIB 代理场景下注解在超类
-                            listener = handlerClass.getSuperclass() != null
-                                    ? handlerClass.getSuperclass().getAnnotation(IntegrationEventListener.class)
-                                    : null;
-                        }
-                        if (listener == null) {
-                            throw new IllegalStateException(
-                                    "Bean 缺少 @IntegrationEventListener 注解: " + handlerClass);
-                        }
-                        if (!(handlerBean instanceof com.ai.mall.common.mq.consumer.InternalHandlerAdapter adapter)) {
-                            throw new IllegalStateException(
-                                    "消费者 Bean 必须继承 AbstractIntegrationHandler: " + handlerClass);
-                        }
-                        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(listener.consumerGroup());
-                        consumer.setNamesrvAddr(properties.getNameServer());
-                        consumer.setInstanceName(listener.consumerGroup() + "-"
-                                + listener.topic() + "-" + handlerClass.getSimpleName());
-                        consumer.setConsumeThreadMin(properties.getConsumeThreadMin());
-                        consumer.setConsumeThreadMax(properties.getConsumeThreadMax());
-                        consumer.setMaxReconsumeTimes(properties.getMaxReconsumeTimes());
-                        try {
-                            consumer.subscribe(listener.topic(), listener.eventType());
-                        } catch (Exception e) {
-                            throw new IllegalStateException("订阅失败 topic=" + listener.topic(), e);
-                        }
-                        consumer.registerMessageListener(new ConsumeConcurrentlyContextAdapter(adapter));
-                        consumers.add(consumer);
-                        log.info("装配集成事件消费者 topic={} tag={} group={} handler={}",
-                                listener.topic(), listener.eventType(), listener.consumerGroup(),
-                                handlerClass.getSimpleName());
-                    });
+    public SmartLifecycle integrationListenerRegistrar(ApplicationContext applicationContext,
+                                                       RocketMQProperties properties) {
+        return new SmartLifecycle() {
 
-            // 容器关闭时停消费者；启动由 SmartLifecycle 语义延迟到单例就绪后
-            Runtime.getRuntime().addShutdownHook(new Thread(() ->
-                    consumers.forEach(DefaultMQPushConsumer::shutdown), "integration-consumer-shutdown"));
-            for (DefaultMQPushConsumer consumer : consumers) {
-                try {
-                    consumer.start();
-                } catch (Exception e) {
-                    throw new IllegalStateException("消费者启动失败 group=" + consumer.getConsumerGroup(), e);
+            private final List<DefaultMQPushConsumer> consumers = new ArrayList<>();
+            private volatile boolean running;
+
+            @Override
+            public void start() {
+                Map<String, Object> handlers =
+                        applicationContext.getBeansWithAnnotation(IntegrationEventListener.class);
+                handlers.values().stream()
+                        .filter(Objects::nonNull)
+                        .forEach(handlerBean -> {
+                            Class<?> handlerClass = handlerBean.getClass();
+                            IntegrationEventListener listener = handlerClass.getAnnotation(IntegrationEventListener.class);
+                            if (listener == null) {
+                                // CGLIB 代理场景下注解在超类
+                                listener = handlerClass.getSuperclass() != null
+                                        ? handlerClass.getSuperclass().getAnnotation(IntegrationEventListener.class)
+                                        : null;
+                            }
+                            if (listener == null) {
+                                throw new IllegalStateException(
+                                        "Bean 缺少 @IntegrationEventListener 注解: " + handlerClass);
+                            }
+                            if (!(handlerBean instanceof com.ai.mall.common.mq.consumer.InternalHandlerAdapter adapter)) {
+                                throw new IllegalStateException(
+                                        "消费者 Bean 必须继承 AbstractIntegrationHandler: " + handlerClass);
+                            }
+                            DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(listener.consumerGroup());
+                            consumer.setNamesrvAddr(properties.getNameServer());
+                            consumer.setInstanceName(listener.consumerGroup() + "-"
+                                    + listener.topic() + "-" + handlerClass.getSimpleName());
+                            consumer.setConsumeThreadMin(properties.getConsumeThreadMin());
+                            consumer.setConsumeThreadMax(properties.getConsumeThreadMax());
+                            consumer.setMaxReconsumeTimes(properties.getMaxReconsumeTimes());
+                            try {
+                                consumer.subscribe(listener.topic(), listener.eventType());
+                            } catch (Exception e) {
+                                throw new IllegalStateException("订阅失败 topic=" + listener.topic(), e);
+                            }
+                            consumer.registerMessageListener(new ConsumeConcurrentlyContextAdapter(adapter));
+                            consumers.add(consumer);
+                            log.info("装配集成事件消费者 topic={} tag={} group={} handler={}",
+                                    listener.topic(), listener.eventType(), listener.consumerGroup(),
+                                    handlerClass.getSimpleName());
+                        });
+
+                for (DefaultMQPushConsumer consumer : consumers) {
+                    try {
+                        consumer.start();
+                    } catch (Exception e) {
+                        throw new IllegalStateException("消费者启动失败 group=" + consumer.getConsumerGroup(), e);
+                    }
                 }
+                running = true;
+            }
+
+            @Override
+            public void stop() {
+                // 随 Spring 容器关闭释放消费线程与网络连接（每个上下文独立清理，不留 hook 泄漏）
+                consumers.forEach(DefaultMQPushConsumer::shutdown);
+                consumers.clear();
+                running = false;
+            }
+
+            @Override
+            public boolean isRunning() {
+                return running;
+            }
+
+            @Override
+            public int getPhase() {
+                // 晚于默认生命周期组件启动，确保 handler/Producer Bean 均已就绪
+                return Integer.MAX_VALUE;
             }
         };
     }
