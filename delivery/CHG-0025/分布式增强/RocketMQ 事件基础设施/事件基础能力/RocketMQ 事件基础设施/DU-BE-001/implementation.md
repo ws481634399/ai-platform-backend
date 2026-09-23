@@ -64,6 +64,12 @@
 - 原因: broker 向 namesrv 广播 brokerIP1:listenPort，宿主机 client 直连该地址；避开 repo-4 dev compose 栈占用的 10909~10912。
 - 影响评估: IT 与本地 compose 栈可并行运行；无生产影响。
 
+### DEV-6
+- 原 DU 建议: requirement-design §2.1 模块树写 `mall-common/mall-mq/`。
+- 实际实现: 模块落位 `mall-common/mall-common-mq/`（artifactId=mall-common-mq）。
+- 原因: 对齐 mall-common 聚合层既有兄弟模块命名（mall-common-core/web/config/redis/security/openfeign/log/test），保持同一命名口径。
+- 影响评估: 仅模块坐标差异，包名 com.ai.mall.common.mq 不变，无功能影响；sdd-review 阶段补记。
+
 ## 自检
 
 - [x] task-spec.md 任务 1~7 全部完成，范围未超出权威表 DU-BE-001 scope
