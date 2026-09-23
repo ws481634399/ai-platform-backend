@@ -41,11 +41,12 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: testing # pending / developing / testing / completed
+status: completed # pending / developing / testing / completed
 baseline:
   commit: "9efde17291b8d9db7cdc40635612b1b58b349d21"
 result:
-  commit: "ebdbbd95691cfbc6c01d15bb1e83965ad11ff105" # 本地提交（未推送）
+  # 最后实质交付提交（含 review 闭环 DEV-6）；DU 完成态提交本身为元数据提交
+  commit: "9c695bb8b67a448ba8f84ced870526adde989bad" # 本地提交（未推送）
   paths:
     - mall-bom/pom.xml
     - mall-contracts/mall-event-contracts/
