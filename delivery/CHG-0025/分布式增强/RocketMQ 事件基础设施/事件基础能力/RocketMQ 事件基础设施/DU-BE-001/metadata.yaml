@@ -1,0 +1,62 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-001
+repository: "repo-1"
+parent:
+  change: "CHG-0025"
+feature-path:
+  level-1:
+    id: FEAT-009
+    name: 分布式增强
+  level-2:
+    id: FEAT-009-01
+    name: RocketMQ 事件基础设施
+  level-3:
+    id: FEAT-009-01-01
+    name: 事件基础能力
+  story:
+    id: STORY-009-01-01
+    name: RocketMQ 事件基础设施
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0025/requirement.md
+  spec: delivery/changes/CHG-0025/requirement-spec.md
+  design: delivery/changes/CHG-0025/requirement-design.md
+  story-design: delivery/changes/CHG-0025/分布式增强/RocketMQ 事件基础设施/事件基础能力/RocketMQ
+    事件基础设施/story-design.md
+  test-design: delivery/changes/CHG-0025/分布式增强/RocketMQ 事件基础设施/事件基础能力/RocketMQ
+    事件基础设施/test-design.md
+scope: []
+acceptance:
+  - AC-001
+  - AC-041
+dependencies:
+  - DU-INFRA-001
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: testing # pending / developing / testing / completed
+baseline:
+  commit: "9efde17291b8d9db7cdc40635612b1b58b349d21"
+result:
+  commit: "ebdbbd95691cfbc6c01d15bb1e83965ad11ff105" # 本地提交（未推送）
+  paths:
+    - mall-bom/pom.xml
+    - mall-contracts/mall-event-contracts/
+    - mall-common/mall-common-mq/
+  symbols:
+    # 事件信封契约（SSOT 包装结构）
+    - mall-contracts/mall-event-contracts/src/main/java/com/ai/mall/event/Envelope.java::Envelope
+    # 生产端三路发送（同步/异步/延迟级别）
+    - mall-common/mall-common-mq/src/main/java/com/ai/mall/common/mq/producer/RocketMQEnvelopeProducer.java::sendSync
+    - mall-common/mall-common-mq/src/main/java/com/ai/mall/common/mq/producer/RocketMQEnvelopeProducer.java::sendDelay
+    # 消费端：幂等占位 → 版本裁决 → 处理链
+    - mall-common/mall-common-mq/src/main/java/com/ai/mall/common/mq/consumer/ConsumedEventRepository.java::tryConsume
+    - mall-common/mall-common-mq/src/main/java/com/ai/mall/common/mq/consumer/AbstractIntegrationHandler.java::processBatch
+    - mall-common/mall-common-mq/src/main/java/com/ai/mall/common/mq/config/RocketMQAutoConfiguration.java::integrationEventProducer

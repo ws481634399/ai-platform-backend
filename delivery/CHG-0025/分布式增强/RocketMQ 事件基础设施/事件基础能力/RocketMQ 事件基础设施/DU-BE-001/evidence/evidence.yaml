@@ -1,0 +1,46 @@
+# DU Evidence — DU-BE-001
+
+> EV 编号三位递增不复用（本 DU 内）。构建/启动日志入 evidence/logs/（.gitignore 已豁免该目录模式）。
+
+| EV    | 类型         | 关联验收 | 说明 |
+| ----- | ------------ | -------- | ---- |
+| EV-001 | 单测+切片测试 | AC-002, AC-003, AC-005, AC-006, AC-008, AC-009 | `mvn -pl mall-common/mall-common-mq -am test`：26 tests, 0 failures, 0 errors（含快照 5/单测 12/切片 3；真实 broker IT 另见 EV-003） |
+| EV-002 | 幂等 SQL 集成测试 | AC-007 前置 | `ConsumedEventRepositoryTest` 4/4——H2 MySQL 模式验证 INSERT IGNORE 占位/重复/跨组隔离/删占位重占 |
+| EV-003 | Testcontainers 集成测试 | AC-002, AC-004, AC-005, AC-006, AC-007 | `RocketMQBrokerIntegrationTest` 7/7——真实 apache/rocketmq:5.3.4 容器收发链路（详见下） |
+| EV-004 | 依赖树断言 | AC-041, TC-008 | `mvn -pl mall-common/mall-common-mq -am dependency:tree`：0 个 "omitted for conflict"；全仓 pom 扫描 rocketmq 版本仅 mall-bom 声明 |
+| EV-005 | 契约快照测试 | AC-002, AC-003 | `EventContractsSnapshotTest` 5/5——Envelope 七字段非空/traceId 缺失自动生成/常量集中声明 |
+
+## EV-001 输出摘要
+
+- 命令：`mvn -B -pl mall-common/mall-common-mq -am test`（工作目录：implementation/ai-platform-backend）
+- 结果：surefire 汇总 `Tests run: 26, Failures: 0, Errors: 0, Skipped: 0`，BUILD SUCCESS
+  - EventContractsSnapshotTest 5/5
+  - RocketMQAutoConfigurationTest 3/3（缺省不装配 / enabled=true 装配齐全 / 无 JdbcTemplate 幂等 fail-closed）
+  - AbstractIntegrationHandlerTest 7/7（版本拒绝 WARN+ACK、重复跳过、成功回写 SUCCESS、异常删占位 RECONSUME_LATER、幂等表 DB 异常 fail-closed、解析失败保守重试、MDC 清理）
+  - ConsumedEventRepositoryTest 4/4（EV-002）
+  - RocketMQEnvelopeProducerTest 5/5（Tag=eventType/keys=eventId/七字段 JSON 往返、traceId 显式>MDC>自动生成、delayLevel 0/19 拒绝 1/18 打到 delayTimeLevel 属性、发送失败上抛 IllegalStateException）
+
+## EV-003 输出摘要（Testcontainers）
+
+- 容器：`apache/rocketmq:5.3.4`（同 repo-4 compose 定稿版本）NameServer + Broker（brokerIP1=127.0.0.1、listenPort=20911 固定映射，避开 dev compose 栈 10909~10912）；幂等表 H2 MySQL 模式
+- 7/7 通过：
+  1. sendSync 送达：Tag=IT_EVENT、keys=eventId、Envelope 七字段往返一致、消费端 MDC.traceId == Envelope.traceId
+  2. sendAsync 回调成功且消息送达
+  3. sendDelay delayLevel=1（1s）延迟消息送达
+  4. Envelope.traceId 缺失 → 生产者自动生成（32 位 hex）、消费端 MDC 可见且不阻断
+  5. eventVersion=2 → maxSupportedVersion=1 消费组 WARN+ACK 拒绝（handler 未执行、投递恰好 1 次不重试），maxSupportedVersion=2 对照组正常收到
+  6. 持续失败（maxReconsumeTimes=2）：删占位重试 3 次（初始+2）→ 超限进 `%DLQ%it-failing-group`，DLQ 消息体保留 Envelope 原文可查询、不静默
+  7. 同 eventId 重复投递 → 真实 SQL 幂等占位生效，handler 只执行 1 次
+
+## EV-004 输出摘要
+
+- 命令：`mvn -B -pl mall-common/mall-common-mq -am dependency:tree`
+- `omitted for conflict` 计数：0
+- 关键解析：rocketmq-spring-boot-starter:2.3.6 → rocketmq-client:5.3.1 / rocketmq-remoting:5.3.1 / netty-all:4.1.135.Final / fastjson2:2.0.58，与 Spring Boot 3.5.15（jackson 2.21.4/slf4j 2.0.18）、Spring Cloud Alibaba 2025.0.0.0 无版本冲突
+- pom 扫描：`Get-ChildItem -Recurse -Filter pom.xml | Select-String rocketmq` 仅命中 mall-bom（版本权威）与 mall-common-mq（无版本坐标声明），业务服务无散落版本号
+
+## 红绿灯记录（TDD）
+
+- TC-002/003（contracts）：红=编译失败找不到 OrderCreatedEventPayload 等（符号缺失）；绿=快照 5/5
+- TC-003 sendDelay：红=NPE 暴露 `send(msg, delayLevel)` 被宽化为 `send(msg, timeout)` 的真实缺陷；绿=改 `setDelayTimeLevel` 后 5/5（见 implementation.md DEV-2）
+- TC-006 DLQ：红=首次 IT `List.of()` 不可变列表炸消费链（60s 超时）；绿=修复后 7/7
