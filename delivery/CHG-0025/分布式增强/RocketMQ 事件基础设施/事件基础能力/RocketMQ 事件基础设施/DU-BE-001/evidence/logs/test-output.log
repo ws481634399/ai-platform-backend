@@ -1,0 +1,485 @@
+﻿[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] backend                                                            [pom]
+[INFO] mall-common                                                        [pom]
+[INFO] mall-contracts                                                     [pom]
+[INFO] mall-event-contracts                                               [jar]
+[INFO] mall-common-mq                                                     [jar]
+[INFO] 
+[INFO] ------------------------< com.ai-mall:backend >-------------------------
+[INFO] Building backend 1.0.0-SNAPSHOT                                    [1/5]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ backend ---
+[INFO] Rule 0: org.apache.maven.enforcer.rules.version.RequireMavenVersion passed
+[INFO] Rule 1: org.apache.maven.enforcer.rules.version.RequireJavaVersion passed
+[INFO] 
+[INFO] ----------------------< com.ai-mall:mall-common >-----------------------
+[INFO] Building mall-common 1.0.0-SNAPSHOT                                [2/5]
+[INFO]   from mall-common\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common ---
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-contracts >---------------------
+[INFO] Building mall-contracts 1.0.0-SNAPSHOT                             [3/5]
+[INFO]   from mall-contracts\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-contracts ---
+[INFO] 
+[INFO] ------------------< com.ai-mall:mall-event-contracts >------------------
+[INFO] Building mall-event-contracts 1.0.0-SNAPSHOT                       [4/5]
+[INFO]   from mall-contracts\mall-event-contracts\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-event-contracts ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-event-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-event-contracts\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-event-contracts ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-event-contracts ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-contracts\mall-event-contracts\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-event-contracts ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-event-contracts ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.event.EventContractsSnapshotTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.393 s -- in com.ai.mall.event.EventContractsSnapshotTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ---------------------< com.ai-mall:mall-common-mq >---------------------
+[INFO] Building mall-common-mq 1.0.0-SNAPSHOT                             [5/5]
+[INFO]   from mall-common\mall-common-mq\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 1 problem was encountered while building the effective model for org.javassist:javassist:jar:3.21.0-GA during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- enforcer:3.5.0:enforce (enforce-environment) @ mall-common-mq ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ mall-common-mq ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.0:compile (default-compile) @ mall-common-mq ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ mall-common-mq ---
+[INFO] skip non existing resourceDirectory D:\Desktop\ai-platform\implementation\ai-platform-backend\mall-common\mall-common-mq\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.0:testCompile (default-testCompile) @ mall-common-mq ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ mall-common-mq ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.ai.mall.common.mq.config.RocketMQAutoConfigurationTest
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.742 s -- in com.ai.mall.common.mq.config.RocketMQAutoConfigurationTest
+[INFO] Running com.ai.mall.common.mq.consumer.AbstractIntegrationHandlerTest
+22:49:34.695 [main] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� eventId=evt-dbdown traceId=trace-1 consumerGroup=test-consumer-group retryTimes=0
+java.lang.IllegalStateException: ģ���ݵȱ� DB �쳣
+	at com.ai.mall.common.mq.consumer.TestFixtures$InMemoryIdempotent.tryConsume(TestFixtures.java:35)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processMessage(AbstractIntegrationHandler.java:84)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandlerTest.idempotentDbFailure_failClosed(AbstractIntegrationHandlerTest.java:120)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+22:49:34.706 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dbdown eventType=TEST_EVENT result=FIRST_PROCESSED costMs=51
+22:49:34.721 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-ok eventType=TEST_EVENT result=FIRST_PROCESSED costMs=2
+22:49:34.730 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-notrace eventType=TEST_EVENT result=FIRST_PROCESSED costMs=2
+22:49:34.734 [main] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� brokerMsgId=garbage-msg-id retryTimes=0
+com.fasterxml.jackson.core.JsonParseException: Unrecognized token 'not': was expecting (JSON String, Number, Array, Object or token 'null', 'true' or 'false')
+ at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1]
+	at com.fasterxml.jackson.core.JsonParser._constructReadException(JsonParser.java:2675)
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:3025)
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._reportInvalidToken(ReaderBasedJsonParser.java:2995)
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchToken(ReaderBasedJsonParser.java:2760)
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser._matchNull(ReaderBasedJsonParser.java:2746)
+	at com.fasterxml.jackson.core.json.ReaderBasedJsonParser.nextToken(ReaderBasedJsonParser.java:750)
+	at com.fasterxml.jackson.databind.ObjectMapper._initForReading(ObjectMapper.java:5139)
+	at com.fasterxml.jackson.databind.ObjectMapper._readMapAndClose(ObjectMapper.java:5042)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3954)
+	at com.fasterxml.jackson.databind.ObjectMapper.readValue(ObjectMapper.java:3922)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processMessage(AbstractIntegrationHandler.java:56)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandlerTest.parseFailure_requeueWithoutIdempotentTouch(AbstractIntegrationHandlerTest.java:131)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+22:49:34.748 [main] WARN com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼��汾�ܾ� ACK eventId=evt-v2 eventVersion=2 maxSupportedVersion=1
+22:49:34.759 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup eventType=TEST_EVENT result=FIRST_PROCESSED costMs=3
+22:49:34.761 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �ظ���Ϣ���� eventId=evt-dup consumerGroup=test-consumer-group
+22:49:34.761 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup eventType=TEST_EVENT result=DUPLICATE costMs=0
+22:49:34.766 [main] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� eventId=evt-fail traceId=trace-1 consumerGroup=test-consumer-group retryTimes=0
+java.lang.IllegalStateException: ҵ����ʧ��
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandlerTest.handleFailure_deletesPlaceholderAndRequeues(AbstractIntegrationHandlerTest.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:775)
+	at org.junit.platform.commons.support.ReflectionSupport.invokeMethod(ReflectionSupport.java:479)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:161)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:152)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:91)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:112)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:94)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:87)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:216)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:212)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:137)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+22:49:34.768 [main] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-fail eventType=TEST_EVENT result=FIRST_PROCESSED costMs=4
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.202 s -- in com.ai.mall.common.mq.consumer.AbstractIntegrationHandlerTest
+[INFO] Running com.ai.mall.common.mq.consumer.ConsumedEventRepositoryTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.346 s -- in com.ai.mall.common.mq.consumer.ConsumedEventRepositoryTest
+[INFO] Running com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest
+22:49:35.174 [main] INFO org.testcontainers.images.PullPolicy -- Image pull policy will be performed by: DefaultPullPolicy()
+22:49:35.175 [main] INFO org.testcontainers.utility.ImageNameSubstitutor -- Image name substitution will be performed by: DefaultImageNameSubstitutor (composite of 'ConfigurationFileImageNameSubstitutor' and 'PrefixingImageNameSubstitutor')
+22:49:35.185 [main] INFO org.testcontainers.DockerClientFactory -- Testcontainers version: 1.21.4
+22:49:35.392 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Loaded org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy from ~/.testcontainers.properties, will try it first
+22:49:35.861 [main] INFO org.testcontainers.dockerclient.DockerClientProviderStrategy -- Found Docker environment with local Npipe socket (npipe:////./pipe/docker_engine)
+22:49:35.862 [main] INFO org.testcontainers.DockerClientFactory -- Docker host IP address is localhost
+22:49:35.885 [main] INFO org.testcontainers.DockerClientFactory -- Connected to docker: 
+  Server Version: 29.4.0
+  API Version: 1.54
+  Operating System: Docker Desktop
+  Total Memory: 15885 MB
+  Labels: 
+    com.docker.desktop.address=npipe://\\.\pipe\docker_cli
+22:49:36.015 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Creating container for image: testcontainers/ryuk:0.12.0
+22:49:36.144 [main] INFO org.testcontainers.utility.RegistryAuthLocator -- Credential helper/store (docker-credential-desktop) does not have credentials for https://index.docker.io/v1/
+22:49:36.344 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Container testcontainers/ryuk:0.12.0 is starting: 4962047bd91ca519492091395cb6b4f11963aafe2ac4bf707d41716e79fcc9f0
+22:49:36.745 [main] INFO tc.testcontainers/ryuk:0.12.0 -- Container testcontainers/ryuk:0.12.0 started in PT0.7300648S
+22:49:36.752 [main] INFO org.testcontainers.utility.RyukResourceReaper -- Ryuk started - will monitor and terminate Testcontainers containers on JVM exit
+22:49:36.752 [main] INFO org.testcontainers.DockerClientFactory -- Checking the system...
+22:49:36.753 [main] INFO org.testcontainers.DockerClientFactory -- ?? Docker server version should be at least 1.6.0
+22:49:36.753 [main] INFO tc.apache/rocketmq:5.3.4 -- Creating container for image: apache/rocketmq:5.3.4
+22:49:36.912 [main] INFO tc.apache/rocketmq:5.3.4 -- Container apache/rocketmq:5.3.4 is starting: d243adfece63e5babcf831fa24d3bf7d58c44c586694861278ea018cf44d8978
+22:49:38.121 [main] INFO tc.apache/rocketmq:5.3.4 -- Container apache/rocketmq:5.3.4 started in PT1.3681977S
+22:49:38.123 [main] INFO tc.apache/rocketmq:5.3.4 -- Creating container for image: apache/rocketmq:5.3.4
+22:49:38.260 [main] INFO tc.apache/rocketmq:5.3.4 -- Container apache/rocketmq:5.3.4 is starting: b84cb8d90fe20823b8666fc0cdc4e0263e80b116b18c946709c0c22cbb7a4a88
+22:49:40.052 [main] INFO tc.apache/rocketmq:5.3.4 -- Container apache/rocketmq:5.3.4 started in PT1.9284829S
+22:49:54.149 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-topic eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C054763216BB0000 status=SEND_OK
+22:49:54.155 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-topic eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C054763216E60001 status=SEND_OK
+22:50:15.111 [ConsumeMessageThread_it-happy-group_2] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �ظ���Ϣ���� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 consumerGroup=it-happy-group
+22:50:15.112 [ConsumeMessageThread_it-happy-group_2] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 eventType=IT_EVENT result=DUPLICATE costMs=4
+22:50:15.113 [ConsumeMessageThread_it-happy-group_1] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 eventType=IT_EVENT result=FIRST_PROCESSED costMs=5
+22:50:15.197 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼��ӳٷ������ topic=aimall-it-topic eventId=evt-delay-ae851f72-2493-40c3-98c3-d2954d1aa9da delayLevel=1 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C054763269180002 status=SEND_OK
+22:50:15.554 [ConsumeMessageThread_it-v2-group_2] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �ظ���Ϣ���� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 consumerGroup=it-v2-group
+22:50:15.554 [ConsumeMessageThread_it-v2-group_1] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:15.554 [ConsumeMessageThread_it-v2-group_2] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-dup-63066360-49d2-43bd-bc6d-d63ec6b87db3 eventType=IT_EVENT result=DUPLICATE costMs=2
+22:50:16.282 [ConsumeMessageThread_it-happy-group_3] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-delay-ae851f72-2493-40c3-98c3-d2954d1aa9da eventType=IT_EVENT result=FIRST_PROCESSED costMs=0
+22:50:16.284 [ConsumeMessageThread_it-v2-group_3] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-delay-ae851f72-2493-40c3-98c3-d2954d1aa9da eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:16.469 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-topic eventId=evt-notrace-1e05d232-8142-4988-8bd0-b4a3f9eee812 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C05476326E100003 status=SEND_OK
+22:50:16.472 [ConsumeMessageThread_it-v2-group_4] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-notrace-1e05d232-8142-4988-8bd0-b4a3f9eee812 eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:16.478 [ConsumeMessageThread_it-happy-group_4] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-notrace-1e05d232-8142-4988-8bd0-b4a3f9eee812 eventType=IT_EVENT result=FIRST_PROCESSED costMs=8
+22:50:16.706 [NettyClientPublicExecutor_9] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼��첽������� topic=aimall-it-topic eventId=evt-async-4bc448e8-5138-4546-9be4-3fd2e3899a05 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C05476326EFE0004 status=SEND_OK
+22:50:16.710 [ConsumeMessageThread_it-v2-group_5] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-async-4bc448e8-5138-4546-9be4-3fd2e3899a05 eventType=IT_EVENT result=FIRST_PROCESSED costMs=3
+22:50:16.712 [ConsumeMessageThread_it-happy-group_5] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-async-4bc448e8-5138-4546-9be4-3fd2e3899a05 eventType=IT_EVENT result=FIRST_PROCESSED costMs=3
+22:50:16.936 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-topic eventId=evt-sync-244b3e48-0fb4-43b9-8ad0-b86adade4674 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C05476326FD30005 status=SEND_OK
+22:50:16.938 [ConsumeMessageThread_it-happy-group_6] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-sync-244b3e48-0fb4-43b9-8ad0-b86adade4674 eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:16.938 [ConsumeMessageThread_it-v2-group_6] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-sync-244b3e48-0fb4-43b9-8ad0-b86adade4674 eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:17.152 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-topic eventId=evt-v2-4e2b8a23-6c0d-42b1-bd21-b63ac5d86008 msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C054763270BE0006 status=SEND_OK
+22:50:17.154 [ConsumeMessageThread_it-happy-group_7] WARN com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼��汾�ܾ� ACK eventId=evt-v2-4e2b8a23-6c0d-42b1-bd21-b63ac5d86008 eventVersion=2 maxSupportedVersion=1
+22:50:17.156 [ConsumeMessageThread_it-v2-group_7] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-v2-4e2b8a23-6c0d-42b1-bd21-b63ac5d86008 eventType=IT_EVENT result=FIRST_PROCESSED costMs=2
+22:50:17.391 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼�ͬ��������� topic=aimall-it-fail-topic eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be msgId=24098A2000DE4C808C291923A8D7F015C2A86BC7C0547632719F0007 status=SEND_OK
+22:50:25.541 [ConsumeMessageThread_it-failing-group_1] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be traceId=trace-it-fail consumerGroup=it-failing-group retryTimes=0
+java.lang.IllegalStateException: ����ʧ�ܣ���֤������ DLQ
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:168)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:155)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processMessage(AbstractIntegrationHandler.java:92)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processBatch(AbstractIntegrationHandler.java:142)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest.lambda$startConsumer$2(RocketMQBrokerIntegrationTest.java:237)
+	at org.apache.rocketmq.client.impl.consumer.ConsumeMessageConcurrentlyService$ConsumeRequest.run(ConsumeMessageConcurrentlyService.java:411)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+22:50:25.542 [ConsumeMessageThread_it-failing-group_1] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be eventType=FAIL_EVENT result=FIRST_PROCESSED costMs=6
+22:50:45.538 [ConsumeMessageThread_it-failing-group_2] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be traceId=trace-it-fail consumerGroup=it-failing-group retryTimes=1
+java.lang.IllegalStateException: ����ʧ�ܣ���֤������ DLQ
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:168)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:155)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processMessage(AbstractIntegrationHandler.java:92)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processBatch(AbstractIntegrationHandler.java:142)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest.lambda$startConsumer$2(RocketMQBrokerIntegrationTest.java:237)
+	at org.apache.rocketmq.client.impl.consumer.ConsumeMessageConcurrentlyService$ConsumeRequest.run(ConsumeMessageConcurrentlyService.java:411)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+22:50:45.538 [ConsumeMessageThread_it-failing-group_2] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be eventType=FAIL_EVENT result=FIRST_PROCESSED costMs=2
+22:50:46.630 [ConsumeMessageThread_it-failing-group_3] ERROR com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼�����ʧ�� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be traceId=trace-it-fail consumerGroup=it-failing-group retryTimes=2
+java.lang.IllegalStateException: ����ʧ�ܣ���֤������ DLQ
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:168)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest$FailingHandler.handle(RocketMQBrokerIntegrationTest.java:155)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processMessage(AbstractIntegrationHandler.java:92)
+	at com.ai.mall.common.mq.consumer.AbstractIntegrationHandler.processBatch(AbstractIntegrationHandler.java:142)
+	at com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest.lambda$startConsumer$2(RocketMQBrokerIntegrationTest.java:237)
+	at org.apache.rocketmq.client.impl.consumer.ConsumeMessageConcurrentlyService$ConsumeRequest.run(ConsumeMessageConcurrentlyService.java:411)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+22:50:46.631 [ConsumeMessageThread_it-failing-group_3] INFO com.ai.mall.common.mq.consumer.AbstractIntegrationHandler -- �����¼����ѽ��� eventId=evt-fail-96326b2f-1fb0-4c11-8723-bbb02709c7be eventType=FAIL_EVENT result=FIRST_PROCESSED costMs=3
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 72.63 s -- in com.ai.mall.common.mq.consumer.RocketMQBrokerIntegrationTest
+[INFO] Running com.ai.mall.common.mq.producer.RocketMQEnvelopeProducerTest
+mvn : Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases 
+of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/do
+c/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+At line:15 char:2479
++ ... pgrep\bin'; mvn -B -pl mall-common/mall-common-mq -am test 2>&1 | Tee ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Mockito is curr...ockito.html#0.3:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpat
+h has been appended
+WARNING: A Java agent has been loaded dynamically (D:\maven-repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy
+-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+22:50:49.085 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼��ӳٷ������ topic=aimall-order-delay eventId=evt-402aab3c-40e5-4f39-b0ac-4d2dc213169c delayLevel=1 msgId=null status=null
+22:50:49.087 [main] INFO com.ai.mall.common.mq.producer.RocketMQEnvelopeProducer -- �����¼��ӳٷ������ topic=aimall-order-delay eventId=evt-bee6a6a1-19ff-4c92-8e30-c2a6d04cd197 delayLevel=18 msgId=null status=null
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.405 s -- in com.ai.mall.common.mq.producer.RocketMQEnvelopeProducerTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 26, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for backend 1.0.0-SNAPSHOT:
+[INFO] 
+[INFO] backend ............................................ SUCCESS [  1.129 s]
+[INFO] mall-common ........................................ SUCCESS [  0.011 s]
+[INFO] mall-contracts ..................................... SUCCESS [  0.006 s]
+[INFO] mall-event-contracts ............................... SUCCESS [  7.044 s]
+[INFO] mall-common-mq ..................................... SUCCESS [01:32 min]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:42 min
+[INFO] Finished at: 2026-09-23T22:50:49+08:00
+[INFO] ------------------------------------------------------------------------
