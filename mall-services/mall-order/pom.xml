@@ -50,6 +50,12 @@
       <artifactId>mall-common-mq</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- CHG-0025 STORY-009-04-01：order.payment.timeout-minutes 动态参数读取 -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-config</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>
