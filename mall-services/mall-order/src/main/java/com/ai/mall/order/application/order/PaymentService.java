@@ -1,6 +1,7 @@
 package com.ai.mall.order.application.order;
 
 import com.ai.mall.common.web.exception.BusinessException;
+import com.ai.mall.order.application.order.event.IntegrationMode;
 import com.ai.mall.order.application.order.port.InventoryPort;
 import com.ai.mall.order.application.order.port.OrderCompensationPort;
 import com.ai.mall.order.domain.order.Order;
@@ -33,12 +34,14 @@ public class PaymentService {
     private final OrderRepository orderRepository;
     private final InventoryPort inventoryPort;
     private final OrderCompensationPort compensationPort;
+    private final IntegrationMode integrationMode;
 
     public PaymentService(OrderRepository orderRepository, InventoryPort inventoryPort,
-                          OrderCompensationPort compensationPort) {
+                          OrderCompensationPort compensationPort, IntegrationMode integrationMode) {
         this.orderRepository = orderRepository;
         this.inventoryPort = inventoryPort;
         this.compensationPort = compensationPort;
+        this.integrationMode = integrationMode;
     }
 
     public Order pay(long memberId, String orderNo) {
@@ -67,7 +70,12 @@ public class PaymentService {
             throw new BusinessException(OrderErrorCode.STATUS_CONFLICT, HttpStatus.CONFLICT, "订单状态已变化，请刷新后重试");
         }
 
-        // 事务提交后确认扣减库存（幂等）；失败登记补偿，支付仍算成功
+        if (integrationMode.async()) {
+            // 异步事件驱动：PAYMENT_SUCCEEDED 已随事务入 Outbox，库存确认扣减由 mall-inventory 消费者完成
+            return order;
+        }
+        // MQ 关闭降级：同步确认扣减库存（幂等）；失败登记补偿，支付仍算成功
+        log.warn("rocketmq.enabled=false，支付后库存确认扣减走同步降级路径 orderNo={}", order.orderNo());
         confirmAfterPaid(order);
         return order;
     }

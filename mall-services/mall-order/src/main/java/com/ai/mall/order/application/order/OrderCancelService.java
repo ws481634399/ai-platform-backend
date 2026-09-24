@@ -1,6 +1,7 @@
 package com.ai.mall.order.application.order;
 
 import com.ai.mall.common.web.exception.BusinessException;
+import com.ai.mall.order.application.order.event.IntegrationMode;
 import com.ai.mall.order.application.order.port.InventoryPort;
 import com.ai.mall.order.application.order.port.OrderCompensationPort;
 import com.ai.mall.order.domain.order.Order;
@@ -33,12 +34,14 @@ public class OrderCancelService {
     private final OrderRepository orderRepository;
     private final InventoryPort inventoryPort;
     private final OrderCompensationPort compensationPort;
+    private final IntegrationMode integrationMode;
 
     public OrderCancelService(OrderRepository orderRepository, InventoryPort inventoryPort,
-                              OrderCompensationPort compensationPort) {
+                              OrderCompensationPort compensationPort, IntegrationMode integrationMode) {
         this.orderRepository = orderRepository;
         this.inventoryPort = inventoryPort;
         this.compensationPort = compensationPort;
+        this.integrationMode = integrationMode;
     }
 
     public Order cancel(long memberId, String orderNo, String reason) {
@@ -68,7 +71,12 @@ public class OrderCancelService {
                     "订单状态已变化，请刷新后重试");
         }
 
-        // 事务提交后释放全部库存预留（幂等）；失败行登记补偿
+        if (integrationMode.async()) {
+            // 异步事件驱动：ORDER_CANCELLED 已随事务入 Outbox，库存释放由 mall-inventory 消费者完成
+            return order;
+        }
+        // MQ 关闭降级：同步释放全部库存预留（幂等）；失败行登记补偿
+        log.warn("rocketmq.enabled=false，取消后库存释放走同步降级路径 orderNo={}", order.orderNo());
         releaseAfterCancel(order);
         return order;
     }
