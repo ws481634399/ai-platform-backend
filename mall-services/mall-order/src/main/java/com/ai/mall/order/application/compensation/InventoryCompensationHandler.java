@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * <p>库存侧 release/confirm 以 reservation 状态 CAS 幂等，重复执行不会产生第二次数量变化。
  */
 @Component
-public class InventoryCompensationHandler {
+public class InventoryCompensationHandler implements CompensationActionHandler {
 
     private final InventoryPort inventoryPort;
     private final ObjectMapper objectMapper;
@@ -21,12 +21,14 @@ public class InventoryCompensationHandler {
         this.objectMapper = objectMapper;
     }
 
+    @Override
     public boolean supports(String operation) {
         return CompensationTask.OP_RELEASE_INVENTORY.equals(operation)
                 || CompensationTask.OP_CONFIRM_INVENTORY.equals(operation);
     }
 
     /** 执行一次补偿；任一行失败抛异常由调度服务记退避。 */
+    @Override
     public void handle(CompensationTask task) {
         InventoryCompensationPayload payload;
         try {
