@@ -1,6 +1,8 @@
 package com.ai.mall.order.domain.order;
 
 import com.ai.mall.common.web.exception.BusinessException;
+import com.ai.mall.order.domain.order.event.OrderIntegrationEvent;
+import com.ai.mall.order.domain.order.event.OrderIntegrationEventType;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class Order {
     private final ReceiverSnapshot receiver;
     private final List<OrderItem> items;
     private final List<OrderStatusHistory> histories;
+    /** 本次业务周期内收集的待发集成事件（仅内存，持久层重建时为空）。 */
+    private final List<OrderIntegrationEvent> integrationEvents;
 
     private String deliveryCompany;
     private String trackingNo;
@@ -43,7 +47,7 @@ public class Order {
                   ReceiverSnapshot receiver, List<OrderItem> items, String deliveryCompany, String trackingNo,
                   String cancelReason, String submitToken, Instant paidAt, Instant cancelledAt, Instant shippedAt,
                   Instant completedAt, long version, Instant createdAt, Instant updatedAt,
-                  List<OrderStatusHistory> histories) {
+                  List<OrderStatusHistory> histories, List<OrderIntegrationEvent> integrationEvents) {
         this.id = id;
         this.orderNo = orderNo;
         this.memberId = memberId;
@@ -64,6 +68,7 @@ public class Order {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.histories = histories;
+        this.integrationEvents = integrationEvents;
     }
 
     /**
@@ -85,10 +90,14 @@ public class Order {
             throw new BusinessException(OrderErrorCode.ORDER_ITEMS_INVALID, HttpStatus.BAD_REQUEST);
         }
         List<OrderItem> lines = new ArrayList<>(items);
+        List<OrderStatusHistory> histories = new ArrayList<>();
+        List<OrderIntegrationEvent> integrationEvents = new ArrayList<>();
         Order order = new Order(null, orderNo, memberId, OrderStatus.PENDING_PAYMENT, source, money, receiver,
-                lines, null, null, null, submitToken, null, null, null, null, 0L, now, now, new ArrayList<>());
+                lines, null, null, null, submitToken, null, null, null, null, 0L, now, now,
+                histories, integrationEvents);
         order.histories.add(new OrderStatusHistory(0L, orderNo, null, OrderStatus.PENDING_PAYMENT,
                 OrderOperation.CREATE, Long.toString(memberId), null, now));
+        order.integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CREATED));
         return order;
     }
 
@@ -103,7 +112,9 @@ public class Order {
                 items == null ? new ArrayList<>() : new ArrayList<>(items),
                 deliveryCompany, trackingNo, cancelReason, submitToken,
                 paidAt, cancelledAt, shippedAt, completedAt, version, createdAt, updatedAt,
-                histories == null ? new ArrayList<>() : new ArrayList<>(histories));
+                histories == null ? new ArrayList<>() : new ArrayList<>(histories),
+                // 持久层重建不携带待发事件，事件只在业务迁移的内存周期内存在
+                new ArrayList<>());
     }
 
     /** 当前状态对某操作的迁移判定（首次/幂等重复/非法）。 */
@@ -117,6 +128,7 @@ public class Order {
         this.status = OrderStatus.PAID;
         this.paidAt = now;
         this.updatedAt = now;
+        integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.PAYMENT_SUCCEEDED));
         return appendHistory(OrderOperation.PAY, OrderStatus.PENDING_PAYMENT, OrderStatus.PAID, operator, null, now);
     }
 
@@ -127,6 +139,7 @@ public class Order {
         this.cancelReason = reason;
         this.cancelledAt = now;
         this.updatedAt = now;
+        integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CANCELLED));
         return appendHistory(OrderOperation.CANCEL, OrderStatus.PENDING_PAYMENT, OrderStatus.CANCELLED,
                 operator, reason, now);
     }
@@ -151,6 +164,7 @@ public class Order {
         this.status = OrderStatus.COMPLETED;
         this.completedAt = now;
         this.updatedAt = now;
+        integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_COMPLETED));
         return appendHistory(OrderOperation.CONFIRM_RECEIPT, OrderStatus.SHIPPED, OrderStatus.COMPLETED,
                 operator, null, now);
     }
@@ -167,6 +181,16 @@ public class Order {
                 id == null ? 0L : id, orderNo, from, to, operation, operator, reason, now);
         this.histories.add(history);
         return history;
+    }
+
+    /**
+     * 取出并清空待发集成事件（flush 后调用）。
+     * 调用方得到可变列表副本；聚合内列表同步清空，防止重复 flush。
+     */
+    public List<OrderIntegrationEvent> pullIntegrationEvents() {
+        List<OrderIntegrationEvent> pulled = new ArrayList<>(integrationEvents);
+        integrationEvents.clear();
+        return pulled;
     }
 
     /** 仓储落库回填订单雪花主键（CREATE 历史以主表 id 插入，由仓储映射时统一取值）。 */
