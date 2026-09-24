@@ -17,6 +17,8 @@ public class CompensationTask {
     public static final String OP_RELEASE_INVENTORY = "RELEASE_INVENTORY";
     /** 库存确认扣减操作。 */
     public static final String OP_CONFIRM_INVENTORY = "CONFIRM_INVENTORY";
+    /** 订单自动取消操作（CHG-0025 STORY-009-05-01）。 */
+    public static final String OP_AUTO_CANCEL_ORDER = "AUTO_CANCEL_ORDER";
     /** 订单业务类型。 */
     public static final String TYPE_ORDER = "ORDER";
 
@@ -37,12 +39,14 @@ public class CompensationTask {
     private final int maxRetries;
     private String lastError;
     private Instant nextRetryAt;
+    /** CHG-0023：登记时刻请求 traceId（不可变登记事实；历史行/非 HTTP 路径为 null）。 */
+    private final String traceId;
     private final Instant createdAt;
     private Instant updatedAt;
 
     private CompensationTask(Long id, String businessType, String businessId, String operation, String payload,
                              CompensationStatus status, int retryCount, int maxRetries, String lastError,
-                             Instant nextRetryAt, Instant createdAt, Instant updatedAt) {
+                             Instant nextRetryAt, String traceId, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.businessType = businessType;
         this.businessId = businessId;
@@ -53,24 +57,25 @@ public class CompensationTask {
         this.maxRetries = maxRetries;
         this.lastError = lastError;
         this.nextRetryAt = nextRetryAt;
+        this.traceId = traceId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    /** 新登记：PENDING、立即可调度（nextRetryAt=now）。 */
+    /** 新登记：PENDING、立即可调度（nextRetryAt=now）；traceId 为触发登记请求的链路标识（可空）。 */
     public static CompensationTask register(String businessType, String businessId, String operation,
-                                            String payload, Instant now) {
+                                            String payload, String traceId, Instant now) {
         return new CompensationTask(null, businessType, businessId, operation, payload,
-                CompensationStatus.PENDING, 0, MAX_RETRIES, null, now, now, now);
+                CompensationStatus.PENDING, 0, MAX_RETRIES, null, now, traceId, now, now);
     }
 
     /** 持久化重建。 */
     public static CompensationTask reconstitute(Long id, String businessType, String businessId, String operation,
                                                 String payload, CompensationStatus status, int retryCount,
                                                 int maxRetries, String lastError, Instant nextRetryAt,
-                                                Instant createdAt, Instant updatedAt) {
+                                                String traceId, Instant createdAt, Instant updatedAt) {
         return new CompensationTask(id, businessType, businessId, operation, payload, status, retryCount,
-                maxRetries, lastError, nextRetryAt, createdAt, updatedAt);
+                maxRetries, lastError, nextRetryAt, traceId, createdAt, updatedAt);
     }
 
     /** 执行成功：置 SUCCESS 终态，清空调度时间。 */
@@ -108,6 +113,21 @@ public class CompensationTask {
         this.updatedAt = now;
     }
 
+    /**
+     * 管理端手动标记完成（CHG-0025 STORY-009-05-01，AC-038）：人工确认业务已闭环后直接置 SUCCESS；
+     * 不抹除原始 lastError（追加 MANUAL_COMPLETE 标记，与真实成功区分）；SUCCESS 幂等无操作。
+     */
+    public void manualComplete(Instant now) {
+        if (this.status == CompensationStatus.SUCCESS) {
+            return;
+        }
+        String previous = this.lastError == null ? "" : this.lastError.trim();
+        this.lastError = previous.isBlank() ? "MANUAL_COMPLETE" : previous + " | MANUAL_COMPLETE";
+        this.status = CompensationStatus.SUCCESS;
+        this.nextRetryAt = null;
+        this.updatedAt = now;
+    }
+
     public void assignPersistedId(long id) {
         this.id = id;
     }
@@ -122,6 +142,7 @@ public class CompensationTask {
     public int maxRetries() { return maxRetries; }
     public String lastError() { return lastError; }
     public Instant nextRetryAt() { return nextRetryAt; }
+    public String traceId() { return traceId; }
     public Instant createdAt() { return createdAt; }
     public Instant updatedAt() { return updatedAt; }
 }
