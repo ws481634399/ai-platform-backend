@@ -12,6 +12,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -33,13 +35,27 @@ public class CompensationService implements OrderCompensationPort {
     private static final int DUE_LIMIT = 50;
 
     private final CompensationRepository repository;
-    private final List<CompensationActionHandler> handlers;
+    /**
+     * 执行器延迟解析：handler 依赖 OrderCancelService，而其补偿端口由本服务实现，
+     * 直接列表注入会形成构造器循环；ObjectProvider 首次执行时才解析。
+     */
+    private final ObjectProvider<CompensationActionHandler> handlerProvider;
     private final ObjectMapper objectMapper;
 
+    @Autowired
+    public CompensationService(CompensationRepository repository,
+                               ObjectProvider<CompensationActionHandler> handlerProvider,
+                               ObjectMapper objectMapper) {
+        this.repository = repository;
+        this.handlerProvider = handlerProvider;
+        this.objectMapper = objectMapper;
+    }
+
+    /** 单测专用：直接给定执行器列表（不经 Spring）。 */
     public CompensationService(CompensationRepository repository, List<CompensationActionHandler> handlers,
                                ObjectMapper objectMapper) {
         this.repository = repository;
-        this.handlers = handlers;
+        this.handlerProvider = new FixedHandlerProvider(handlers);
         this.objectMapper = objectMapper;
     }
 
@@ -132,7 +148,8 @@ public class CompensationService implements OrderCompensationPort {
             MDC.put(TraceConstants.MDC_KEY, traceId);
         }
         try {
-            CompensationActionHandler handler = handlers.stream()
+            // 延迟解析执行器（打破与 OrderCancelService 的构造器循环）
+            CompensationActionHandler handler = handlerProvider.orderedStream()
                     .filter(candidate -> candidate.supports(task.operation()))
                     .findFirst()
                     .orElseThrow(() -> new IllegalStateException("无匹配补偿执行器: " + task.operation()));
@@ -158,7 +175,15 @@ public class CompensationService implements OrderCompensationPort {
     // ---------- 管理台 ----------
 
     public CompensationRepository.CompensationPage page(String status, int page, int size) {
-        return repository.page(null, null, status, page, size);
+        return page(null, null, status, page, size);
+    }
+
+    /**
+     * 管理台分页（CHG-0025 STORY-009-05-01）：operation 精确、aggregateId 模糊（通配符已由控制器转义）。
+     */
+    public CompensationRepository.CompensationPage page(String operation, String aggregateId, String status,
+                                                        int page, int size) {
+        return repository.page(null, operation, aggregateId, status, page, size);
     }
 
     /** 手动重试：复活 FAILED_DEAD/PENDING 任务并立即执行一次；SUCCESS 直接返回。 */
@@ -198,5 +223,55 @@ public class CompensationService implements OrderCompensationPort {
         }
         String message = cause.getMessage();
         return message == null ? cause.getClass().getSimpleName() : message;
+    }
+
+    /** ObjectProvider 的固定列表实现（单测构造器用）。 */
+    private static final class FixedHandlerProvider implements ObjectProvider<CompensationActionHandler> {
+
+        private final List<CompensationActionHandler> handlers;
+
+        private FixedHandlerProvider(List<CompensationActionHandler> handlers) {
+            this.handlers = List.copyOf(handlers);
+        }
+
+        @Override
+        public CompensationActionHandler getObject() {
+            return handlers.isEmpty() ? null : handlers.get(0);
+        }
+
+        @Override
+        public CompensationActionHandler getObject(Object... args) {
+            return getObject();
+        }
+
+        @Override
+        public CompensationActionHandler getIfAvailable() {
+            return handlers.isEmpty() ? null : handlers.get(0);
+        }
+
+        @Override
+        public CompensationActionHandler getIfUnique() {
+            return handlers.size() == 1 ? handlers.get(0) : null;
+        }
+
+        @Override
+        public java.util.stream.Stream<CompensationActionHandler> orderedStream() {
+            return handlers.stream();
+        }
+
+        @Override
+        public java.util.stream.Stream<CompensationActionHandler> stream() {
+            return handlers.stream();
+        }
+
+        @Override
+        public java.util.Iterator<CompensationActionHandler> iterator() {
+            return handlers.iterator();
+        }
+
+        @Override
+        public void forEach(java.util.function.Consumer<? super CompensationActionHandler> action) {
+            handlers.forEach(action);
+        }
     }
 }

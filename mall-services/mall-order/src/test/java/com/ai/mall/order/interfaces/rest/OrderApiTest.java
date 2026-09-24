@@ -77,6 +77,8 @@ class OrderApiTest extends AbstractRedisIntegrationTest {
     private static final long SKU2 = 6002L;
     private static final long SKU_OFF = 6003L;
     private static final long ADDRESS = 8001L;
+    /** CHG-0023 TC-006：锁成单败场景固定入站 traceId，补偿台分页/retry 均应回传。 */
+    private static final String COMPENSATION_TRACE_ID = "abcdef0123456789abcdef0123456789";
 
     @Autowired private MockMvc mockMvc;
     @Autowired private JwtEncoder jwtEncoder;
@@ -400,6 +402,7 @@ class OrderApiTest extends AbstractRedisIntegrationTest {
                 """
                         [{"skuId":"6001","quantity":1},{"skuId":"6002","quantity":1}]""", MEMBER_A);
         mockMvc.perform(post("/api/mall/orders").header("Authorization", "Bearer " + memberToken(MEMBER_A))
+                        .header("X-Trace-Id", COMPENSATION_TRACE_ID)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(createBody(token, "BUY_NOW",
                                 """
@@ -409,15 +412,16 @@ class OrderApiTest extends AbstractRedisIntegrationTest {
         Integer orderCount = jdbc.queryForObject("SELECT COUNT(*) FROM orders", Integer.class);
         assertEquals(0, orderCount, "锁库存失败不得落单");
 
-        // 补偿台可见 PENDING 任务（需要 order:compensation 权限）
+        // 补偿台可见 PENDING 任务（需要 system:compensation:list 权限，CHG-0025 由旧 order:compensation 切换）
         mockMvc.perform(get("/api/admin/compensations")
                         .header("Authorization", "Bearer " + adminToken(List.of())))
                 .andExpect(status().isForbidden());
         MvcResult pageResult = mockMvc.perform(get("/api/admin/compensations")
-                        .header("Authorization", "Bearer " + adminToken(List.of("order:compensation"))))
+                        .header("Authorization", "Bearer " + adminToken(List.of("system:compensation:list"))))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.records.length()").value(1))
                 .andExpect(jsonPath("$.data.records[0].status").value("PENDING"))
+                .andExpect(jsonPath("$.data.records[0].traceId").value(COMPENSATION_TRACE_ID))
                 .andReturn();
         long compensationId = objectMapper.readTree(pageResult.getResponse().getContentAsString())
                 .path("data").path("records").get(0).get("id").asLong();
@@ -425,9 +429,10 @@ class OrderApiTest extends AbstractRedisIntegrationTest {
         // 库存恢复后人工重试 → SUCCESS，且最终完成释放
         releaseThrowSku.set(null);
         mockMvc.perform(post("/api/admin/compensations/" + compensationId + "/retry")
-                        .header("Authorization", "Bearer " + adminToken(List.of("order:compensation"))))
+                        .header("Authorization", "Bearer " + adminToken(List.of("system:compensation:retry"))))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.status").value("SUCCESS"));
+                .andExpect(jsonPath("$.data.status").value("SUCCESS"))
+                .andExpect(jsonPath("$.data.traceId").value(COMPENSATION_TRACE_ID));
         assertTrue(releasedReservations.stream().anyMatch(r -> r.endsWith(":" + SKU1)),
                 "补偿重试应完成 SKU1 预留释放");
     }
