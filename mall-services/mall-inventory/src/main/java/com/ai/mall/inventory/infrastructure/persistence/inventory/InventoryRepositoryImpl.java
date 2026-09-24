@@ -112,6 +112,11 @@ public class InventoryRepositoryImpl implements InventoryRepository {
     }
 
     @Override
+    public List<String> findReservationIdsByOrderNo(String orderNo) {
+        return reservationMapper.findReservationIdsLike(orderNo + ":%");
+    }
+
+    @Override
     public void saveReservation(InventoryReservation reservation) {
         InventoryReservationPo po = reservationToPo(reservation);
         if (reservation.getId() == 0L) {

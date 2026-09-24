@@ -39,6 +39,18 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
     </dependency>
+    <!-- CHG-0025 M7：集成事件消费者（@ConditionalOnProperty rocketmq.enabled） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-mq</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <!-- 订单事件 Payload 契约（显式声明版本，不进 mall-bom 托管） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-event-contracts</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>

@@ -27,6 +27,11 @@ public interface InventoryRepository {
 
     Optional<InventoryReservation> findReservationByReservationId(String reservationId);
 
+    /**
+     * CHG-0025 M7：按订单号枚举该单全部 per-line reservationId（orderNo:skuId 前缀匹配）。
+     */
+    List<String> findReservationIdsByOrderNo(String orderNo);
+
     void saveReservation(InventoryReservation reservation);
 
     /**
