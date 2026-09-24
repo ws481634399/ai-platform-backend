@@ -23,8 +23,14 @@ public interface CompensationRepository {
 
     Optional<CompensationTask> findById(long id);
 
-    /** 管理台分页（status 可空）。 */
-    CompensationPage page(String status, int page, int size);
+    /**
+     * 管理台分页（CHG-0025 STORY-009-05-01）。
+     *
+     * @param businessType business_type 精确过滤（可空）
+     * @param businessId business_id 模糊过滤（可空，调用方负责通配符转义）
+     * @param status status 精确过滤（可空）
+     */
+    CompensationPage page(String businessType, String businessId, String status, int page, int size);
 
     record CompensationPage(List<CompensationTask> records, long total, int page, int size) {
     }

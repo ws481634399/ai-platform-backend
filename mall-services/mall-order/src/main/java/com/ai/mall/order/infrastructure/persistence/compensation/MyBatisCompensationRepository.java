@@ -59,8 +59,12 @@ public class MyBatisCompensationRepository implements CompensationRepository {
     }
 
     @Override
-    public CompensationPage page(String status, int page, int size) {
+    public CompensationPage page(String businessType, String businessId, String status, int page, int size) {
         var wrapper = lambdaQuery(CompensationTaskPo.class)
+                .eq(businessType != null && !businessType.isBlank(),
+                        CompensationTaskPo::getBusinessType, businessType)
+                .like(businessId != null && !businessId.isBlank(),
+                        CompensationTaskPo::getBusinessId, businessId)
                 .eq(status != null && !status.isBlank(), CompensationTaskPo::getStatus, status)
                 .orderByDesc(CompensationTaskPo::getCreatedAt);
         Page<CompensationTaskPo> poPage = mapper.selectPage(new Page<>(page, size), wrapper);
@@ -80,6 +84,7 @@ public class MyBatisCompensationRepository implements CompensationRepository {
         po.setMaxRetries(domain.maxRetries());
         po.setLastError(domain.lastError());
         po.setNextRetryAt(domain.nextRetryAt());
+        po.setTraceId(domain.traceId());
         po.setCreatedAt(domain.createdAt());
         po.setUpdatedAt(domain.updatedAt());
         return po;
@@ -90,6 +95,6 @@ public class MyBatisCompensationRepository implements CompensationRepository {
                 po.getOperation(), po.getPayload(), CompensationStatus.valueOf(po.getStatus()),
                 po.getRetryCount() == null ? 0 : po.getRetryCount(),
                 po.getMaxRetries() == null ? CompensationTask.MAX_RETRIES : po.getMaxRetries(),
-                po.getLastError(), po.getNextRetryAt(), po.getCreatedAt(), po.getUpdatedAt());
+                po.getLastError(), po.getNextRetryAt(), po.getTraceId(), po.getCreatedAt(), po.getUpdatedAt());
     }
 }
