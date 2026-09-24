@@ -4,47 +4,46 @@
 # 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
 # Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
 
-id: DU-BE-510
+id: DU-BE-002
 repository: "repo-1"
 parent:
-  change: "CHG-0020"
+  change: "CHG-0025"
 feature-path:
   level-1:
-    id: FEAT-005
-    name: 商品搜索
+    id: FEAT-009
+    name: 分布式增强
   level-2:
-    id: FEAT-005-01
-    name: 商品搜索查询
+    id: FEAT-009-02
+    name: Outbox 可靠投递
   level-3:
-    id: FEAT-005-01-01
-    name: 搜索服务基础
+    id: FEAT-009-02-01
+    name: Outbox 投递能力
   story:
-    id: STORY-005-01-01-02
-    name: 搜索异常响应与降级
+    id: STORY-009-02-01
+    name: Outbox 可靠投递
   candidate: false
 workspace-source:
-  requirement: delivery/changes/CHG-0020/requirement.md
-  spec: delivery/changes/CHG-0020/requirement-spec.md
-  design: delivery/changes/CHG-0020/requirement-design.md
-  story-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/搜索服务基础/搜索异常响应与降级/story-design.md
-  test-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/搜索服务基础/搜索异常响应与降级/test-design.md
+  requirement: delivery/changes/CHG-0025/requirement.md
+  spec: delivery/changes/CHG-0025/requirement-spec.md
+  design: delivery/changes/CHG-0025/requirement-design.md
+  story-design: delivery/changes/CHG-0025/分布式增强/Outbox 可靠投递/Outbox 投递能力/Outbox
+    可靠投递/story-design.md
+  test-design: delivery/changes/CHG-0025/分布式增强/Outbox 可靠投递/Outbox 投递能力/Outbox
+    可靠投递/test-design.md
 scope: []
 acceptance:
-  - AC-001
-  - AC-002
-  - AC-003
-  - AC-004
-  - AC-005
+  - AC-010
+  - AC-017
 dependencies: []
 implementation-guidance:
   # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: completed # pending / developing / testing / completed
+status: pending # pending / developing / testing / completed
 baseline:
-  commit: "bbc9ffefab5079c3b00c5ee9db1ff1aaad0356f9"
+  commit: "cdcb08e204dcc31c11ed60063acbc69397d1a48f"
 result:
-  commit: "af16e36c86e75611b0a2acbc1d946a4551f0aebb"
+  commit: ""
   paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
   symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）

@@ -4,47 +4,47 @@
 # 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
 # Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
 
-id: DU-BE-510
+id: DU-BE-706
 repository: "repo-1"
 parent:
-  change: "CHG-0020"
+  change: "CHG-0023"
 feature-path:
   level-1:
-    id: FEAT-005
-    name: 商品搜索
+    id: FEAT-007
+    name: 平台验收补强
   level-2:
-    id: FEAT-005-01
-    name: 商品搜索查询
+    id: FEAT-007-01
+    name: M5 验收缺口补强
   level-3:
-    id: FEAT-005-01-01
-    name: 搜索服务基础
+    id: FEAT-007-01-02
+    name: 可观测与配置
   story:
-    id: STORY-005-01-01-02
-    name: 搜索异常响应与降级
+    id: STORY-007-01-02-01
+    name: Trace 贯通（跨服务链路与补偿追踪）
   candidate: false
 workspace-source:
-  requirement: delivery/changes/CHG-0020/requirement.md
-  spec: delivery/changes/CHG-0020/requirement-spec.md
-  design: delivery/changes/CHG-0020/requirement-design.md
-  story-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/搜索服务基础/搜索异常响应与降级/story-design.md
-  test-design: delivery/changes/CHG-0020/商品搜索/商品搜索查询/搜索服务基础/搜索异常响应与降级/test-design.md
+  requirement: delivery/changes/CHG-0023/requirement.md
+  spec: delivery/changes/CHG-0023/requirement-spec.md
+  design: delivery/changes/CHG-0023/requirement-design.md
+  story-design: delivery/changes/CHG-0023/平台验收补强/M5 验收缺口补强/可观测与配置/Trace
+    贯通（跨服务链路与补偿追踪）/story-design.md
+  test-design: delivery/changes/CHG-0023/平台验收补强/M5 验收缺口补强/可观测与配置/Trace
+    贯通（跨服务链路与补偿追踪）/test-design.md
 scope: []
 acceptance:
-  - AC-001
-  - AC-002
-  - AC-003
-  - AC-004
-  - AC-005
+  - AC-012
+  - AC-013
+  - AC-014
 dependencies: []
 implementation-guidance:
   # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: completed # pending / developing / testing / completed
+status: pending # pending / developing / testing / completed
 baseline:
-  commit: "bbc9ffefab5079c3b00c5ee9db1ff1aaad0356f9"
+  commit: ""
 result:
-  commit: "af16e36c86e75611b0a2acbc1d946a4551f0aebb"
+  commit: ""
   paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
   symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）

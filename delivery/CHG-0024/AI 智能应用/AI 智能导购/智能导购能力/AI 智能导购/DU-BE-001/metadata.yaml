@@ -39,9 +39,9 @@ implementation-guidance:
   complexity-trigger: []
 status: completed # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "9efde17291b8d9db7cdc40635612b1b58b349d21"
 result:
-  commit: "eab992d" # 本地提交（未推送）
+  commit: "9efde17291b8d9db7cdc40635612b1b58b349d21" # 本地提交（未推送）
   paths:
     - mall-gateway/src/main/resources/application.yml
     - mall-gateway/src/main/java/com/ai/mall/gateway/security/GatewaySecurityConfiguration.java
