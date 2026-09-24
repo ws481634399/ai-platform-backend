@@ -40,10 +40,20 @@ implementation-guidance:
   sketch: true
   pseudocode: false
   complexity-trigger: []
-status: pending # pending / developing / testing / completed
+status: testing # pending / developing / testing / completed
 baseline:
   commit: "cdcb08e204dcc31c11ed60063acbc69397d1a48f"
 result:
-  commit: ""
-  paths: [] # 实现影响路径（可选，repo 相对路径；completed 时 Agent 回填，如 auth/service.go）
-  symbols: [] # 关键代码符号（可选，格式 <file>::<symbol>，如 auth/service.go::Login）
+  commit: "e375c40"
+  paths:
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/outbox/OutboxDeliveryTask.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/outbox/OutboxRecordWriter.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/persistence/outbox/MyBatisOutboxEventRepository.java
+    - mall-services/mall-order/src/main/resources/db/migration/V4__add_outbox_event.sql
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/interfaces/rest/admin/OutboxAdminController.java
+    - mall-services/mall-identity/src/main/resources/db/migration/V13__outbox_permissions.sql
+  symbols:
+    - OutboxDeliveryTask.java::deliver
+    - OutboxRecordWriter.java::append
+    - MyBatisOutboxEventRepository.java::claim
+    - OutboxAdminController.java::retry
