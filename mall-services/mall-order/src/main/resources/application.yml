@@ -54,6 +54,13 @@ mall:
     # CHG-0025 M7：支付超时分钟数（ORDER_CREATED.paymentDeadline / 后续延迟取消共用）
     payment:
       timeout-minutes: ${ORDER_PAYMENT_TIMEOUT_MINUTES:30}
+    # STORY-009-04-01：延迟消息强制级别（0=按超时动态向上对齐；集成验收可强制短延迟级别）
+    delay:
+      force-level: ${ORDER_DELAY_FORCE_LEVEL:0}
+    # STORY-009-04-01：超时兜底扫描（延迟消息丢失/失败时的双保险，默认开启）
+    timeout-fallback:
+      enabled: ${ORDER_TIMEOUT_FALLBACK_ENABLED:true}
+      fixed-delay-ms: ${ORDER_TIMEOUT_FALLBACK_INTERVAL_MS:60000}
 
 # CHG-0025 M7：默认关闭，开启后支付/取消走事件驱动并装配 Outbox 投递
 rocketmq:
