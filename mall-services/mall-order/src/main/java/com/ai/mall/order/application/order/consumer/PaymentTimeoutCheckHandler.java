@@ -9,6 +9,7 @@ import com.ai.mall.event.Envelope;
 import com.ai.mall.event.EventTags;
 import com.ai.mall.event.EventTopics;
 import com.ai.mall.event.payload.OrderDelayPayload;
+import com.ai.mall.order.application.compensation.CompensationService;
 import com.ai.mall.order.application.order.OrderCancelService;
 import com.ai.mall.order.domain.order.OrderErrorCode;
 import com.ai.mall.order.domain.order.OrderRepository;
@@ -48,12 +49,15 @@ public class PaymentTimeoutCheckHandler extends AbstractIntegrationHandler<Order
 
     private final OrderRepository orderRepository;
     private final OrderCancelService orderCancelService;
+    private final CompensationService compensationService;
 
     public PaymentTimeoutCheckHandler(ObjectMapper objectMapper, IdempotentConsumer idempotentConsumer,
-                                      OrderRepository orderRepository, OrderCancelService orderCancelService) {
+                                      OrderRepository orderRepository, OrderCancelService orderCancelService,
+                                      CompensationService compensationService) {
         super(objectMapper, idempotentConsumer);
         this.orderRepository = orderRepository;
         this.orderCancelService = orderCancelService;
+        this.compensationService = compensationService;
     }
 
     @Override
@@ -89,7 +93,19 @@ public class PaymentTimeoutCheckHandler extends AbstractIntegrationHandler<Order
                 markSkipped(envelope.getEventId(), ConsumerGroups.ORDER_DELAY_CONSUMER_GROUP);
                 return;
             }
+            // 其他业务异常（下游失败等）：登记 ORDER_AUTO_CANCEL 补偿后重抛（AC-035）
+            registerAutoCancelCompensation(envelope, payload, orderId);
+            throw ex;
+        } catch (RuntimeException ex) {
+            // 系统/DB 异常：同样登记补偿兜底，再交 MQ 重试
+            registerAutoCancelCompensation(envelope, payload, orderId);
             throw ex;
         }
+    }
+
+    /** 登记订单自动取消补偿；登记本身失败不掩盖原始异常（内部已 catch 记 ERROR）。 */
+    private void registerAutoCancelCompensation(Envelope envelope, OrderDelayPayload payload, long orderId) {
+        compensationService.enqueueOrderAutoCancel(
+                orderId, payload.orderNo(), envelope.getEventId(), envelope.getTraceId());
     }
 }

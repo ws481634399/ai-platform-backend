@@ -14,6 +14,7 @@ import com.ai.mall.common.web.exception.BusinessException;
 import com.ai.mall.event.Envelope;
 import com.ai.mall.event.payload.OrderDelayPayload;
 import com.ai.mall.order.application.order.OrderCancelService;
+import com.ai.mall.order.application.compensation.CompensationService;
 import com.ai.mall.order.domain.order.OrderErrorCode;
 import com.ai.mall.order.domain.order.OrderRepository;
 import com.ai.mall.order.domain.order.OrderStatus;
@@ -40,6 +41,8 @@ class PaymentTimeoutCheckHandlerTest {
     @Mock
     private OrderCancelService orderCancelService;
     @Mock
+    private CompensationService compensationService;
+    @Mock
     private IdempotentConsumer idempotentConsumer;
 
     private final ObjectMapper objectMapper = new ObjectMapper().findAndRegisterModules();
@@ -49,7 +52,7 @@ class PaymentTimeoutCheckHandlerTest {
     @BeforeEach
     void setUp() {
         handler = new PaymentTimeoutCheckHandler(objectMapper, idempotentConsumer,
-                orderRepository, orderCancelService);
+                orderRepository, orderCancelService, compensationService);
     }
 
     private Envelope envelope() {
@@ -117,7 +120,7 @@ class PaymentTimeoutCheckHandlerTest {
     }
 
     @Test
-    void otherError_propagatesForRetry() {
+    void otherError_registersCompensationAndPropagatesForRetry() {
         when(orderRepository.findStatusById(ORDER_ID))
                 .thenReturn(Optional.of(OrderStatus.PENDING_PAYMENT));
         when(orderCancelService.systemCancel(ORDER_ID, "PAYMENT_TIMEOUT", "DELAY_MESSAGE"))
@@ -128,5 +131,8 @@ class PaymentTimeoutCheckHandlerTest {
                 .isInstanceOf(RuntimeException.class);
 
         verify(idempotentConsumer, never()).markResult(any(), any(), any());
+        // AC-035：真正取消失败先登记 ORDER_AUTO_CANCEL 补偿，再重抛交 MQ 重试
+        verify(compensationService, times(1)).enqueueOrderAutoCancel(
+                ORDER_ID, "ON9800", "evt-delay-1", null);
     }
 }
