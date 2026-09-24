@@ -51,6 +51,15 @@ mall:
     cart-uri: ${CART_SERVICE_URI:http://localhost:8104}
     # submitToken 有效期（秒）
     submit-token-ttl-seconds: ${ORDER_SUBMIT_TOKEN_TTL:600}
+    # CHG-0025 M7：支付超时分钟数（ORDER_CREATED.paymentDeadline / 后续延迟取消共用）
+    payment:
+      timeout-minutes: ${ORDER_PAYMENT_TIMEOUT_MINUTES:30}
+
+# CHG-0025 M7：默认关闭，开启后支付/取消走事件驱动并装配 Outbox 投递
+rocketmq:
+  enabled: ${ROCKETMQ_ENABLED:false}
+  name-server: ${ROCKETMQ_NAME_SERVER:localhost:9876}
+  producer-group: ${ROCKETMQ_PRODUCER_GROUP:mall-producer-group}
 
 logging:
   pattern:

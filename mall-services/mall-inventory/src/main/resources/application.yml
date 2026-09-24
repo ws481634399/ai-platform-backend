@@ -43,6 +43,13 @@ mall:
       shared-secret: ${MALL_INTERNAL_SHARED_SECRET:dev-internal-secret}
   inventory:
     sku-service-uri: ${MALL_PRODUCT_URI:http://localhost:8103}
+    # CHG-0025 M7：订单内部 API（乱序回查/补偿登记）
+    order-uri: ${MALL_ORDER_URI:http://localhost:8105}
+
+# CHG-0025 M7：默认关闭，开启后装配订单事件消费者
+rocketmq:
+  enabled: ${ROCKETMQ_ENABLED:false}
+  name-server: ${ROCKETMQ_NAME_SERVER:localhost:9876}
 
 logging:
   pattern:
