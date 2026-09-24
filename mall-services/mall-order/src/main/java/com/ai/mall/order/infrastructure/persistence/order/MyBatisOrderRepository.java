@@ -2,6 +2,7 @@ package com.ai.mall.order.infrastructure.persistence.order;
 
 import static com.baomidou.mybatisplus.core.toolkit.Wrappers.lambdaQuery;
 
+import com.ai.mall.order.application.order.event.OrderEventOutbox;
 import com.ai.mall.order.domain.order.Money;
 import com.ai.mall.order.domain.order.Order;
 import com.ai.mall.order.domain.order.OrderItem;
@@ -37,13 +38,16 @@ public class MyBatisOrderRepository implements OrderRepository {
     private final OrderItemMapper itemMapper;
     private final OrderStatusHistoryMapper historyMapper;
     private final ObjectMapper objectMapper;
+    private final OrderEventOutbox eventOutbox;
 
     public MyBatisOrderRepository(OrderMapper orderMapper, OrderItemMapper itemMapper,
-                                  OrderStatusHistoryMapper historyMapper, ObjectMapper objectMapper) {
+                                  OrderStatusHistoryMapper historyMapper, ObjectMapper objectMapper,
+                                  OrderEventOutbox eventOutbox) {
         this.orderMapper = orderMapper;
         this.itemMapper = itemMapper;
         this.historyMapper = historyMapper;
         this.objectMapper = objectMapper;
+        this.eventOutbox = eventOutbox;
     }
 
     @Override
@@ -61,12 +65,20 @@ public class MyBatisOrderRepository implements OrderRepository {
         for (OrderStatusHistory history : order.histories()) {
             historyMapper.insert(toHistoryPo(po.getId(), history));
         }
+        // 集成事件在同一事务内 flush（payload 需要已回填的 orderId，故置于最后）
+        eventOutbox.flush(order);
     }
 
     @Override
     public Optional<Order> findByOrderNo(String orderNo) {
         OrderPo po = orderMapper.selectOne(lambdaQuery(OrderPo.class).eq(OrderPo::getOrderNo, orderNo));
         return Optional.ofNullable(po).map(this::toAggregate);
+    }
+
+    @Override
+    public Optional<OrderStatus> findStatusById(long orderId) {
+        OrderPo po = orderMapper.selectById(orderId);
+        return Optional.ofNullable(po).map(p -> OrderStatus.valueOf(p.getStatus()));
     }
 
     @Override
@@ -101,6 +113,8 @@ public class MyBatisOrderRepository implements OrderRepository {
             historyPo.setReason(change.reason());
             historyPo.setOccurredAt(change.occurredAt());
             historyMapper.insert(historyPo);
+            // CAS 获胜方在同一事务内 flush 集成事件；落败不 flush
+            eventOutbox.flush(change.order());
             return true;
         }
         return false;

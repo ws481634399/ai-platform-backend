@@ -18,6 +18,9 @@ public interface OrderRepository {
     /** 按业务单号加载完整聚合（含商品行与状态历史）。 */
     Optional<Order> findByOrderNo(String orderNo);
 
+    /** 内部裁决用：按主键仅取订单状态（不重建整聚合）。 */
+    Optional<OrderStatus> findStatusById(long orderId);
+
     /** 双层幂等第二道：按会员 + 已消费 submitToken 反查首单。 */
     Optional<Order> findByMemberAndSubmitToken(long memberId, String submitToken);
 
@@ -37,12 +40,12 @@ public interface OrderRepository {
     /** 状态迁移命令（from/expectedVersion 为 CAS 条件，其余为动作专属落库字段）。 */
     record StatusTransition(long orderId, String orderNo, long expectedVersion, OrderOperation operation,
                             OrderStatus from, OrderStatus to, String operator, String reason,
-                            String deliveryCompany, String trackingNo, Instant occurredAt) {
+                            String deliveryCompany, String trackingNo, Instant occurredAt, Order order) {
 
         public static StatusTransition of(Order order, OrderOperation operation, OrderStatus to, String operator,
                                           String reason, String deliveryCompany, String trackingNo, Instant now) {
             return new StatusTransition(order.getId(), order.orderNo(), order.version(), operation,
-                    order.status(), to, operator, reason, deliveryCompany, trackingNo, now);
+                    order.status(), to, operator, reason, deliveryCompany, trackingNo, now, order);
         }
     }
 
