@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import java.time.Instant;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 /** orders Mapper：基础 CRUD + 动作专属 CAS 条件更新（CHG-0019）。 */
@@ -34,4 +35,10 @@ public interface OrderMapper extends BaseMapper<OrderPo> {
     @Update("UPDATE orders SET status = 'COMPLETED', completed_at = #{now}, updated_at = #{now}, "
             + "version = version + 1 WHERE id = #{id} AND status = 'SHIPPED' AND version = #{version}")
     int casComplete(@Param("id") long id, @Param("version") long version, @Param("now") Instant now);
+
+    /** 超时兜底扫描：早于 cutoff 的待支付订单（STORY-009-04-01）。 */
+    @Select("SELECT id, order_no FROM orders WHERE status = 'PENDING_PAYMENT' "
+            + "AND created_at < #{cutoff} LIMIT #{limit}")
+    java.util.List<ExpiredOrderRow> selectExpiredPending(@Param("cutoff") Instant cutoff,
+                                                          @Param("limit") int limit);
 }

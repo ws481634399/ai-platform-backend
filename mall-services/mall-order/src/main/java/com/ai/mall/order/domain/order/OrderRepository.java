@@ -40,6 +40,16 @@ public interface OrderRepository {
     /** 按一批订单 id 批量取商品行（避免列表 N+1）。 */
     List<OrderItem> findItemsByOrderIds(List<Long> orderIds);
 
+    /**
+     * 兜底扫描：查询创建时间早于 cutoff 的待支付订单（延迟消息丢失/投递失败时双保险）。
+     * 仅取轻量字段 id/orderNo，由扫描器逐单调 systemCancel。
+     */
+    List<ExpiredOrder> findExpiredPending(Instant cutoff, int limit);
+
+    /** 超时兜底扫描轻量行。 */
+    record ExpiredOrder(long id, String orderNo) {
+    }
+
     /** 状态迁移命令（from/expectedVersion 为 CAS 条件，其余为动作专属落库字段）。 */
     record StatusTransition(long orderId, String orderNo, long expectedVersion, OrderOperation operation,
                             OrderStatus from, OrderStatus to, String operator, String reason,

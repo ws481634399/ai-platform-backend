@@ -152,6 +152,13 @@ public class MyBatisOrderRepository implements OrderRepository {
                 .stream().map(this::toItem).toList();
     }
 
+    @Override
+    public List<ExpiredOrder> findExpiredPending(Instant cutoff, int limit) {
+        return orderMapper.selectExpiredPending(cutoff, limit).stream()
+                .map(row -> new ExpiredOrder(row.getId(), row.getOrderNo()))
+                .toList();
+    }
+
     // ---------- 聚合装配 ----------
 
     private Order toAggregate(OrderPo po) {
