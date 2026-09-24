@@ -98,6 +98,8 @@ public class Order {
         order.histories.add(new OrderStatusHistory(0L, orderNo, null, OrderStatus.PENDING_PAYMENT,
                 OrderOperation.CREATE, Long.toString(memberId), null, now));
         order.integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CREATED));
+        // 延迟取消检查：与 ORDER_CREATED 同事务写 Outbox，投递时路由 order-delay Topic
+        order.integrationEvents.add(new OrderIntegrationEvent(OrderIntegrationEventType.PAYMENT_TIMEOUT_CHECK));
         return order;
     }
 

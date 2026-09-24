@@ -26,9 +26,11 @@ class OrderIntegrationEventsTest {
         Order order = Order.create("ON20250101001", 5001L, OrderSource.CART, Money.ofM4(2000L),
                 RECEIVER, List.of(item("ON20250101001")), "tok-1", Instant.now());
 
+        // ORDER_CREATED 与 PAYMENT_TIMEOUT_CHECK 同事务成对收集
         assertThat(order.pullIntegrationEvents())
                 .extracting(event -> event.type())
-                .containsExactly(OrderIntegrationEventType.ORDER_CREATED);
+                .containsExactly(OrderIntegrationEventType.ORDER_CREATED,
+                        OrderIntegrationEventType.PAYMENT_TIMEOUT_CHECK);
     }
 
     @Test
@@ -59,7 +61,7 @@ class OrderIntegrationEventsTest {
         Order order = Order.create("ON20250101004", 5001L, OrderSource.CART, Money.ofM4(2000L),
                 RECEIVER, List.of(item("ON20250101004")), "tok-4", Instant.now());
 
-        assertThat(order.pullIntegrationEvents()).hasSize(1);
+        assertThat(order.pullIntegrationEvents()).hasSize(2);
         assertThat(order.pullIntegrationEvents()).isEmpty();
     }
 
