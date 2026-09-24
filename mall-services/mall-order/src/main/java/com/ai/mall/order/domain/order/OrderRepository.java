@@ -18,6 +18,9 @@ public interface OrderRepository {
     /** 按业务单号加载完整聚合（含商品行与状态历史）。 */
     Optional<Order> findByOrderNo(String orderNo);
 
+    /** 按主键加载完整聚合（系统取消路径，不做会员归属校验）。 */
+    Optional<Order> findById(long orderId);
+
     /** 内部裁决用：按主键仅取订单状态（不重建整聚合）。 */
     Optional<OrderStatus> findStatusById(long orderId);
 

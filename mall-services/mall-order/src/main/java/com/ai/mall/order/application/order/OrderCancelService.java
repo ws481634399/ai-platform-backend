@@ -14,17 +14,21 @@ import com.ai.mall.order.domain.order.OrderStatusHistory;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
- * 会员取消订单应用服务（CHG-0019 REQ-M4-002）。
+ * 订单取消应用服务（CHG-0019 REQ-M4-002；STORY-009-04-01 增加系统取消入口）。
  *
- * <p>仅待支付可取消；CAS（PENDING_PAYMENT→CANCELLED）成功后事务外逐行释放库存预留。
- * 重复取消幂等返回成功；与支付竞争落败时重读：已取消幂等返回，已支付 409。
+ * <p>仅待支付可取消；CAS（PENDING_PAYMENT→CANCELLED）成功后，同步降级模式于事务外逐行
+ * 释放库存预留。重复取消幂等返回成功；与支付竞争落败时重读：已取消幂等返回，其他 409。
  * release 失败不影响取消结果：登记 RELEASE 补偿，由调度器有界重试。
+ *
+ * <p>{@link #systemCancel} 供延迟消息到期回查 / 定时补偿兜底调用：按主键加载不做会员
+ * 归属，操作人固定 "SYS:"+source 以区分来源（DELAY_MESSAGE / TIMEOUT_FALLBACK）。
  */
 @Service
 public class OrderCancelService {
@@ -44,8 +48,33 @@ public class OrderCancelService {
         this.integrationMode = integrationMode;
     }
 
+    /** 会员侧取消：加载时做归属校验（查不到或非本人均按 NOT_FOUND 处理）。 */
     public Order cancel(long memberId, String orderNo, String reason) {
         Order order = loadOwned(orderNo, memberId);
+        return doCancel(order, Long.toString(memberId), reason, () -> loadOwned(orderNo, memberId));
+    }
+
+    /**
+     * 系统自动取消（延迟消息到期 / 定时补偿兜底）。
+     *
+     * @param reason 取消原因（如 PAYMENT_TIMEOUT）
+     * @param source 触发来源标识（DELAY_MESSAGE / TIMEOUT_FALLBACK），记入操作人前缀
+     */
+    public Order systemCancel(long orderId, String reason, String source) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new BusinessException(OrderErrorCode.ORDER_NOT_FOUND, HttpStatus.NOT_FOUND));
+        return doCancel(order, "SYS:" + source, reason,
+                () -> orderRepository.findById(orderId)
+                        .orElseThrow(() -> new BusinessException(OrderErrorCode.ORDER_NOT_FOUND, HttpStatus.NOT_FOUND)));
+    }
+
+    /**
+     * 取消主流程（会员 / 系统共用）。
+     *
+     * @param operator 操作人：会员 id 或 SYS:source
+     * @param reloader CAS 落败后的重读器（各自保持归属语义）
+     */
+    private Order doCancel(Order order, String operator, String reason, Supplier<Order> reloader) {
         OrderStatus.TransitionOutcome outcome = order.outcome(OrderOperation.CANCEL);
         if (outcome == OrderStatus.TransitionOutcome.ALREADY_TARGET) {
             return order;
@@ -56,14 +85,13 @@ public class OrderCancelService {
         }
 
         Instant now = Instant.now();
-        String operator = Long.toString(memberId);
         String normalizedReason = reason == null || reason.isBlank() ? null : reason.trim();
         OrderStatusHistory history = order.cancel(operator, normalizedReason, now);
         boolean won = orderRepository.transition(OrderRepository.StatusTransition.of(
                 order, OrderOperation.CANCEL, OrderStatus.CANCELLED, operator, normalizedReason,
                 null, null, history.occurredAt()));
         if (!won) {
-            Order reloaded = loadOwned(orderNo, memberId);
+            Order reloaded = reloader.get();
             if (reloaded.status() == OrderStatus.CANCELLED) {
                 return reloaded;
             }

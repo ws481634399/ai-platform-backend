@@ -76,6 +76,12 @@ public class MyBatisOrderRepository implements OrderRepository {
     }
 
     @Override
+    public Optional<Order> findById(long orderId) {
+        OrderPo po = orderMapper.selectById(orderId);
+        return Optional.ofNullable(po).map(this::toAggregate);
+    }
+
+    @Override
     public Optional<OrderStatus> findStatusById(long orderId) {
         OrderPo po = orderMapper.selectById(orderId);
         return Optional.ofNullable(po).map(p -> OrderStatus.valueOf(p.getStatus()));
