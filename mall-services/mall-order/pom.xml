@@ -44,6 +44,12 @@
       <artifactId>mall-common-redis</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <!-- CHG-0025 M7：RocketMQ 集成事件生产者封装（@ConditionalOnProperty rocketmq.enabled） -->
+    <dependency>
+      <groupId>com.ai-mall</groupId>
+      <artifactId>mall-common-mq</artifactId>
+      <version>${project.version}</version>
+    </dependency>
     <!-- 数据访问基础：服务直连官方 starter，不经 common 中转（design.md §2.7） -->
     <dependency>
       <groupId>com.baomidou</groupId>
