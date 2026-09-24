@@ -69,4 +69,18 @@ class OutboxRecordWriterTest {
         verify(repository).save(captor.capture());
         assertThat(captor.getValue().getTraceId()).isEqualTo("t-abc");
     }
+
+    @Test
+    @DisplayName("TC-003：四参 append 携带 delayLevel；三参 append 默认级别 0")
+    void appendWithDelayLevel() {
+        JsonNode payload = objectMapper.createObjectNode();
+        Envelope envelope = Envelope.builder().eventId("e2").eventType("PAYMENT_TIMEOUT_CHECK").eventVersion(1)
+                .occurredAt(Instant.now()).producer("p").payload(payload).build();
+
+        writer.append("order-9", "PAYMENT_TIMEOUT_CHECK", envelope, 16);
+
+        ArgumentCaptor<OutboxEvent> captor = ArgumentCaptor.forClass(OutboxEvent.class);
+        verify(repository).save(captor.capture());
+        assertThat(captor.getValue().getDelayLevel()).isEqualTo(16);
+    }
 }

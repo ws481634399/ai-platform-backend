@@ -82,7 +82,8 @@ public class OutboxAdminController {
 
     private static OutboxAdminDtos.OutboxView toView(OutboxEvent event) {
         return new OutboxAdminDtos.OutboxView(event.getId(), event.getAggregateId(), event.getEventType(),
-                event.getPayload(), event.getStatus().name(), event.getRetryCount(), event.getNextRetryAt(),
-                event.getTraceId(), event.getLastError(), event.getCreatedAt(), event.getSentAt());
+                event.getDelayLevel(), event.getPayload(), event.getStatus().name(), event.getRetryCount(),
+                event.getNextRetryAt(), event.getTraceId(), event.getLastError(), event.getCreatedAt(),
+                event.getSentAt());
     }
 }

@@ -13,6 +13,7 @@ public class OutboxEventPo {
     private Long id;
     private String aggregateId;
     private String eventType;
+    private Integer delayLevel;
     private String payload;
     private String status;
     private Integer retryCount;
@@ -28,6 +29,8 @@ public class OutboxEventPo {
     public void setAggregateId(String aggregateId) { this.aggregateId = aggregateId; }
     public String getEventType() { return eventType; }
     public void setEventType(String eventType) { this.eventType = eventType; }
+    public Integer getDelayLevel() { return delayLevel; }
+    public void setDelayLevel(Integer delayLevel) { this.delayLevel = delayLevel; }
     public String getPayload() { return payload; }
     public void setPayload(String payload) { this.payload = payload; }
     public String getStatus() { return status; }

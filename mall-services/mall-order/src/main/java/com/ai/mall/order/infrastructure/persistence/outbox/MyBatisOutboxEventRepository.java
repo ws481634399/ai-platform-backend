@@ -93,6 +93,7 @@ public class MyBatisOutboxEventRepository implements OutboxEventRepository {
         po.setId(domain.getId());
         po.setAggregateId(domain.getAggregateId());
         po.setEventType(domain.getEventType());
+        po.setDelayLevel(domain.getDelayLevel());
         po.setPayload(domain.getPayload());
         po.setStatus(domain.getStatus().name());
         po.setRetryCount(domain.getRetryCount());
@@ -108,6 +109,7 @@ public class MyBatisOutboxEventRepository implements OutboxEventRepository {
         return OutboxEvent.reconstitute(po.getId(), po.getAggregateId(), po.getEventType(), po.getPayload(),
                 OutboxStatus.valueOf(po.getStatus()),
                 po.getRetryCount() == null ? 0 : po.getRetryCount(),
-                po.getNextRetryAt(), po.getTraceId(), po.getLastError(), po.getCreatedAt(), po.getSentAt());
+                po.getNextRetryAt(), po.getTraceId(), po.getLastError(), po.getCreatedAt(), po.getSentAt(),
+                po.getDelayLevel() == null ? 0 : po.getDelayLevel());
     }
 }

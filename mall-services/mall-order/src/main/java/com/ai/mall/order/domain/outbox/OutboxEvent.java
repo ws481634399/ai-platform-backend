@@ -12,6 +12,7 @@ public class OutboxEvent {
     private Long id;
     private final String aggregateId;
     private final String eventType;
+    private final int delayLevel;
     private final String payload;
     private OutboxStatus status;
     private int retryCount;
@@ -22,8 +23,13 @@ public class OutboxEvent {
     private Instant sentAt;
 
     public OutboxEvent(String aggregateId, String eventType, String payload, String traceId) {
+        this(aggregateId, eventType, 0, payload, traceId);
+    }
+
+    public OutboxEvent(String aggregateId, String eventType, int delayLevel, String payload, String traceId) {
         this.aggregateId = aggregateId;
         this.eventType = eventType;
+        this.delayLevel = delayLevel;
         this.payload = payload;
         this.traceId = traceId;
         this.status = OutboxStatus.PENDING;
@@ -31,12 +37,13 @@ public class OutboxEvent {
         this.createdAt = Instant.now();
     }
 
-    private OutboxEvent(Long id, String aggregateId, String eventType, String payload,
+    private OutboxEvent(Long id, String aggregateId, String eventType, int delayLevel, String payload,
                         OutboxStatus status, int retryCount, Instant nextRetryAt,
                         String traceId, String lastError, Instant createdAt, Instant sentAt) {
         this.id = id;
         this.aggregateId = aggregateId;
         this.eventType = eventType;
+        this.delayLevel = delayLevel;
         this.payload = payload;
         this.status = status;
         this.retryCount = retryCount;
@@ -50,7 +57,15 @@ public class OutboxEvent {
     public static OutboxEvent reconstitute(Long id, String aggregateId, String eventType, String payload,
                                            OutboxStatus status, int retryCount, Instant nextRetryAt,
                                            String traceId, String lastError, Instant createdAt, Instant sentAt) {
-        return new OutboxEvent(id, aggregateId, eventType, payload, status, retryCount, nextRetryAt,
+        return reconstitute(id, aggregateId, eventType, payload, status, retryCount, nextRetryAt,
+                traceId, lastError, createdAt, sentAt, 0);
+    }
+
+    public static OutboxEvent reconstitute(Long id, String aggregateId, String eventType, String payload,
+                                           OutboxStatus status, int retryCount, Instant nextRetryAt,
+                                           String traceId, String lastError, Instant createdAt, Instant sentAt,
+                                           int delayLevel) {
+        return new OutboxEvent(id, aggregateId, eventType, delayLevel, payload, status, retryCount, nextRetryAt,
                 traceId, lastError, createdAt, sentAt);
     }
 
@@ -61,6 +76,7 @@ public class OutboxEvent {
     public Long getId() { return id; }
     public String getAggregateId() { return aggregateId; }
     public String getEventType() { return eventType; }
+    public int getDelayLevel() { return delayLevel; }
     public String getPayload() { return payload; }
     public OutboxStatus getStatus() { return status; }
     public int getRetryCount() { return retryCount; }

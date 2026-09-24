@@ -160,4 +160,22 @@ class OutboxEventRepositoryIntegrationTest {
         var order1Page = repository.page(null, null, "ord-1", 1, 10);
         assertThat(order1Page.records()).hasSize(2);
     }
+
+    @Test
+    @DisplayName("TC-003：V5 delay_level 列存在默认 0；save/reload 携带延迟级别")
+    void delayLevelColumn() {
+        OutboxEvent delayed = OutboxEvent.reconstitute(null, "ord-delay", "PAYMENT_TIMEOUT_CHECK",
+                "{\"eventId\":\"x\"}", OutboxStatus.PENDING, 0, null, "trace-1", null,
+                Instant.now(), null, 16);
+        repository.save(delayed);
+
+        OutboxEvent reloaded = repository.findById(delayed.getId()).orElseThrow();
+        assertThat(reloaded.getDelayLevel()).isEqualTo(16);
+
+        // 既有写入路径不显式带级别时列默认 0
+        jdbc.update("INSERT INTO outbox_event(aggregate_id,event_type,payload) VALUES ('a','T','{}')");
+        Integer level = jdbc.queryForObject(
+                "SELECT delay_level FROM outbox_event WHERE aggregate_id = 'a'", Integer.class);
+        assertThat(level).isZero();
+    }
 }

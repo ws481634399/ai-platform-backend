@@ -12,6 +12,7 @@ public final class OutboxAdminDtos {
             Long id,
             String aggregateId,
             String eventType,
+            int delayLevel,
             String payload,
             String status,
             int retryCount,

@@ -38,15 +38,25 @@ public class OutboxRecordWriter {
      */
     @Transactional(propagation = Propagation.MANDATORY)
     public void append(String aggregateId, String eventType, Envelope envelope) {
+        append(aggregateId, eventType, envelope, 0);
+    }
+
+    /**
+     * 在调用方事务内追加一条带延迟级别的 Outbox 记录。
+     *
+     * @param delayLevel RocketMQ 延迟级别（0=即时；1~18 延迟），flush 时落定
+     */
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void append(String aggregateId, String eventType, Envelope envelope, int delayLevel) {
         String payloadJson;
         try {
             payloadJson = objectMapper.writeValueAsString(envelope);
         } catch (JsonProcessingException e) {
             throw new IllegalStateException("Outbox 事件序列化失败: " + eventType, e);
         }
-        OutboxEvent event = new OutboxEvent(aggregateId, eventType, payloadJson, envelope.getTraceId());
+        OutboxEvent event = new OutboxEvent(aggregateId, eventType, delayLevel, payloadJson, envelope.getTraceId());
         repository.save(event);
-        log.debug("Outbox 记录已写入: eventId={}, aggregateId={}, eventType={}",
-                envelope.getEventId(), aggregateId, eventType);
+        log.debug("Outbox 记录已写入: eventId={}, aggregateId={}, eventType={}, delayLevel={}",
+                envelope.getEventId(), aggregateId, eventType, delayLevel);
     }
 }
