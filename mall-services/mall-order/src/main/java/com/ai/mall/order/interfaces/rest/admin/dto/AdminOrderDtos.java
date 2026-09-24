@@ -23,7 +23,9 @@ public final class AdminOrderDtos {
 
     /** 补偿任务视图。 */
     public record CompensationView(@StringId long id, String businessType, String businessId, String operation,
+                                   String payload,
                                    String status, int retryCount, int maxRetries, String lastError,
-                                   Instant nextRetryAt, Instant createdAt, Instant updatedAt) {
+                                   Instant nextRetryAt, Instant createdAt, Instant updatedAt,
+                                   String traceId) {
     }
 }
