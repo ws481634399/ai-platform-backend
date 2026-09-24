@@ -1,13 +1,17 @@
 package com.ai.mall.order.application.order.event;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.ai.mall.event.Envelope;
 import com.ai.mall.event.EventTags;
+import com.ai.mall.order.application.order.timeout.DelayLevelMapper;
+import com.ai.mall.order.application.order.timeout.PaymentTimeoutPolicy;
 import com.ai.mall.order.application.outbox.OutboxRecordWriter;
 import com.ai.mall.order.domain.order.Money;
 import com.ai.mall.order.domain.order.Order;
@@ -39,14 +43,13 @@ class OutboxOrderEventFlusherTest {
     private OrderEnvelopeAssembler assembler;
     @Mock
     private OutboxRecordWriter recordWriter;
-
-    private OrderEnvelopeAssembler realAssembler;
+    @Mock
+    private PaymentTimeoutPolicy timeoutPolicy;
 
     private Order order;
 
     @BeforeEach
     void setUp() {
-        realAssembler = new OrderEnvelopeAssembler(new ObjectMapper().findAndRegisterModules(), 30L);
         OrderItem item = new OrderItem(null, "ON4001", 1001L, 2001L, "测试商品", "SKU1",
                 Map.of("颜色", "红"), null, 1000L, 2);
         order = Order.create("ON4001", 5001L, OrderSource.CART, Money.ofM4(2000L),
@@ -55,34 +58,48 @@ class OutboxOrderEventFlusherTest {
     }
 
     @Test
-    void asyncMode_appendsEnvelopeWithinTransaction() {
-        Envelope envelope = realAssembler.assemble(order,
-                new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CREATED));
-        org.mockito.Mockito.when(assembler.assemble(eq(order), any(OrderIntegrationEvent.class)))
-                .thenReturn(envelope);
+    void asyncMode_appendsEnvelopeWithMappedLevel() {
+        Envelope createdEnv = Envelope.builder().eventId("e1").eventType(EventTags.ORDER_CREATED)
+                .eventVersion(1).occurredAt(Instant.now()).producer("mall-order")
+                .payload(new ObjectMapper().createObjectNode()).build();
+        Envelope delayEnv = Envelope.builder().eventId("e2").eventType(EventTags.PAYMENT_TIMEOUT_CHECK)
+                .eventVersion(1).occurredAt(Instant.now()).producer("mall-order")
+                .payload(new ObjectMapper().createObjectNode()).build();
+        when(timeoutPolicy.timeoutMinutes()).thenReturn(30L);
+        when(assembler.assemble(eq(order), any(OrderIntegrationEvent.class), eq(30L)))
+                .thenAnswer(invocation -> {
+                    OrderIntegrationEventType type = invocation.getArgument(1, OrderIntegrationEvent.class).type();
+                    return type == OrderIntegrationEventType.ORDER_CREATED ? createdEnv : delayEnv;
+                });
 
-        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(true))
-                .flush(order);
+        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(true),
+                timeoutPolicy, new DelayLevelMapper(0)).flush(order);
 
-        verify(recordWriter, times(1)).append(eq("9100"), eq(EventTags.ORDER_CREATED), eq(envelope));
+        // ORDER_CREATED 即时 append；PAYMENT_TIMEOUT_CHECK 带映射级别 16（30m 恰好命中）
+        verify(recordWriter, times(1)).append(eq("9100"), eq(EventTags.ORDER_CREATED), eq(createdEnv));
+        verify(recordWriter, times(1))
+                .append(eq("9100"), eq(EventTags.PAYMENT_TIMEOUT_CHECK), eq(delayEnv), eq(16));
+        // 一次 flush 内超时只读取一次，两事件共用同一值
+        verify(timeoutPolicy, times(1)).timeoutMinutes();
     }
 
     @Test
     void syncMode_dropsEventsWithoutAppend() {
-        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(false))
-                .flush(order);
+        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(false),
+                timeoutPolicy, new DelayLevelMapper(0)).flush(order);
 
         verify(recordWriter, never()).append(any(), any(), any());
-        verify(assembler, never()).assemble(any(), any());
+        verify(assembler, never()).assemble(any(), any(), anyLong());
     }
 
     @Test
     void noEvents_noop() {
         order.pullIntegrationEvents();
 
-        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(true))
-                .flush(order);
+        new OutboxOrderEventFlusher(assembler, recordWriter, new IntegrationMode(true),
+                timeoutPolicy, new DelayLevelMapper(0)).flush(order);
 
         verify(recordWriter, never()).append(any(), any(), any());
+        verify(timeoutPolicy, never()).timeoutMinutes();
     }
 }

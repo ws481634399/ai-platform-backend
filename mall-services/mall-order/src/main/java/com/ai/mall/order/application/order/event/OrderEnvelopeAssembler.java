@@ -6,6 +6,7 @@ import com.ai.mall.event.EventVersions;
 import com.ai.mall.event.payload.OrderCancelledEventPayload;
 import com.ai.mall.event.payload.OrderCompletedEventPayload;
 import com.ai.mall.event.payload.OrderCreatedEventPayload;
+import com.ai.mall.event.payload.OrderDelayPayload;
 import com.ai.mall.event.payload.PaymentSucceededEventPayload;
 import com.ai.mall.common.core.trace.TraceContext;
 import com.ai.mall.order.domain.order.Order;
@@ -16,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * <ul>
  *   <li>reservationNo 取 orderNo——订单级预留组标识；per-line reservationId = orderNo:skuId；</li>
  *   <li>M4 为模拟支付无支付单号 → paymentNo 用确定性编号 "PAY"+orderNo；</li>
- *   <li>paymentDeadline = createdAt + order.payment.timeout-minutes。</li>
+ *   <li>paymentDeadline / expireAt = createdAt + 本次 flush 读取到的超时分钟数。</li>
  * </ul>
  */
 @Component
@@ -36,17 +36,18 @@ public class OrderEnvelopeAssembler {
     private static final String CURRENCY_CNY = "CNY";
 
     private final ObjectMapper objectMapper;
-    private final long paymentTimeoutMinutes;
 
-    public OrderEnvelopeAssembler(ObjectMapper objectMapper,
-                                  @Value("${order.payment.timeout-minutes:30}") long paymentTimeoutMinutes) {
-        this.objectMapper =objectMapper;
-        this.paymentTimeoutMinutes = paymentTimeoutMinutes;
+    public OrderEnvelopeAssembler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 
-    /** 按事件类型组装完整 Envelope。 */
-    public Envelope assemble(Order order, OrderIntegrationEvent event) {
-        Object payloadDto = buildPayload(order, event.type());
+    /**
+     * 按事件类型组装完整 Envelope。
+     *
+     * @param timeoutMinutes 本次 flush 统一使用的支付超时分钟数（调用方保证一次 flush 只读一次）
+     */
+    public Envelope assemble(Order order, OrderIntegrationEvent event, long timeoutMinutes) {
+        Object payloadDto = buildPayload(order, event.type(), timeoutMinutes);
         JsonNode payloadNode = objectMapper.valueToTree(payloadDto);
         return Envelope.builder()
                 .eventId(UUID.randomUUID().toString())
@@ -59,14 +60,14 @@ public class OrderEnvelopeAssembler {
                 .build();
     }
 
-    private Object buildPayload(Order order, OrderIntegrationEventType type) {
+    private Object buildPayload(Order order, OrderIntegrationEventType type, long timeoutMinutes) {
         String orderId = String.valueOf(order.getId());
         String memberId = String.valueOf(order.memberId());
         return switch (type) {
             case ORDER_CREATED -> new OrderCreatedEventPayload(
                     orderId, order.orderNo(), memberId, order.orderNo(),
                     order.money().payFen(), CURRENCY_CNY,
-                    order.createdAt().plus(paymentTimeoutMinutes, ChronoUnit.MINUTES));
+                    order.createdAt().plus(timeoutMinutes, ChronoUnit.MINUTES));
             case PAYMENT_SUCCEEDED -> new PaymentSucceededEventPayload(
                     orderId, order.orderNo(), "PAY" + order.orderNo(), order.orderNo(),
                     order.money().payFen(), CURRENCY_CNY, order.paidAt());
@@ -75,6 +76,9 @@ public class OrderEnvelopeAssembler {
                     order.cancelReason(), order.cancelledAt());
             case ORDER_COMPLETED -> new OrderCompletedEventPayload(
                     orderId, order.orderNo(), memberId, order.completedAt());
+            case PAYMENT_TIMEOUT_CHECK -> new OrderDelayPayload(
+                    orderId, order.orderNo(),
+                    order.createdAt().plus(timeoutMinutes, ChronoUnit.MINUTES));
         };
     }
 
@@ -85,6 +89,7 @@ public class OrderEnvelopeAssembler {
             case PAYMENT_SUCCEEDED -> EventTags.PAYMENT_SUCCEEDED;
             case ORDER_CANCELLED -> EventTags.ORDER_CANCELLED;
             case ORDER_COMPLETED -> EventTags.ORDER_COMPLETED;
+            case PAYMENT_TIMEOUT_CHECK -> EventTags.PAYMENT_TIMEOUT_CHECK;
         };
     }
 }

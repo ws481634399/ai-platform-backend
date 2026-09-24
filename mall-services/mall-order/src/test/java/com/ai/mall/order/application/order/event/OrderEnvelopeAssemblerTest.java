@@ -61,8 +61,8 @@ class OrderEnvelopeAssemblerTest {
         Order order = createdOrder(orderNo);
         order.assignPersistedId(9001L);
 
-        Envelope envelope = new OrderEnvelopeAssembler(objectMapper, 30L)
-                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CREATED));
+        Envelope envelope = new OrderEnvelopeAssembler(objectMapper)
+                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CREATED), 30L);
 
         assertThat(envelope.getEventType()).isEqualTo(EventTags.ORDER_CREATED);
         assertThat(envelope.getEventVersion()).isEqualTo(EventVersions.CURRENT);
@@ -90,8 +90,8 @@ class OrderEnvelopeAssemblerTest {
                 Instant.now(), Instant.now(), List.of());
         order.pay("5001", paidAt);
 
-        Envelope envelope = new OrderEnvelopeAssembler(objectMapper, 30L)
-                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.PAYMENT_SUCCEEDED));
+        Envelope envelope = new OrderEnvelopeAssembler(objectMapper)
+                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.PAYMENT_SUCCEEDED), 30L);
 
         assertThat(envelope.getEventType()).isEqualTo(EventTags.PAYMENT_SUCCEEDED);
         JsonNode payload = envelope.getPayload();
@@ -113,8 +113,8 @@ class OrderEnvelopeAssemblerTest {
                 Instant.now(), Instant.now(), List.of());
         order.cancel("5001", "不想买了", cancelledAt);
 
-        Envelope envelope = new OrderEnvelopeAssembler(objectMapper, 30L)
-                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CANCELLED));
+        Envelope envelope = new OrderEnvelopeAssembler(objectMapper)
+                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_CANCELLED), 30L);
 
         JsonNode payload = envelope.getPayload();
         assertThat(payload.get("reservationNo").asText()).isEqualTo(orderNo);
@@ -133,12 +133,30 @@ class OrderEnvelopeAssemblerTest {
                 now.minusSeconds(120), now, List.of());
         order.confirmReceipt("5001", now);
 
-        Envelope envelope = new OrderEnvelopeAssembler(objectMapper, 30L)
-                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_COMPLETED));
+        Envelope envelope = new OrderEnvelopeAssembler(objectMapper)
+                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.ORDER_COMPLETED), 30L);
 
         JsonNode payload = envelope.getPayload();
         assertThat(payload.get("orderId").asText()).isEqualTo("9004");
         assertThat((long) payload.get("completedAt").asDouble())
                 .isEqualTo(now.getEpochSecond());
+    }
+
+    @Test
+    void assemblePaymentTimeoutCheck_delayPayload() {
+        String orderNo = "ON3005";
+        Order order = createdOrder(orderNo);
+        order.assignPersistedId(9005L);
+
+        Envelope envelope = new OrderEnvelopeAssembler(objectMapper)
+                .assemble(order, new OrderIntegrationEvent(OrderIntegrationEventType.PAYMENT_TIMEOUT_CHECK), 15L);
+
+        assertThat(envelope.getEventType()).isEqualTo(EventTags.PAYMENT_TIMEOUT_CHECK);
+        JsonNode payload = envelope.getPayload();
+        assertThat(payload.get("orderId").asText()).isEqualTo("9005");
+        assertThat(payload.get("orderNo").asText()).isEqualTo(orderNo);
+        long expectedExpire = order.createdAt().plus(15, ChronoUnit.MINUTES).getEpochSecond();
+        assertThat((long) payload.get("expireAt").asDouble())
+                .isEqualTo(expectedExpire);
     }
 }
