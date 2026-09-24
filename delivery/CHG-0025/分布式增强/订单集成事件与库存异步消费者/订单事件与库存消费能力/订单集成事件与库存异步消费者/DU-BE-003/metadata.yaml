@@ -1,0 +1,63 @@
+# OpenSpec Repository Delivery Unit Metadata
+#
+# 保存完整 Parent Chain：即使仓库被单独打开，也能追溯 DU → Story → Feature Path → Change。
+# 不复制外部 Spec/Design（Reference do not duplicate），workspace-source 仅为相对引用。
+# Phase 4.4：DU 实体只存在于实现仓；本文件由 task 阶段物化生成，Agent 更新 status/result。
+
+id: DU-BE-003
+repository: "repo-1"
+parent:
+  change: "CHG-0025"
+feature-path:
+  level-1:
+    id: FEAT-009
+    name: 分布式增强
+  level-2:
+    id: FEAT-009-03
+    name: 订单集成事件与库存异步消费者
+  level-3:
+    id: FEAT-009-03-01
+    name: 订单事件与库存消费能力
+  story:
+    id: STORY-009-03-01
+    name: 订单集成事件与库存异步消费者
+  candidate: false
+workspace-source:
+  requirement: delivery/changes/CHG-0025/requirement.md
+  spec: delivery/changes/CHG-0025/requirement-spec.md
+  design: delivery/changes/CHG-0025/requirement-design.md
+  story-design: delivery/changes/CHG-0025/分布式增强/订单集成事件与库存异步消费者/订单事件与库存消费能力/订单集成事件与库存异步消费者/story-design.md
+  test-design: delivery/changes/CHG-0025/分布式增强/订单集成事件与库存异步消费者/订单事件与库存消费能力/订单集成事件与库存异步消费者/test-design.md
+scope: []
+acceptance:
+  - AC-018
+dependencies: []
+implementation-guidance:
+  # Dev 前置实现指导声明（正文在 task-design.md，metadata 只存声明）
+  sketch: true
+  pseudocode: false
+  complexity-trigger: []
+status: completed # pending / developing / testing / completed
+baseline:
+  commit: ""
+result:
+  commit: "16c506d"
+  paths:
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/domain/order/event/OrderIntegrationEvent.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/domain/order/event/OrderIntegrationEventType.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/order/event/OrderEnvelopeAssembler.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/order/event/OutboxOrderEventFlusher.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/application/order/event/IntegrationMode.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/infrastructure/persistence/order/MyBatisOrderRepository.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/interfaces/rest/internal/OrderStatusInternalController.java
+    - mall-services/mall-order/src/main/java/com/ai/mall/order/interfaces/rest/internal/CompensationInternalController.java
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/consumer/PaymentSucceededInventoryHandler.java
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/consumer/OrderCancelledInventoryHandler.java
+    - mall-services/mall-inventory/src/main/java/com/ai/mall/inventory/infrastructure/client/OrderServiceClient.java
+  symbols:
+    - Order.java::pullIntegrationEvents
+    - OrderEnvelopeAssembler.java::assemble
+    - OutboxOrderEventFlusher.java::flush
+    - MyBatisOrderRepository.java::transition
+    - PaymentSucceededInventoryHandler.java::handle
+    - OrderCancelledInventoryHandler.java::handle
