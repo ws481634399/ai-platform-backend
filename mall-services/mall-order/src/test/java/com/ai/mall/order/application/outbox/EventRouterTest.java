@@ -39,6 +39,14 @@ class EventRouterTest {
     }
 
     @Test
+    @DisplayName("PAYMENT_TIMEOUT_CHECK 默认注册到 aimall-order-delay（级别以行内 delay_level 为准）")
+    void delayCheckRoute() {
+        SendTarget target = router.route(EventTags.PAYMENT_TIMEOUT_CHECK);
+        assertThat(target.topic()).isEqualTo(EventTopics.AIMALL_ORDER_DELAY);
+        assertThat(target.delayLevel()).isZero();
+    }
+
+    @Test
     @DisplayName("register 可扩展路由（供 STORY-009-04-01 延迟消息）")
     void registerExtendsRoute() {
         router.register(EventTags.PAYMENT_TIMEOUT_CHECK, new SendTarget(EventTopics.AIMALL_ORDER_DELAY, 9));

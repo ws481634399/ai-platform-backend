@@ -25,6 +25,9 @@ public class EventRouter {
         register(EventTags.PAYMENT_SUCCEEDED, orderEvents);
         register(EventTags.ORDER_CANCELLED, orderEvents);
         register(EventTags.ORDER_COMPLETED, orderEvents);
+        // STORY-009-04-01：延迟取消检查路由到 order-delay Topic，delayLevel=0 占位，
+        // 实际级别由投递任务读取 outbox_event.delay_level
+        register(EventTags.PAYMENT_TIMEOUT_CHECK, new SendTarget(EventTopics.AIMALL_ORDER_DELAY, 0));
     }
 
     /** 注册/覆盖路由（供后续 Story 扩展延迟消息等）。 */

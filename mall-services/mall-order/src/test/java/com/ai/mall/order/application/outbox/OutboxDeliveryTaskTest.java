@@ -175,6 +175,26 @@ class OutboxDeliveryTaskTest {
     }
 
     @Test
+    @DisplayName("TC-003：延迟事件按行内 delay_level 走 sendDelay 到 order-delay Topic")
+    void delayedEventUsesRowDelayLevel() throws Exception {
+        Envelope env = Envelope.builder().eventId("evt-9").eventType(EventTags.PAYMENT_TIMEOUT_CHECK)
+                .eventVersion(1).occurredAt(Instant.now()).producer("mall-order")
+                .payload(objectMapper.createObjectNode()).build();
+        OutboxEvent e = OutboxEvent.reconstitute(9L, "ord-9", EventTags.PAYMENT_TIMEOUT_CHECK,
+                objectMapper.writeValueAsString(env), OutboxStatus.PENDING, 0, null, "t-9", null,
+                Instant.now(), null, 16);
+        when(repository.findPendingDue(anyInt(), any())).thenReturn(List.of(e));
+        when(repository.claim(eq(9L), any())).thenReturn(1);
+        when(producerProvider.getIfAvailable()).thenReturn(producer);
+
+        task.run();
+
+        verify(producer).sendDelay(eq(EventTopics.AIMALL_ORDER_DELAY), any(Envelope.class), eq(16));
+        verify(producer, never()).sendSync(anyString(), any());
+        verify(repository).markSent(9L);
+    }
+
+    @Test
     @DisplayName("无到期记录 → 空轮不操作")
     void noDueRecordsNoOp() {
         when(repository.findPendingDue(anyInt(), any())).thenReturn(List.of());

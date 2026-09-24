@@ -97,6 +97,9 @@ public class OutboxDeliveryTask {
             }
             if (target.isDelayed()) {
                 producer.sendDelay(target.topic(), envelope, target.delayLevel());
+            } else if (event.getDelayLevel() > 0) {
+                // 延迟事件：级别在业务事务 flush 时落库（STORY-009-04-01），以行内值为准
+                producer.sendDelay(target.topic(), envelope, event.getDelayLevel());
             } else {
                 producer.sendSync(target.topic(), envelope);
             }
