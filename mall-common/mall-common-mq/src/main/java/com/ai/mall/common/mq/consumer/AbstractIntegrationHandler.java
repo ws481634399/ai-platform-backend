@@ -90,8 +90,8 @@ public abstract class AbstractIntegrationHandler<P> implements InternalHandlerAd
             // ④ 业务处理
             P payload = objectMapper.treeToValue(envelope.getPayload(), payloadType);
             handle(envelope, payload);
-            // ⑤ 结果回写 SUCCESS（SKIPPED 由子类在 handle 内显式调用 markSkipped）
-            idempotentConsumer.markResult(envelope.getEventId(), consumerGroup, IdempotentConsumer.Result.SUCCESS);
+            // ⑤ 结果回写：仅当仍为 PROCESSING 时置 SUCCESS（SKIPPED 由子类在 handle 内显式标记，不得覆盖）
+            idempotentConsumer.markSuccessIfProcessing(envelope.getEventId(), consumerGroup);
             return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         } catch (Exception e) {
             // 异常路径：删除幂等占位（允许重试再处理）→ 交 RocketMQ 重试 → 超限 DLQ

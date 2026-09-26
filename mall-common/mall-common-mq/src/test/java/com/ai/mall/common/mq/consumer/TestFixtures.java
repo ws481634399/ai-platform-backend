@@ -50,6 +50,15 @@ final class TestFixtures {
         }
 
         @Override
+        public void markSuccessIfProcessing(String eventId, String consumerGroup) {
+            // 与 SQL CAS 同语义：仅占位（PROCESSING）时收尾，已显式 SKIPPED 不覆盖
+            String key = eventId + "|" + consumerGroup;
+            if (placeholders.remove(key)) {
+                results.put(key, Result.SUCCESS);
+            }
+        }
+
+        @Override
         public void deletePlaceholder(String eventId, String consumerGroup) {
             deleteCalls++;
             placeholders.remove(eventId + "|" + consumerGroup);

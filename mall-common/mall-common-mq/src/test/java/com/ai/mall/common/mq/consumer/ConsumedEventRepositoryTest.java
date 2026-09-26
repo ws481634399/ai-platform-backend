@@ -62,6 +62,31 @@ class ConsumedEventRepositoryTest {
     }
 
     @Test
+    @DisplayName("markSuccessIfProcessing：占位仍 PROCESSING → 回写 SUCCESS")
+    void markSuccessIfProcessing_whenProcessing_becomesSuccess() {
+        repository.tryConsume("evt-4", "group-a", "PAYMENT_SUCCEEDED", "50004", "t4");
+        repository.markSuccessIfProcessing("evt-4", "group-a");
+
+        String result = jdbcTemplate.queryForObject(
+                "SELECT result FROM consumed_event WHERE event_id = ? AND consumer_group = ?",
+                String.class, "evt-4", "group-a");
+        assertThat(result).isEqualTo("SUCCESS");
+    }
+
+    @Test
+    @DisplayName("markSuccessIfProcessing：handler 已显式 SKIPPED → 不覆盖（乱序裁决轨迹必须保留）")
+    void markSuccessIfProcessing_whenSkipped_notOverwritten() {
+        repository.tryConsume("evt-5", "group-a", "PAYMENT_SUCCEEDED", "50005", "t5");
+        repository.markResult("evt-5", "group-a", IdempotentConsumer.Result.SKIPPED);
+        repository.markSuccessIfProcessing("evt-5", "group-a");
+
+        String result = jdbcTemplate.queryForObject(
+                "SELECT result FROM consumed_event WHERE event_id = ? AND consumer_group = ?",
+                String.class, "evt-5", "group-a");
+        assertThat(result).isEqualTo("SKIPPED");
+    }
+
+    @Test
     @DisplayName("deletePlaceholder：异常回滚删除占位后，同事件可重新占位（允许 RocketMQ 重试再处理）")
     void deletePlaceholder_allowsReconsume() {
         assertThat(repository.tryConsume("evt-3", "group-a", "PAYMENT_SUCCEEDED", "50003", "t3"))

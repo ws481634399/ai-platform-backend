@@ -10,6 +10,7 @@ import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.boot.test.context.runner.ApplicationContextRunner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -55,6 +56,24 @@ class RocketMQAutoConfigurationTest {
                     assertThat(properties.getNameServer()).isEqualTo("127.0.0.1:19876");
                     assertThat(properties.getProducerGroup()).isEqualTo("it-producer-group");
                     assertThat(properties.getMaxReconsumeTimes()).isEqualTo(16);
+                });
+    }
+
+    @Test
+    @DisplayName("enabled=true + 生产形态自动配置排序（JdbcTemplateAutoConfiguration 在前）→ 幂等组件必须装配")
+    void enabledWithJdbcTemplateAutoConfiguration_orderingRegistersIdempotentConsumer() {
+        // 复现真实 Fat Jar：自动配置先按全限定名排序，com.ai.* 早于 org.springframework.* 被处理；
+        // 若不声明 @AutoConfigureAfter，@ConditionalOnBean(JdbcTemplate) 评估时 Bean 尚不存在 → 幂等组件丢失
+        new ApplicationContextRunner()
+                .withConfiguration(AutoConfigurations.of(
+                        JdbcTemplateAutoConfiguration.class, RocketMQAutoConfiguration.class))
+                .withBean(ObjectMapper.class, ObjectMapper::new)
+                .withBean(javax.sql.DataSource.class,
+                        () -> new DriverManagerDataSource("jdbc:h2:mem:ordering;MODE=MySQL", "sa", ""))
+                .withPropertyValues("rocketmq.enabled=true", "rocketmq.name-server=127.0.0.1:19876")
+                .run(context -> {
+                    assertThat(context).hasSingleBean(JdbcTemplate.class);
+                    assertThat(context).hasSingleBean(IdempotentConsumer.class);
                 });
     }
 

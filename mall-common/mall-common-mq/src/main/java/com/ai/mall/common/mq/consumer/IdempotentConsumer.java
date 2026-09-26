@@ -20,6 +20,12 @@ public interface IdempotentConsumer {
     /** 回写处理结果（SUCCESS/SKIPPED） */
     void markResult(String eventId, String consumerGroup, Result result);
 
+    /**
+     * 处理链收尾条件回写：仅当占位仍为 PROCESSING 时置 SUCCESS。
+     * handler 已显式回写 SKIPPED（乱序裁决）时不得覆盖。
+     */
+    void markSuccessIfProcessing(String eventId, String consumerGroup);
+
     /** 删除占位（异常回滚场景，允许重试再处理） */
     void deletePlaceholder(String eventId, String consumerGroup);
 

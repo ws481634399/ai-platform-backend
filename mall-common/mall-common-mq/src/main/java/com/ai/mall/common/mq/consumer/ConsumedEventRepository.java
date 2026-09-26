@@ -48,6 +48,16 @@ public class ConsumedEventRepository implements IdempotentConsumer {
     }
 
     @Override
+    public void markSuccessIfProcessing(String eventId, String consumerGroup) {
+        // CAS：仅 PROCESSING 行可被处理链收尾为 SUCCESS；SKIPPED（乱序裁决）保持不覆盖
+        jdbcTemplate.update(
+                "UPDATE " + tableName
+                        + " SET result = 'SUCCESS' WHERE event_id = ? AND consumer_group = ?"
+                        + " AND result = 'PROCESSING'",
+                eventId, consumerGroup);
+    }
+
+    @Override
     public void deletePlaceholder(String eventId, String consumerGroup) {
         jdbcTemplate.update(
                 "DELETE FROM " + tableName + " WHERE event_id = ? AND consumer_group = ?",
