@@ -50,7 +50,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "8976d1c487302fc6ee5b904d88a42f294b7e9037"
 result:
-  commit: "d30f9a7"
+  commit: "456dd36c09c1094011865860db169c7ff0112f69"
   paths:
     - mall-services/mall-inventory/src/main/resources/db/migration/V3__create_consumed_event.sql
     - mall-services/mall-order/src/main/resources/db/migration/V6__create_consumed_event.sql

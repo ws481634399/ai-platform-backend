@@ -39,9 +39,9 @@ implementation-guidance:
   complexity-trigger: []
 status: completed # pending / developing / testing / completed
 baseline:
-  commit: ""
+  commit: "456dd36c09c1094011865860db169c7ff0112f69"
 result:
-  commit: "16c506d"
+  commit: "456dd36c09c1094011865860db169c7ff0112f69"
   paths:
     - mall-services/mall-order/src/main/java/com/ai/mall/order/domain/order/event/OrderIntegrationEvent.java
     - mall-services/mall-order/src/main/java/com/ai/mall/order/domain/order/event/OrderIntegrationEventType.java

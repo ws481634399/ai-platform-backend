@@ -44,7 +44,7 @@ status: completed # pending / developing / testing / completed
 baseline:
   commit: "cdcb08e204dcc31c11ed60063acbc69397d1a48f"
 result:
-  commit: "e375c40"
+  commit: "456dd36c09c1094011865860db169c7ff0112f69"
   paths:
     - mall-services/mall-order/src/main/java/com/ai/mall/order/application/outbox/OutboxDeliveryTask.java
     - mall-services/mall-order/src/main/java/com/ai/mall/order/application/outbox/OutboxRecordWriter.java

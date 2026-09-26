@@ -46,7 +46,7 @@ baseline:
   commit: "9efde17291b8d9db7cdc40635612b1b58b349d21"
 result:
   # 最后实质交付提交（含 review 闭环 DEV-6）；DU 完成态提交本身为元数据提交
-  commit: "a1b4dc66d93d99419135b47711df2e303b7d19aa" # 本地提交（未推送）
+  commit: "456dd36c09c1094011865860db169c7ff0112f69" # 本地提交（未推送）
   paths:
     - mall-bom/pom.xml
     - mall-contracts/mall-event-contracts/
